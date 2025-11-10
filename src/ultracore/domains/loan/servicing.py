@@ -10,6 +10,7 @@ from enum import Enum
 import math
 
 from ultracore.infrastructure.event_store.store import get_event_store
+from ultracore.infrastructure.kafka_event_store.production_store import get_production_kafka_store
 from ultracore.domains.account.aggregate import AccountAggregate
 from ultracore.ledger.general_ledger import ledger
 
@@ -143,6 +144,15 @@ class LoanServicing:
             'servicing_started': datetime.utcnow().isoformat()
         }
         
+        kafka_store = get_production_kafka_store()
+        await kafka_store.append_event(
+            entity='loans',
+            event_type=event_type,
+            event_data=event_data,
+            aggregate_id=self.loan_id,
+            exactly_once=True if event_type in ['PaymentProcessed', 'LoanPaidOff'] else False
+        )
+        
         await store.append(
             aggregate_id=self.loan_id,
             aggregate_type='LoanServicing',
@@ -243,6 +253,15 @@ class LoanServicing:
             'period': next_payment['period']
         }
         
+        kafka_store = get_production_kafka_store()
+        await kafka_store.append_event(
+            entity='loans',
+            event_type=event_type,
+            event_data=event_data,
+            aggregate_id=self.loan_id,
+            exactly_once=True if event_type in ['PaymentProcessed', 'LoanPaidOff'] else False
+        )
+        
         await store.append(
             aggregate_id=self.loan_id,
             aggregate_type='LoanServicing',
@@ -312,6 +331,15 @@ class LoanServicing:
             'final_balance': str(self.remaining_balance)
         }
         
+        kafka_store = get_production_kafka_store()
+        await kafka_store.append_event(
+            entity='loans',
+            event_type=event_type,
+            event_data=event_data,
+            aggregate_id=self.loan_id,
+            exactly_once=True if event_type in ['PaymentProcessed', 'LoanPaidOff'] else False
+        )
+        
         await store.append(
             aggregate_id=self.loan_id,
             aggregate_type='LoanServicing',
@@ -353,6 +381,15 @@ class LoanServicing:
             'reason': reason
         }
         
+        kafka_store = get_production_kafka_store()
+        await kafka_store.append_event(
+            entity='loans',
+            event_type=event_type,
+            event_data=event_data,
+            aggregate_id=self.loan_id,
+            exactly_once=True if event_type in ['PaymentProcessed', 'LoanPaidOff'] else False
+        )
+        
         await store.append(
             aggregate_id=self.loan_id,
             aggregate_type='LoanServicing',
@@ -376,6 +413,15 @@ class LoanServicing:
             'recovery_amount': str(recovery_amount),
             'loss_amount': str(loss_amount)
         }
+        
+        kafka_store = get_production_kafka_store()
+        await kafka_store.append_event(
+            entity='loans',
+            event_type=event_type,
+            event_data=event_data,
+            aggregate_id=self.loan_id,
+            exactly_once=True if event_type in ['PaymentProcessed', 'LoanPaidOff'] else False
+        )
         
         await store.append(
             aggregate_id=self.loan_id,
@@ -426,3 +472,4 @@ class LoanServicing:
             elif event.event_type == 'LoanChargedOff':
                 self.loan_status = LoanStatus.CHARGED_OFF
                 self.remaining_balance = Decimal('0')
+
