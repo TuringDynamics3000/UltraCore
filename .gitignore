@@ -9,6 +9,11 @@ venv/
 .mypy_cache/
 .ruff_cache/
 
+# API Keys - NEVER COMMIT
+**/config.py
+.env.local
+.env.production
+
 # IDE
 .vscode/
 .idea/
