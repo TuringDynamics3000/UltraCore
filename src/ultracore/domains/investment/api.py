@@ -1,87 +1,115 @@
 ﻿"""
-Investment Domain API
+Complete Investment API - Order Management
 """
 from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
 from decimal import Decimal
 import uuid
 
-from ultracore.domains.investment.aggregate import (
-    PortfolioAggregate, CreatePortfolioRequest, PlaceOrderRequest
+from ultracore.domains.investment.complete_aggregate import (
+    CompleteInvestmentAggregate,
+    OrderSide,
+    OrderType
 )
 
 router = APIRouter()
 
 
+class CreatePortfolioRequest(BaseModel):
+    account_id: str
+    initial_cash: float
+
+
+class PlaceOrderRequest(BaseModel):
+    symbol: str
+    side: OrderSide
+    quantity: int
+    order_type: OrderType
+    limit_price: float = None
+
+
 @router.post('/portfolios')
 async def create_portfolio(request: CreatePortfolioRequest):
     '''Create investment portfolio'''
-    portfolio_id = f'PORT-{str(uuid.uuid4())[:8]}'
+    portfolio_id = f'PRT-{str(uuid.uuid4())[:8]}'
     
-    portfolio = PortfolioAggregate(portfolio_id)
+    portfolio = CompleteInvestmentAggregate(portfolio_id)
     await portfolio.create_portfolio(
-        client_id=request.client_id,
-        portfolio_name=request.portfolio_name,
-        initial_cash=Decimal('10000')  # Default starting cash
+        account_id=request.account_id,
+        initial_cash=Decimal(str(request.initial_cash))
     )
     
     return {
         'portfolio_id': portfolio_id,
-        'client_id': request.client_id,
-        'portfolio_name': request.portfolio_name,
+        'account_id': request.account_id,
         'cash_balance': str(portfolio.cash_balance)
-    }
-
-
-@router.get('/portfolios/{portfolio_id}')
-async def get_portfolio(portfolio_id: str):
-    '''Get portfolio details'''
-    portfolio = PortfolioAggregate(portfolio_id)
-    await portfolio.load_from_events()
-    
-    if not portfolio.client_id:
-        raise HTTPException(status_code=404, detail='Portfolio not found')
-    
-    performance = await portfolio.get_performance()
-    
-    return {
-        'portfolio_id': portfolio.portfolio_id,
-        'client_id': portfolio.client_id,
-        'portfolio_name': portfolio.portfolio_name,
-        **performance
     }
 
 
 @router.post('/portfolios/{portfolio_id}/orders')
 async def place_order(portfolio_id: str, request: PlaceOrderRequest):
     '''
-    Place buy/sell order
+    Place investment order
     
-    Supports: STOCK, ETF, MUTUAL_FUND, BOND
+    Supports market, limit, stop-loss orders
     '''
-    portfolio = PortfolioAggregate(portfolio_id)
+    portfolio = CompleteInvestmentAggregate(portfolio_id)
     await portfolio.load_from_events()
     
-    if not portfolio.client_id:
+    if not portfolio.account_id:
         raise HTTPException(status_code=404, detail='Portfolio not found')
     
-    try:
-        order_id = await portfolio.place_order(
-            symbol=request.symbol,
-            security_type=request.security_type,
-            order_side=request.order_side,
-            quantity=request.quantity,
-            order_type=request.order_type,
-            limit_price=Decimal(str(request.limit_price)) if request.limit_price else None
-        )
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+    order_id = await portfolio.place_order(
+        symbol=request.symbol,
+        side=request.side,
+        quantity=request.quantity,
+        order_type=request.order_type,
+        limit_price=Decimal(str(request.limit_price)) if request.limit_price else None
+    )
     
     return {
-        'order_id': order_id,
         'portfolio_id': portfolio_id,
+        'order_id': order_id,
         'symbol': request.symbol,
-        'side': request.order_side.value,
-        'quantity': request.quantity,
-        'status': 'EXECUTED',
-        'cash_balance': str(portfolio.cash_balance)
+        'side': request.side.value,
+        'quantity': request.quantity
+    }
+
+
+@router.get('/portfolios/{portfolio_id}')
+async def get_portfolio(portfolio_id: str):
+    '''Get portfolio details'''
+    portfolio = CompleteInvestmentAggregate(portfolio_id)
+    await portfolio.load_from_events()
+    
+    if not portfolio.account_id:
+        raise HTTPException(status_code=404, detail='Portfolio not found')
+    
+    return {
+        'portfolio_id': portfolio_id,
+        'account_id': portfolio.account_id,
+        'cash_balance': str(portfolio.cash_balance),
+        'holdings': portfolio.holdings,
+        'total_value': str(portfolio.total_value)
+    }
+
+
+@router.post('/portfolios/{portfolio_id}/optimize')
+async def optimize_portfolio(portfolio_id: str):
+    '''
+    ML-powered portfolio optimization
+    
+    Modern Portfolio Theory + ML
+    '''
+    portfolio = CompleteInvestmentAggregate(portfolio_id)
+    await portfolio.load_from_events()
+    
+    if not portfolio.account_id:
+        raise HTTPException(status_code=404, detail='Portfolio not found')
+    
+    optimization = await portfolio.optimize_portfolio()
+    
+    return {
+        'portfolio_id': portfolio_id,
+        'optimization': optimization
     }

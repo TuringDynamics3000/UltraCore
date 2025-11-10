@@ -1,79 +1,74 @@
 ﻿"""
-Client Domain API
+Complete Client API - Full KYC Lifecycle
 """
 from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+from typing import List, Dict
 import uuid
-from typing import Dict
 
-from ultracore.domains.client.aggregate import (
-    ClientAggregate, OnboardingRequest, KYCDocumentRequest
+from ultracore.domains.client.complete_aggregate import (
+    CompleteClientAggregate,
+    ClientStatus,
+    KYCStatus
 )
-from ultracore.domains.client.kyc_service import kyc_service
-from ultracore.infrastructure.event_store.store import get_event_store
 
 router = APIRouter()
 
 
-@router.post('/')
-async def onboard_client(request: OnboardingRequest):
+class OnboardClientRequest(BaseModel):
+    first_name: str
+    last_name: str
+    email: str
+    phone: str
+    date_of_birth: str
+    address: Dict
+
+
+class SubmitKYCDocumentsRequest(BaseModel):
+    documents: List[Dict]
+
+
+@router.post('/onboard')
+async def onboard_client(request: OnboardClientRequest):
     '''
-    Onboard a new customer
+    Onboard new client
     
-    Creates client profile and starts KYC process
+    Start KYC process
     '''
-    client_id = f'CLIENT-{str(uuid.uuid4())[:8]}'
+    client_id = f'CLI-{str(uuid.uuid4())[:8]}'
     
-    client = ClientAggregate(client_id)
-    await client.onboard(request)
+    client = CompleteClientAggregate(client_id)
+    await client.onboard_client(
+        first_name=request.first_name,
+        last_name=request.last_name,
+        email=request.email,
+        phone=request.phone,
+        date_of_birth=request.date_of_birth,
+        address=request.address
+    )
     
     return {
         'client_id': client_id,
         'status': client.status.value,
-        'kyc_status': client.kyc_status.value,
-        'message': 'Client onboarded successfully. Please submit KYC documents.',
-        'next_step': f'/api/v1/clients/{client_id}/kyc/documents'
+        'kyc_status': client.kyc_status.value
     }
 
 
-@router.get('/{client_id}')
-async def get_client(client_id: str):
-    '''Get client profile'''
-    client = ClientAggregate(client_id)
+@router.post('/{client_id}/kyc/submit')
+async def submit_kyc_documents(client_id: str, request: SubmitKYCDocumentsRequest):
+    '''Submit KYC documents'''
+    client = CompleteClientAggregate(client_id)
     await client.load_from_events()
     
     if not client.first_name:
         raise HTTPException(status_code=404, detail='Client not found')
     
-    return {
-        'client_id': client.client_id,
-        'name': f'{client.first_name} {client.last_name}',
-        'email': client.email,
-        'status': client.status.value,
-        'kyc_status': client.kyc_status.value,
-        'risk_score': client.risk_score
-    }
-
-
-@router.post('/{client_id}/kyc/documents')
-async def submit_kyc_document(client_id: str, document: KYCDocumentRequest):
-    '''
-    Submit KYC identity document
-    
-    Accepts: Passport, Driver's License, Medicare Card
-    '''
-    client = ClientAggregate(client_id)
-    await client.load_from_events()
-    
-    if not client.first_name:
-        raise HTTPException(status_code=404, detail='Client not found')
-    
-    await client.submit_kyc_document(document)
+    await client.submit_kyc_documents(request.documents)
     
     return {
         'client_id': client_id,
         'kyc_status': client.kyc_status.value,
-        'message': 'Document submitted successfully',
-        'next_step': f'/api/v1/clients/{client_id}/kyc/verify'
+        'documents_count': len(client.kyc_documents)
     }
 
 
@@ -82,102 +77,86 @@ async def verify_kyc(client_id: str):
     '''
     AI-powered KYC verification
     
-    Performs:
-    - Identity verification
-    - AML/CTF compliance checks
-    - Risk assessment
-    - Age verification
+    Runs AML checks and risk assessment
     '''
-    client = ClientAggregate(client_id)
+    client = CompleteClientAggregate(client_id)
     await client.load_from_events()
     
     if not client.first_name:
         raise HTTPException(status_code=404, detail='Client not found')
     
-    if client.kyc_status != 'IN_PROGRESS':
-        raise HTTPException(status_code=400, detail='No KYC documents submitted')
-    
-    # Get client data from events
-    store = get_event_store()
-    events = await store.get_events(client_id)
-    
-    client_data = {}
-    document_data = {}
-    
-    for event in events:
-        if event.event_type == 'ClientOnboarded':
-            client_data = event.event_data
-        elif event.event_type == 'KYCDocumentSubmitted':
-            document_data = event.event_data
-    
-    # AI verification
-    verification_result = await kyc_service.verify_identity(client_data, document_data)
-    
-    # Update client based on verification
-    await client.verify_kyc(verification_result)
+    await client.verify_kyc()
     
     return {
         'client_id': client_id,
         'kyc_status': client.kyc_status.value,
-        'client_status': client.status.value,
-        'risk_score': verification_result['risk_score'],
-        'risk_level': verification_result['risk_level'],
-        'verification': verification_result
+        'status': client.status.value,
+        'risk_level': client.risk_level.value,
+        'risk_score': client.risk_score
     }
 
 
-@router.get('/{client_id}/360')
-async def get_customer_360(client_id: str):
-    '''
-    Customer 360 View
-    
-    Complete customer profile with all history
-    '''
-    store = get_event_store()
-    events = await store.get_events(client_id)
-    
-    if not events:
-        raise HTTPException(status_code=404, detail='Client not found')
-    
-    client = ClientAggregate(client_id)
+@router.post('/{client_id}/activate')
+async def activate_client(client_id: str):
+    '''Activate client after KYC approval'''
+    client = CompleteClientAggregate(client_id)
     await client.load_from_events()
     
-    # Build 360 view
-    profile = {}
-    kyc_documents = []
-    timeline = []
+    if not client.first_name:
+        raise HTTPException(status_code=404, detail='Client not found')
     
-    for event in events:
-        timeline.append({
-            'timestamp': event.timestamp.isoformat(),
-            'event_type': event.event_type,
-            'user': event.user_id
-        })
-        
-        if event.event_type == 'ClientOnboarded':
-            profile = event.event_data
-        elif event.event_type == 'KYCDocumentSubmitted':
-            kyc_documents.append(event.event_data)
+    if client.status != ClientStatus.KYC_APPROVED:
+        raise HTTPException(status_code=400, detail='KYC not approved')
+    
+    await client.activate_client()
     
     return {
         'client_id': client_id,
-        'profile': profile,
-        'status': client.status.value,
-        'kyc_status': client.kyc_status.value,
-        'risk_score': client.risk_score,
-        'kyc_documents': kyc_documents,
-        'timeline': timeline,
-        'total_events': len(events)
+        'status': client.status.value
     }
 
 
-@router.get('/{client_id}/events')
-async def get_client_events(client_id: str):
-    '''Get all events for a client'''
-    store = get_event_store()
-    events = await store.get_events(client_id)
+@router.get('/{client_id}')
+async def get_client(client_id: str):
+    '''Get complete client profile'''
+    client = CompleteClientAggregate(client_id)
+    await client.load_from_events()
+    
+    if not client.first_name:
+        raise HTTPException(status_code=404, detail='Client not found')
     
     return {
         'client_id': client_id,
-        'events': [event.to_dict() for event in events]
+        'name': f'{client.first_name} {client.last_name}',
+        'email': client.email,
+        'status': client.status.value,
+        'kyc_status': client.kyc_status.value,
+        'risk_level': client.risk_level.value,
+        'risk_score': client.risk_score,
+        'accounts': client.accounts,
+        'loans': client.loans
+    }
+
+
+@router.get('/{client_id}/churn-prediction')
+async def predict_churn(client_id: str):
+    '''
+    ML-powered churn prediction
+    
+    Predicts customer churn risk
+    '''
+    client = CompleteClientAggregate(client_id)
+    await client.load_from_events()
+    
+    if not client.first_name:
+        raise HTTPException(status_code=404, detail='Client not found')
+    
+    churn_result = await client.predict_churn()
+    
+    return {
+        'client_id': client_id,
+        'churn_probability': churn_result['churn_probability'],
+        'churn_score': churn_result['churn_score'],
+        'risk_level': churn_result['risk_level'],
+        'retention_actions': churn_result['retention_actions']
     }

@@ -1,84 +1,80 @@
 ﻿"""
-Account Domain API
+Complete Account API - Full Account Lifecycle
 """
 from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
 from decimal import Decimal
 import uuid
 
-from ultracore.domains.account.aggregate import (
-    AccountAggregate, CreateAccountRequest, TransactionRequest, AccountType
+from ultracore.domains.account.complete_aggregate import (
+    CompleteAccountAggregate,
+    AccountType,
+    AccountStatus
 )
 
 router = APIRouter()
 
 
-@router.post('/')
-async def create_account(request: CreateAccountRequest):
+class CreateAccountRequest(BaseModel):
+    client_id: str
+    account_type: AccountType
+    initial_deposit: float = 0
+
+
+class DepositRequest(BaseModel):
+    amount: float
+    description: str
+    reference: str = None
+
+
+class WithdrawRequest(BaseModel):
+    amount: float
+    description: str
+    reference: str = None
+
+
+class PlaceHoldRequest(BaseModel):
+    amount: float
+    reason: str
+
+
+@router.post('/open')
+async def open_account(request: CreateAccountRequest):
     '''
-    Create a new bank account
+    Open new account
     
-    Types: SAVINGS, CHECKING, TERM_DEPOSIT
+    Creates account with initial deposit
     '''
     account_id = f'ACC-{str(uuid.uuid4())[:8]}'
     
-    account = AccountAggregate(account_id)
-    await account.create_account(
+    account = CompleteAccountAggregate(account_id)
+    await account.open_account(
         client_id=request.client_id,
         account_type=request.account_type,
-        currency=request.currency,
         initial_deposit=Decimal(str(request.initial_deposit))
     )
     
-    # Auto-activate for now (in production, would require verification)
+    # Auto-activate
     await account.activate()
     
     return {
         'account_id': account_id,
         'client_id': request.client_id,
         'account_type': request.account_type.value,
-        'balance': str(account.balance),
         'status': account.status.value,
-        'currency': account.currency,
-        'interest_rate': str(account.interest_rate)
-    }
-
-
-@router.get('/{account_id}')
-async def get_account(account_id: str):
-    '''Get account details and balance'''
-    account = AccountAggregate(account_id)
-    await account.load_from_events()
-    
-    if not account.client_id:
-        raise HTTPException(status_code=404, detail='Account not found')
-    
-    return {
-        'account_id': account.account_id,
-        'client_id': account.client_id,
-        'account_type': account.account_type.value if account.account_type else None,
         'balance': str(account.balance),
-        'status': account.status.value,
-        'currency': account.currency,
-        'interest_rate': str(account.interest_rate),
-        'transaction_count': len(account.transactions)
+        'available_balance': str(account.available_balance)
     }
 
 
 @router.post('/{account_id}/deposit')
-async def deposit_money(account_id: str, request: TransactionRequest):
-    '''
-    Deposit money into account
-    
-    Posts to General Ledger automatically
-    '''
-    account = AccountAggregate(account_id)
+async def deposit(account_id: str, request: DepositRequest):
+    '''Deposit funds'''
+    account = CompleteAccountAggregate(account_id)
     await account.load_from_events()
     
     if not account.client_id:
         raise HTTPException(status_code=404, detail='Account not found')
-    
-    if account.status != 'ACTIVE':
-        raise HTTPException(status_code=400, detail=f'Account is {account.status}')
     
     await account.deposit(
         amount=Decimal(str(request.amount)),
@@ -88,29 +84,19 @@ async def deposit_money(account_id: str, request: TransactionRequest):
     
     return {
         'account_id': account_id,
-        'transaction_type': 'DEPOSIT',
-        'amount': str(request.amount),
         'new_balance': str(account.balance),
-        'status': 'COMPLETED'
+        'available_balance': str(account.available_balance)
     }
 
 
 @router.post('/{account_id}/withdraw')
-async def withdraw_money(account_id: str, request: TransactionRequest):
-    '''
-    Withdraw money from account
-    
-    Validates sufficient funds
-    Posts to General Ledger automatically
-    '''
-    account = AccountAggregate(account_id)
+async def withdraw(account_id: str, request: WithdrawRequest):
+    '''Withdraw funds'''
+    account = CompleteAccountAggregate(account_id)
     await account.load_from_events()
     
     if not account.client_id:
         raise HTTPException(status_code=404, detail='Account not found')
-    
-    if account.status != 'ACTIVE':
-        raise HTTPException(status_code=400, detail=f'Account is {account.status}')
     
     try:
         await account.withdraw(
@@ -123,94 +109,88 @@ async def withdraw_money(account_id: str, request: TransactionRequest):
     
     return {
         'account_id': account_id,
-        'transaction_type': 'WITHDRAWAL',
-        'amount': str(request.amount),
         'new_balance': str(account.balance),
-        'status': 'COMPLETED'
+        'available_balance': str(account.available_balance)
     }
 
 
-@router.get('/{account_id}/transactions')
-async def get_transactions(account_id: str):
-    '''Get account transaction history'''
-    account = AccountAggregate(account_id)
+@router.post('/{account_id}/hold')
+async def place_hold(account_id: str, request: PlaceHoldRequest):
+    '''Place hold on funds'''
+    account = CompleteAccountAggregate(account_id)
     await account.load_from_events()
     
     if not account.client_id:
         raise HTTPException(status_code=404, detail='Account not found')
     
-    return {
-        'account_id': account_id,
-        'transactions': account.transactions,
-        'current_balance': str(account.balance)
-    }
-
-
-@router.get('/{account_id}/statement')
-async def get_statement(account_id: str, period: str = 'current_month'):
-    '''Generate account statement'''
-    account = AccountAggregate(account_id)
-    await account.load_from_events()
+    hold_id = f'HLD-{str(uuid.uuid4())[:8]}'
     
-    if not account.client_id:
-        raise HTTPException(status_code=404, detail='Account not found')
-    
-    total_deposits = sum(
-        Decimal(t['amount']) for t in account.transactions 
-        if t['transaction_type'] == 'DEPOSIT'
-    )
-    
-    total_withdrawals = sum(
-        Decimal(t['amount']) for t in account.transactions 
-        if t['transaction_type'] == 'WITHDRAWAL'
-    )
+    try:
+        await account.place_hold(
+            hold_id=hold_id,
+            amount=Decimal(str(request.amount)),
+            reason=request.reason
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     
     return {
         'account_id': account_id,
-        'period': period,
-        'opening_balance': '0.00',  # Would calculate from period start
-        'closing_balance': str(account.balance),
-        'total_deposits': str(total_deposits),
-        'total_withdrawals': str(total_withdrawals),
-        'transaction_count': len(account.transactions),
-        'transactions': account.transactions
+        'hold_id': hold_id,
+        'available_balance': str(account.available_balance)
     }
 
 
-@router.post('/{account_id}/freeze')
-async def freeze_account(account_id: str, reason: str):
-    '''Freeze account (fraud/suspicious activity)'''
-    account = AccountAggregate(account_id)
-    await account.load_from_events()
-    
-    if not account.client_id:
-        raise HTTPException(status_code=404, detail='Account not found')
-    
-    await account.freeze(reason)
-    
-    return {
-        'account_id': account_id,
-        'status': 'FROZEN',
-        'reason': reason
-    }
-
-
-@router.post('/{account_id}/close')
-async def close_account(account_id: str, reason: str = 'Customer request'):
-    '''Close account'''
-    account = AccountAggregate(account_id)
+@router.delete('/{account_id}/hold/{hold_id}')
+async def release_hold(account_id: str, hold_id: str):
+    '''Release hold'''
+    account = CompleteAccountAggregate(account_id)
     await account.load_from_events()
     
     if not account.client_id:
         raise HTTPException(status_code=404, detail='Account not found')
     
     try:
-        await account.close(reason)
+        await account.release_hold(hold_id)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     
     return {
         'account_id': account_id,
-        'status': 'CLOSED',
-        'reason': reason
+        'available_balance': str(account.available_balance)
     }
+
+
+@router.get('/{account_id}')
+async def get_account(account_id: str):
+    '''Get account details'''
+    account = CompleteAccountAggregate(account_id)
+    await account.load_from_events()
+    
+    if not account.client_id:
+        raise HTTPException(status_code=404, detail='Account not found')
+    
+    return {
+        'account_id': account_id,
+        'client_id': account.client_id,
+        'account_type': account.account_type.value if account.account_type else None,
+        'status': account.status.value,
+        'balance': str(account.balance),
+        'available_balance': str(account.available_balance),
+        'currency': account.currency,
+        'holds': {k: str(v) for k, v in account.holds.items()}
+    }
+
+
+@router.get('/{account_id}/statement')
+async def get_statement(account_id: str, from_date: str, to_date: str):
+    '''Get account statement'''
+    account = CompleteAccountAggregate(account_id)
+    await account.load_from_events()
+    
+    if not account.client_id:
+        raise HTTPException(status_code=404, detail='Account not found')
+    
+    statement = await account.get_statement(from_date, to_date)
+    
+    return statement
