@@ -1,0 +1,8 @@
+﻿# CODEOWNERS - TuringDynamics / Richelou Pty Ltd
+# Solo developer setup
+
+# All code owned by main developer
+* @mjmilne1
+
+# If you add collaborators later, you can specify:
+# /src/ultracore/domains/loan/ @mjmilne1 @collaborator
