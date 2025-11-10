@@ -1,4 +1,4 @@
-﻿from typing import List, Optional, Dict
+from typing import List, Optional, Dict
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import select
@@ -76,6 +76,6 @@ def get_event_store() -> EventStore:
     global event_store
     if event_store is None:
         # Use default postgres database to avoid corruption issues
-        database_url = 'postgresql+asyncpg://postgres:changeme123@127.0.0.1:5432/postgres'
+        database_url = 'postgresql+asyncpg://postgres:ultracore123@127.0.0.1:5433/postgres'
         event_store = EventStore(database_url)
     return event_store
