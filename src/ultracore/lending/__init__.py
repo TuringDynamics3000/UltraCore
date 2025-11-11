@@ -1,34 +1,63 @@
-﻿"""UltraCore Loan Management System"""
+﻿"""
+UltraCore Lending Module
 
-# Origination
-from ultracore.lending.origination.loan_application import get_application_manager
-from ultracore.lending.origination.underwriting_engine import get_underwriting_engine
+Complete loan lifecycle management
+"""
 
-# Servicing
-from ultracore.lending.servicing.loan_account import get_loan_account_manager
-from ultracore.lending.servicing.amortization_engine import get_amortization_engine
-from ultracore.lending.servicing.interest_calculator import get_interest_calculator
-from ultracore.lending.servicing.payment_processor import get_payment_processor
+__version__ = "1.0.0"
 
-# Collections
-from ultracore.lending.collections.delinquency_tracker import get_delinquency_tracker
-from ultracore.lending.collections.collections_manager import get_collections_manager
+from ultracore.lending.loan_models import (
+    Loan,
+    LoanType,
+    LoanStatus,
+    RepaymentFrequency,
+    InterestType,
+    LoanApplication,
+    Collateral
+)
 
-# Provisioning
-from ultracore.lending.provisioning.ifrs9_engine import (
-    get_ifrs9_staging_engine,
-    get_provision_manager
+from ultracore.lending.loan_manager import (
+    get_loan_manager,
+    LoanManager
+)
+
+from ultracore.lending.underwriting import (
+    get_underwriting_engine,
+    UnderwritingEngine,
+    CreditScore,
+    RiskRating
+)
+
+from ultracore.lending.servicing import (
+    get_loan_servicing,
+    LoanServicing,
+    PaymentSchedule,
+    Payment
 )
 
 __all__ = [
-    'get_application_manager',
+    # Models
+    'Loan',
+    'LoanType',
+    'LoanStatus',
+    'RepaymentFrequency',
+    'InterestType',
+    'LoanApplication',
+    'Collateral',
+    
+    # Manager
+    'get_loan_manager',
+    'LoanManager',
+    
+    # Underwriting
     'get_underwriting_engine',
-    'get_loan_account_manager',
-    'get_amortization_engine',
-    'get_interest_calculator',
-    'get_payment_processor',
-    'get_delinquency_tracker',
-    'get_collections_manager',
-    'get_ifrs9_staging_engine',
-    'get_provision_manager'
+    'UnderwritingEngine',
+    'CreditScore',
+    'RiskRating',
+    
+    # Servicing
+    'get_loan_servicing',
+    'LoanServicing',
+    'PaymentSchedule',
+    'Payment',
 ]
