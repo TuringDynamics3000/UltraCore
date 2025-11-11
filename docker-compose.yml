@@ -1,167 +1,169 @@
-﻿version: '3.8'
+﻿# UltraCore Banking Platform - Docker Compose
+# Kafka-first event sourcing infrastructure
+
+version: '3.8'
 
 services:
-  # PostgreSQL - Secondary Event Store & Read Models
-  postgres:
-    image: postgres:16-alpine
-    container_name: ultracore-postgres
-    environment:
-      POSTGRES_DB: ultracore
-      POSTGRES_USER: ultracore
-      POSTGRES_PASSWORD: ultracore_dev_password
-      POSTGRES_INITDB_ARGS: '-E UTF8'
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./init-db.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - ultracore-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ultracore"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  # Zookeeper - Kafka Dependency
+  # ============================================================================
+  # ZOOKEEPER - Kafka coordination
+  # ============================================================================
   zookeeper:
     image: confluentinc/cp-zookeeper:7.5.0
+    hostname: zookeeper
     container_name: ultracore-zookeeper
+    ports:
+      - "2181:2181"
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
-    ports:
-      - "2181:2181"
+    volumes:
+      - zookeeper-data:/var/lib/zookeeper/data
+      - zookeeper-logs:/var/lib/zookeeper/log
     networks:
       - ultracore-network
     healthcheck:
-      test: ["CMD", "nc", "-z", "localhost", "2181"]
+      test: echo stat | nc localhost 2181
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 3
 
-  # Kafka - Primary Event Store & Message Broker
+  # ============================================================================
+  # KAFKA - Event streaming platform
+  # ============================================================================
   kafka:
     image: confluentinc/cp-kafka:7.5.0
+    hostname: kafka
     container_name: ultracore-kafka
     depends_on:
-      zookeeper:
-        condition: service_healthy
+      - zookeeper
     ports:
       - "9092:9092"
-      - "9093:9093"
+      - "9101:9101"
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:9093
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_JMX_PORT: 9101
+      KAFKA_JMX_HOSTNAME: localhost
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
       KAFKA_LOG_RETENTION_HOURS: 168
       KAFKA_LOG_RETENTION_BYTES: 1073741824
-      KAFKA_COMPRESSION_TYPE: 'snappy'
-      KAFKA_MESSAGE_MAX_BYTES: 10485760
+      KAFKA_LOG_SEGMENT_BYTES: 1073741824
     volumes:
-      - kafka_data:/var/lib/kafka/data
+      - kafka-data:/var/lib/kafka/data
     networks:
       - ultracore-network
     healthcheck:
-      test: ["CMD", "kafka-broker-api-versions", "--bootstrap-server", "localhost:9092"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 30s
+      test: kafka-broker-api-versions --bootstrap-server localhost:9092
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
-  # Kafka UI - Monitor Kafka Topics & Messages
+  # ============================================================================
+  # SCHEMA REGISTRY - Schema management
+  # ============================================================================
+  schema-registry:
+    image: confluentinc/cp-schema-registry:7.5.0
+    hostname: schema-registry
+    container_name: ultracore-schema-registry
+    depends_on:
+      - kafka
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'kafka:29092'
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+    networks:
+      - ultracore-network
+    healthcheck:
+      test: curl -f http://localhost:8081/subjects
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # ============================================================================
+  # KAFKA UI - Management interface
+  # ============================================================================
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     container_name: ultracore-kafka-ui
     depends_on:
       - kafka
+      - schema-registry
     ports:
       - "8080:8080"
     environment:
       KAFKA_CLUSTERS_0_NAME: ultracore
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9093
-      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry:8081
     networks:
       - ultracore-network
 
-  # Redis - Caching Layer
+  # ============================================================================
+  # POSTGRESQL - Read model (materialized view)
+  # ============================================================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: ultracore-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ultracore
+      POSTGRES_USER: ultracore
+      POSTGRES_PASSWORD: ultracore_password
+      POSTGRES_INITDB_ARGS: "-E UTF8"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - ultracore-network
+    healthcheck:
+      test: pg_isready -U ultracore
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # ============================================================================
+  # REDIS - Caching layer
+  # ============================================================================
   redis:
     image: redis:7-alpine
     container_name: ultracore-redis
     ports:
       - "6379:6379"
     volumes:
-      - redis_data:/data
+      - redis-data:/data
     networks:
       - ultracore-network
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: redis-cli ping
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 3
 
-  # Redpanda Console - Alternative Kafka UI (Optional)
-  # redpanda-console:
-  #   image: vectorized/console:latest
-  #   container_name: ultracore-redpanda-console
-  #   depends_on:
-  #     - kafka
-  #   ports:
-  #     - "8081:8080"
-  #   environment:
-  #     KAFKA_BROKERS: kafka:9093
-  #   networks:
-  #     - ultracore-network
-
-  # Prometheus - Metrics Collection (Optional)
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: ultracore-prometheus
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus_data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-    networks:
-      - ultracore-network
-
-  # Grafana - Metrics Visualization (Optional)
-  grafana:
-    image: grafana/grafana:latest
-    container_name: ultracore-grafana
-    ports:
-      - "3000:3000"
-    environment:
-      GF_SECURITY_ADMIN_PASSWORD: admin
-      GF_SECURITY_ADMIN_USER: admin
-    volumes:
-      - grafana_data:/var/lib/grafana
-    networks:
-      - ultracore-network
-    depends_on:
-      - prometheus
-
+# ============================================================================
+# VOLUMES
+# ============================================================================
 volumes:
-  postgres_data:
+  zookeeper-data:
     driver: local
-  kafka_data:
+  zookeeper-logs:
     driver: local
-  redis_data:
+  kafka-data:
     driver: local
-  prometheus_data:
+  postgres-data:
     driver: local
-  grafana_data:
+  redis-data:
     driver: local
 
+# ============================================================================
+# NETWORKS
+# ============================================================================
 networks:
   ultracore-network:
     driver: bridge
