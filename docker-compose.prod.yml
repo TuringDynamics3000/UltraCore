@@ -1,0 +1,117 @@
+﻿# UltraCore Platform Deployment Configuration
+# Production deployment for AWS/Azure
+
+version: '3.8'
+
+services:
+  # ========== ULTRACORE BANKING ==========
+  ultracore-banking:
+    image: ultracore/banking:latest
+    environment:
+      - ENV=production
+      - DATABASE_URL=${DATABASE_URL}
+      - KAFKA_BROKERS=${KAFKA_BROKERS}
+      - REDIS_URL=${REDIS_URL}
+    ports:
+      - "8000:8000"
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ========== ULTRAWEALTH INVESTMENTS ==========
+  ultrawealth:
+    image: ultracore/wealth:latest
+    environment:
+      - ENV=production
+      - DEPLOYMENT_MODE=hybrid
+      - ML_MODELS_PATH=/models
+      - TAX_OPTIMIZATION=enabled
+    ports:
+      - "8001:8001"
+    volumes:
+      - ml-models:/models
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          memory: 8G
+          cpus: '4'
+
+  # ========== KAFKA STREAMING ==========
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+    ports:
+      - "9092:9092"
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+
+  # ========== POSTGRESQL DATABASE ==========
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=ultracore
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  # ========== REDIS CACHE ==========
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+  # ========== ML SERVICES ==========
+  ml-optimizer:
+    image: ultracore/ml-optimizer:latest
+    environment:
+      - MODEL_PATH=/models
+      - GPU_ENABLED=true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  # ========== NGINX LOAD BALANCER ==========
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ssl-certs:/etc/nginx/ssl
+    depends_on:
+      - ultracore-banking
+      - ultrawealth
+
+volumes:
+  kafka-data:
+  postgres-data:
+  redis-data:
+  ml-models:
+  ssl-certs:
+
+networks:
+  default:
+    driver: overlay
+    attachable: true
