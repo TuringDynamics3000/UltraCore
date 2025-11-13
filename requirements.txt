@@ -32,3 +32,11 @@ pytest-asyncio==0.23.4
 # Documentation
 mkdocs==1.5.3
 mkdocs-material==9.5.3
+
+# Database
+sqlalchemy[asyncio]==2.0.23
+asyncpg==0.29.0
+alembic==1.13.0
+
+# Kafka
+kafka-python==2.0.2
