@@ -79,12 +79,13 @@ function Start-UltraWealth {
     # Create .env file if it doesn't exist
     if (-not (Test-Path ".env")) {
         Write-Step "Creating .env file..."
-        @"
+        $envContent = @"
 SECRET_KEY=$(New-Guid)
 ULTRAWEALTH_DATABASE_URL=postgresql://ultracore:ultracore_password@postgres:5432/ultracore
 KAFKA_BOOTSTRAP_SERVERS=kafka:29092
 REDIS_URL=redis://redis:6379
-"@ | Out-File -FilePath ".env" -Encoding utf8
+"@
+        $envContent | Out-File -FilePath ".env" -Encoding utf8
         Write-Success "Created .env file"
     }
     
