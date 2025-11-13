@@ -59,8 +59,8 @@ class SavingsAccountModel(Base):
     approved_by = Column(String(255))
     closed_by = Column(String(255))
     
-    # Metadata
-    metadata = Column(JSONB)
+    # Additional data
+    additional_data = Column(JSONB)
     
     # Relationships
     transactions = relationship("SavingsTransactionModel", back_populates="account", lazy="dynamic")
@@ -99,8 +99,8 @@ class SavingsTransactionModel(Base):
     transaction_date = Column(DateTime, nullable=False, index=True)
     value_date = Column(DateTime)
     
-    # Metadata
-    metadata = Column(JSONB)
+    # Additional data
+    additional_data = Column(JSONB)
     
     # Relationships
     account = relationship("SavingsAccountModel", back_populates="transactions")
@@ -157,7 +157,7 @@ class SavingsProductModel(Base):
     bonus_conditions = Column(JSONB)
     fee_waiver_conditions = Column(JSONB)
     age_restrictions = Column(JSONB)
-    metadata = Column(JSONB)
+    additional_data = Column(JSONB)
 
 
 class TermDepositModel(Base):
@@ -197,8 +197,8 @@ class TermDepositModel(Base):
     tfn = Column(String(20))
     withholding_tax_rate = Column(Numeric(precision=5, scale=2), default=Decimal('47.00'))
     
-    # Metadata
-    metadata = Column(JSONB)
+    # Additional data
+    additional_data = Column(JSONB)
     
     # Indexes
     __table_args__ = (
