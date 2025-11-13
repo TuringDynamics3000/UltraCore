@@ -12,7 +12,7 @@ numpy==1.26.3
 
 # Machine Learning
 scikit-learn==1.4.0
-tensorflow==2.15.0
+tensorflow[and-cuda]==2.15.0  # GPU-accelerated
 
 # HTTP & CORS
 requests==2.31.0

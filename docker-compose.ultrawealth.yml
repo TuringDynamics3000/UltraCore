@@ -14,6 +14,8 @@ services:
       - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
       - REDIS_URL=redis://redis:6379
       - SECRET_KEY=${SECRET_KEY:-change-this-in-production}
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
     depends_on:
       - postgres
       - kafka
@@ -25,6 +27,13 @@ services:
       - ./ultrawealth:/app/ultrawealth
       - ./ultracore:/app/ultracore
       - ./src:/app/src
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
   # PostgreSQL Database
   postgres:

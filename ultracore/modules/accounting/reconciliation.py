@@ -3,7 +3,7 @@ Reconciliation Tools
 Reconcile cash, positions, and transactions
 """
 
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from datetime import datetime
 from ultracore.modules.accounting.general_ledger import general_ledger
 from ultracore.modules.accounting.kafka_events import accounting_kafka, AccountingEventType
