@@ -81,7 +81,7 @@ function Start-UltraWealth {
     
     # Start services
     Write-Step "Starting Docker containers..."
-    docker-compose -f docker-compose.ultrawealth.yml up -d
+    docker-compose -f ../docker-compose.ultrawealth.yml up -d
     
     if ($LASTEXITCODE -eq 0) {
         Write-Success "UltraWealth started successfully!"
@@ -108,7 +108,7 @@ function Start-UltraWealth {
 # Stop UltraWealth
 function Stop-UltraWealth {
     Write-Step "Stopping UltraWealth..."
-    docker-compose -f docker-compose.ultrawealth.yml down
+    docker-compose -f ../docker-compose.ultrawealth.yml down
     
     if ($LASTEXITCODE -eq 0) {
         Write-Success "UltraWealth stopped successfully!"
@@ -129,13 +129,13 @@ function Restart-UltraWealth {
 # View logs
 function Show-Logs {
     Write-Step "Showing UltraWealth logs (Ctrl+C to exit)..."
-    docker-compose -f docker-compose.ultrawealth.yml logs -f ultrawealth-api
+    docker-compose -f ../docker-compose.ultrawealth.yml logs -f ultrawealth-api
 }
 
 # Show status
 function Show-Status {
     Write-Step "UltraWealth Status:"
-    docker-compose -f docker-compose.ultrawealth.yml ps
+    docker-compose -f ../docker-compose.ultrawealth.yml ps
 }
 
 # Initialize database
@@ -147,7 +147,7 @@ function Initialize-Database {
     Start-Sleep -Seconds 5
     
     # Run database initialization
-    docker-compose -f docker-compose.ultrawealth.yml exec ultrawealth-api python -m ultrawealth.database.init_db
+    docker-compose -f ../docker-compose.ultrawealth.yml exec ultrawealth-api python -m ultrawealth.database.init_db
     
     if ($LASTEXITCODE -eq 0) {
         Write-Success "Database initialized successfully!"
