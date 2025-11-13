@@ -24,8 +24,8 @@ from pydantic import BaseModel, ValidationError
 
 from ultracore.modules.accounting.general_ledger.journal import JournalService
 # from ultracore.payments.payment_service import PaymentService  # TODO: Fix import path
-from ultracore.notifications.notification_service import NotificationService
-from ultracore.document_management.storage.document_storage import DocumentStorage
+from src.ultracore.notifications.notification_service import NotificationService
+# from ultracore.document_management.storage.document_storage import DocumentStorage  # TODO: Implement
 
 
 class ContractStatus(str, Enum):

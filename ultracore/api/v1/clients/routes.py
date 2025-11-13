@@ -87,7 +87,7 @@ async def create_client(client: ClientCreate):
     
     client_data = {
         "client_id": client_id,
-        **client.dict(),
+        **client.model_dump(),
         "status": ClientStatus.PENDING,
         "created_at": datetime.now(),
         "kyc_verified": False
@@ -143,7 +143,7 @@ async def update_client(client_id: str, client_update: ClientUpdate):
     client_data = clients_db[client_id]
     
     # Update only provided fields
-    update_data = client_update.dict(exclude_unset=True)
+    update_data = client_update.model_dump(exclude_unset=True)
     for field, value in update_data.items():
         client_data[field] = value
     

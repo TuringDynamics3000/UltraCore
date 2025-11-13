@@ -7,6 +7,7 @@ from typing import Dict, Any, List, Optional
 from datetime import datetime
 from ultracore.modules.accounting.chart_of_accounts import chart_of_accounts, AccountType
 from ultracore.modules.accounting.journal_entry import journal_entry_service
+from datetime import timezone
 
 class GeneralLedger:
     """

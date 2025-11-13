@@ -86,7 +86,7 @@ async def create_cash_account(account: CashAccountCreate):
     
     account_data = {
         "account_id": account_id,
-        **account.dict(),
+        **account.model_dump(),
         "balance": Decimal("0.00"),
         "available_balance": Decimal("0.00"),
         "created_at": datetime.now(),
@@ -162,7 +162,7 @@ async def create_transaction(transaction: TransactionCreate):
     
     transaction_data = {
         "transaction_id": transaction_id,
-        **transaction.dict(),
+        **transaction.model_dump(),
         "balance_after": account["balance"],
         "status": TransactionStatus.COMPLETED,
         "created_at": datetime.now()

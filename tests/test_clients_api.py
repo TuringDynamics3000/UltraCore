@@ -40,9 +40,6 @@ class TestClientsAPI:
         assert data["status"] == "PENDING"
         assert data["kyc_verified"] is False
         assert "client_id" in data
-        
-        # Store client_id for other tests
-        return data["client_id"]
     
     def test_list_clients(self):
         """Test listing all clients"""
@@ -57,7 +54,16 @@ class TestClientsAPI:
     
     def test_get_client(self):
         """Test getting a specific client"""
-        client_id = self.test_create_client()
+        # Create a test client
+        response = client.post("/api/v1/clients/", json={
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "john.doe@example.com",
+            "phone": "+61400000000",
+            "date_of_birth": "1990-01-01",
+            "risk_profile": "BALANCED"
+        })
+        client_id = response.json()["client_id"]
         
         response = client.get(f"/api/v1/clients/{client_id}")
         assert response.status_code == 200
@@ -72,7 +78,16 @@ class TestClientsAPI:
     
     def test_update_client(self):
         """Test updating client information"""
-        client_id = self.test_create_client()
+        # Create a test client
+        response = client.post("/api/v1/clients/", json={
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "john.doe@example.com",
+            "phone": "+61400000000",
+            "date_of_birth": "1990-01-01",
+            "risk_profile": "BALANCED"
+        })
+        client_id = response.json()["client_id"]
         
         response = client.put(f"/api/v1/clients/{client_id}", json={
             "first_name": "Jane",
@@ -87,7 +102,16 @@ class TestClientsAPI:
     
     def test_verify_kyc(self):
         """Test KYC verification"""
-        client_id = self.test_create_client()
+        # Create a test client
+        response = client.post("/api/v1/clients/", json={
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "john.doe@example.com",
+            "phone": "+61400000000",
+            "date_of_birth": "1990-01-01",
+            "risk_profile": "BALANCED"
+        })
+        client_id = response.json()["client_id"]
         
         response = client.post(f"/api/v1/clients/{client_id}/verify-kyc")
         assert response.status_code == 200
@@ -97,7 +121,16 @@ class TestClientsAPI:
     
     def test_suspend_client(self):
         """Test suspending a client"""
-        client_id = self.test_create_client()
+        # Create a test client
+        response = client.post("/api/v1/clients/", json={
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "john.doe@example.com",
+            "phone": "+61400000000",
+            "date_of_birth": "1990-01-01",
+            "risk_profile": "BALANCED"
+        })
+        client_id = response.json()["client_id"]
         
         response = client.post(f"/api/v1/clients/{client_id}/suspend")
         assert response.status_code == 200
@@ -106,7 +139,16 @@ class TestClientsAPI:
     
     def test_activate_client(self):
         """Test activating a client"""
-        client_id = self.test_create_client()
+        # Create a test client
+        response = client.post("/api/v1/clients/", json={
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "john.doe@example.com",
+            "phone": "+61400000000",
+            "date_of_birth": "1990-01-01",
+            "risk_profile": "BALANCED"
+        })
+        client_id = response.json()["client_id"]
         
         # First verify KYC
         client.post(f"/api/v1/clients/{client_id}/verify-kyc")
@@ -122,7 +164,16 @@ class TestClientsAPI:
     
     def test_activate_without_kyc(self):
         """Test that activation fails without KYC"""
-        client_id = self.test_create_client()
+        # Create a test client
+        response = client.post("/api/v1/clients/", json={
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "john.doe@example.com",
+            "phone": "+61400000000",
+            "date_of_birth": "1990-01-01",
+            "risk_profile": "BALANCED"
+        })
+        client_id = response.json()["client_id"]
         
         response = client.post(f"/api/v1/clients/{client_id}/activate")
         assert response.status_code == 400
@@ -130,7 +181,16 @@ class TestClientsAPI:
     
     def test_close_client(self):
         """Test closing a client account"""
-        client_id = self.test_create_client()
+        # Create a test client
+        response = client.post("/api/v1/clients/", json={
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "john.doe@example.com",
+            "phone": "+61400000000",
+            "date_of_birth": "1990-01-01",
+            "risk_profile": "BALANCED"
+        })
+        client_id = response.json()["client_id"]
         
         response = client.delete(f"/api/v1/clients/{client_id}")
         assert response.status_code == 204
@@ -142,7 +202,16 @@ class TestClientsAPI:
     
     def test_get_client_summary(self):
         """Test getting client summary"""
-        client_id = self.test_create_client()
+        # Create a test client
+        response = client.post("/api/v1/clients/", json={
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "john.doe@example.com",
+            "phone": "+61400000000",
+            "date_of_birth": "1990-01-01",
+            "risk_profile": "BALANCED"
+        })
+        client_id = response.json()["client_id"]
         
         response = client.get(f"/api/v1/clients/{client_id}/summary")
         assert response.status_code == 200
@@ -154,7 +223,16 @@ class TestClientsAPI:
     
     def test_filter_by_status(self):
         """Test filtering clients by status"""
-        client_id = self.test_create_client()
+        # Create a test client
+        response = client.post("/api/v1/clients/", json={
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "john.doe@example.com",
+            "phone": "+61400000000",
+            "date_of_birth": "1990-01-01",
+            "risk_profile": "BALANCED"
+        })
+        client_id = response.json()["client_id"]
         client.post(f"/api/v1/clients/{client_id}/verify-kyc")
         
         response = client.get("/api/v1/clients/?status=ACTIVE")
