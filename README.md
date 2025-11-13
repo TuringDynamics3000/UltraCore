@@ -34,7 +34,7 @@ Complete financial data integration with 100+ Australian ETFs, ML predictions, a
 
 ### Installation
 ```powershell
-git clone https://github.com/mjmilne1/UltraCore.git
+git clone https://github.com/TuringDynamics3000/UltraCore.git
 cd UltraCore
 pip install -r requirements.txt
 ```
@@ -112,7 +112,7 @@ Proprietary - UltraWealth Platform
 
 ## 👤 Author
 **Michael Milne**  
-GitHub: [@mjmilne1](https://github.com/mjmilne1)  
+GitHub: [@TuringDynamics3000](https://github.com/TuringDynamics3000)  
 Email: [michael@turingdynamics.ai](mailto:michael@turingdynamics.ai)  
 Organization: Turing Dynamics / UltraWealth
 

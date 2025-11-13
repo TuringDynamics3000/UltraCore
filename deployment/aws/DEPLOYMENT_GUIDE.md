@@ -447,4 +447,4 @@ aws ce get-cost-and-usage \
 For issues or questions:
 - **Documentation:** https://turingdynamics.atlassian.net/wiki/spaces/UW
 - **Email:** support@turingdynamics.ai
-- **GitHub:** https://github.com/mjmilne1/UltraCore/issues
+- **GitHub:** https://github.com/TuringDynamics3000/UltraCore/issues

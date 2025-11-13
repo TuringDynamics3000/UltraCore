@@ -4,7 +4,7 @@
 # Date:   November 13, 2025
 
 # --- Configuration ---
-$RepoUrl = "https://github.com/mjmilne1/UltraCore.git"
+$RepoUrl = "https://github.com/TuringDynamics3000/UltraCore.git"
 $Branch = "investor-management-feature"
 $CloneDir = "C:\UltraCore"
 $DockerComposeFile = "docker-compose.investor.yml"

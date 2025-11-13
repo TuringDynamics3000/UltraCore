@@ -483,4 +483,4 @@ UltraCore now has:
 **Built by**: TuringDynamics / Richelou Pty Ltd
 **Version**: 2.9.0
 **Status**: Production Ready
-**Repository**: https://github.com/mjmilne1/UltraCore
+**Repository**: https://github.com/TuringDynamics3000/UltraCore
