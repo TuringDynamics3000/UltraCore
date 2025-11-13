@@ -357,8 +357,8 @@ async def test_regenerate_backup_codes(totp_service, test_user, session):
 @pytest.mark.asyncio
 async def test_get_mfa_status(totp_service, test_user, session):
     """Test MFA status retrieval"""
-    # Enable MFA
-    await totp_service.enable_mfa(test_user.user_id)
+    # Enable MFA (this creates 10 backup codes)
+    secret, qr_code, backup_codes = await totp_service.enable_mfa(test_user.user_id)
     await session.commit()
     
     # Get status
@@ -367,13 +367,11 @@ async def test_get_mfa_status(totp_service, test_user, session):
     assert status["mfa_enabled"] is True
     assert status["backup_codes_remaining"] == 10
     
-    # Use a backup code
-    codes = await totp_service.create_backup_codes(test_user.user_id)
-    await session.commit()
-    await totp_service.verify_backup_code(test_user.user_id, codes[0])
+    # Use one of the backup codes that were created during enable_mfa
+    await totp_service.verify_backup_code(test_user.user_id, backup_codes[0])
     await session.commit()
     
-    # Check status again
+    # Check status again - should have 9 remaining
     status = await totp_service.get_mfa_status(test_user.user_id)
     assert status["backup_codes_remaining"] == 9
     

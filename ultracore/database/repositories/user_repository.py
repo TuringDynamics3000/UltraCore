@@ -244,6 +244,26 @@ class UserRepository(BaseRepository[User]):
         
         return True
     
+    async def revoke_backup_codes(self, user_id: UUID):
+        """
+        Revoke all backup codes for a user by marking them as used
+        """
+        result = await self.session.execute(
+            select(MFABackupCode).where(
+                and_(
+                    MFABackupCode.user_id == user_id,
+                    MFABackupCode.used_at.is_(None)
+                )
+            )
+        )
+        
+        codes = result.scalars().all()
+        
+        for code in codes:
+            code.used_at = datetime.utcnow()
+        
+        await self.session.flush()
+    
     # ========================================================================
     # Token Management
     # ========================================================================
