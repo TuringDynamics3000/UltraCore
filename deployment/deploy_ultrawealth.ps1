@@ -1,4 +1,3 @@
-#!/usr/bin/env pwsh
 <#
 .SYNOPSIS
     UltraWealth Deployment Script
@@ -23,36 +22,24 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-# Colors
-$Green = "`e[32m"
-$Yellow = "`e[33m"
-$Red = "`e[31m"
-$Blue = "`e[34m"
-$Reset = "`e[0m"
-
-function Write-ColorOutput {
-    param([string]$Color, [string]$Message)
-    Write-Host "${Color}${Message}${Reset}"
-}
-
 function Write-Step {
     param([string]$Message)
-    Write-ColorOutput $Blue "===> $Message"
+    Write-Host "===> $Message" -ForegroundColor Blue
 }
 
 function Write-Success {
     param([string]$Message)
-    Write-ColorOutput $Green "✓ $Message"
+    Write-Host "✓ $Message" -ForegroundColor Green
 }
 
-function Write-Warning {
+function Write-Warning-Message {
     param([string]$Message)
-    Write-ColorOutput $Yellow "⚠ $Message"
+    Write-Host "⚠ $Message" -ForegroundColor Yellow
 }
 
 function Write-Error-Message {
     param([string]$Message)
-    Write-ColorOutput $Red "✗ $Message"
+    Write-Host "✗ $Message" -ForegroundColor Red
 }
 
 # Check Docker
@@ -79,13 +66,16 @@ function Start-UltraWealth {
     # Create .env file if it doesn't exist
     if (-not (Test-Path ".env")) {
         Write-Step "Creating .env file..."
-        $envContent = @"
-SECRET_KEY=$(New-Guid)
-ULTRAWEALTH_DATABASE_URL=postgresql://ultracore:ultracore_password@postgres:5432/ultracore
-KAFKA_BOOTSTRAP_SERVERS=kafka:29092
-REDIS_URL=redis://redis:6379
-"@
-        $envContent | Out-File -FilePath ".env" -Encoding utf8
+        
+        $guid = [guid]::NewGuid().ToString()
+        $envLines = @(
+            "SECRET_KEY=$guid",
+            "ULTRAWEALTH_DATABASE_URL=postgresql://ultracore:ultracore_password@postgres:5432/ultracore",
+            "KAFKA_BOOTSTRAP_SERVERS=kafka:29092",
+            "REDIS_URL=redis://redis:6379"
+        )
+        
+        $envLines | Out-File -FilePath ".env" -Encoding utf8
         Write-Success "Created .env file"
     }
     
@@ -96,7 +86,7 @@ REDIS_URL=redis://redis:6379
     if ($LASTEXITCODE -eq 0) {
         Write-Success "UltraWealth started successfully!"
         Write-Host ""
-        Write-ColorOutput $Green "🚀 UltraWealth is running!"
+        Write-Host "🚀 UltraWealth is running!" -ForegroundColor Green
         Write-Host ""
         Write-Host "Services:"
         Write-Host "  • API:          http://localhost:8891"
@@ -169,10 +159,10 @@ function Initialize-Database {
 
 # Main execution
 Write-Host ""
-Write-ColorOutput $Blue "╔════════════════════════════════════════╗"
-Write-ColorOutput $Blue "║   UltraWealth Deployment Manager      ║"
-Write-ColorOutput $Blue "║   Automated Investment System         ║"
-Write-ColorOutput $Blue "╚════════════════════════════════════════╝"
+Write-Host "╔════════════════════════════════════════╗" -ForegroundColor Blue
+Write-Host "║   UltraWealth Deployment Manager      ║" -ForegroundColor Blue
+Write-Host "║   Automated Investment System         ║" -ForegroundColor Blue
+Write-Host "╚════════════════════════════════════════╝" -ForegroundColor Blue
 Write-Host ""
 
 switch ($Action) {
