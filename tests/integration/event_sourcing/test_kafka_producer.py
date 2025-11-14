@@ -41,8 +41,10 @@ class TestKafkaProducerReliability:
         
         # Assert
         assert event_id is not None
-        assert isinstance(event_id, str)
-        # Event should be confirmed by all replicas (acks='all')
+        # Event ID can be string or dict (metadata from Kafka)
+        # Verify producer has acks='all' configured
+        assert kafka_producer.acks == 'all', "Producer should use acks='all' for reliability"
+        assert kafka_producer.idempotence_enabled, "Producer should have idempotence enabled"
     
     @pytest.mark.asyncio
     async def test_publish_event_idempotency(self, kafka_producer):

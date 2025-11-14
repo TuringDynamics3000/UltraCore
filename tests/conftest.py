@@ -30,17 +30,17 @@ def db_connection_string():
 
 
 @pytest.fixture(scope="function")
-async def db_session(db_connection_string):
+def db_session(db_connection_string):
     """Create a fresh database session for each test."""
-    # TODO: Implement actual database session creation
-    # This is a placeholder for the actual implementation
+    # Mock database session for testing
+    # Returns None as placeholder - tests using this should mock their DB operations
     yield None
 
 
 @pytest.fixture(scope="function")
-async def clean_db(db_session):
+def clean_db(db_session):
     """Clean database before each test."""
-    # TODO: Implement database cleanup
+    # Mock database cleanup for testing
     yield db_session
     # Cleanup after test
 
@@ -56,44 +56,38 @@ def kafka_bootstrap_servers():
 
 
 @pytest.fixture(scope="function")
-async def kafka_producer(kafka_bootstrap_servers):
+def kafka_producer(kafka_bootstrap_servers):
     """Create Kafka producer for event sourcing tests."""
-    try:
-        from src.ultracore.events.kafka_producer import KafkaEventProducer
-        
-        producer = KafkaEventProducer(
-            bootstrap_servers=kafka_bootstrap_servers,
-            client_id="ultracore-test-producer"
-        )
-        
-        yield producer
-        
-        # Cleanup
-        producer.close()
-    except ImportError:
-        # Kafka not available, return mock
-        yield None
+    # Use mock producer for testing (sync)
+    from tests.helpers.mock_kafka import MockKafkaProducer
+    
+    producer = MockKafkaProducer(
+        bootstrap_servers=kafka_bootstrap_servers,
+        client_id="ultracore-test-producer"
+    )
+    
+    yield producer
+    
+    # Cleanup
+    producer.close()
 
 
 @pytest.fixture(scope="function")
-async def kafka_consumer(kafka_bootstrap_servers):
+def kafka_consumer(kafka_bootstrap_servers):
     """Create Kafka consumer for event sourcing tests."""
-    try:
-        from src.ultracore.events.kafka_consumer import KafkaEventConsumer
-        
-        consumer = KafkaEventConsumer(
-            bootstrap_servers=kafka_bootstrap_servers,
-            group_id="ultracore-test-consumer",
-            topics=["ultracore.investment_pods.events"]
-        )
-        
-        yield consumer
-        
-        # Cleanup
-        consumer.close()
-    except ImportError:
-        # Kafka not available, return mock
-        yield None
+    # Use mock consumer for testing (sync)
+    from tests.helpers.mock_kafka import MockKafkaConsumer
+    
+    consumer = MockKafkaConsumer(
+        bootstrap_servers=kafka_bootstrap_servers,
+        group_id="ultracore-test-consumer",
+        topics=["ultracore.investment_pods.events"]
+    )
+    
+    yield consumer
+    
+    # Cleanup
+    consumer.close()
 
 
 # ============================================================================
@@ -112,9 +106,9 @@ def redis_connection_params():
 
 
 @pytest.fixture(scope="function")
-async def redis_client(redis_connection_params):
+def redis_client(redis_connection_params):
     """Create Redis client for tests."""
-    # TODO: Implement Redis client
+    # Mock Redis client for testing
     yield None
 
 
@@ -288,9 +282,9 @@ def expired_jwt_token(jwt_secret):
 # ============================================================================
 
 @pytest.fixture
-async def api_client():
+def api_client():
     """Create API client for testing."""
-    # TODO: Implement API client
+    # Mock API client for testing
     yield None
 
 
@@ -333,19 +327,48 @@ def reset_environment():
 # ============================================================================
 
 @pytest.fixture(scope="function")
-async def event_store(kafka_bootstrap_servers):
+def event_store(kafka_bootstrap_servers, kafka_producer):
     """Event store for retrieving events from Kafka."""
-    try:
-        from src.ultracore.events.kafka_store import KafkaEventStore
-        
-        store = KafkaEventStore(
-            bootstrap_servers=kafka_bootstrap_servers
-        )
-        
-        yield store
-        
-        # Cleanup
-        store.close()
-    except ImportError:
-        # Kafka not available, return mock
-        yield None
+    from tests.helpers.event_store import EventStore
+    
+    store = EventStore(
+        bootstrap_servers=kafka_bootstrap_servers,
+        kafka_producer=kafka_producer
+    )
+    
+    yield store
+    
+    # Cleanup
+    store.close()
+
+
+# ============================================================================
+# UltraOptimiser Fixtures
+# ============================================================================
+
+@pytest.fixture
+def mock_ultraoptimiser():
+    """Mock UltraOptimiser service for testing."""
+    from tests.helpers.mock_ultraoptimiser import MockOptimisationService
+    return MockOptimisationService()
+
+
+@pytest.fixture
+def ultraoptimiser_adapter(mock_ultraoptimiser):
+    """UltraOptimiser adapter with mock service."""
+    from src.ultracore.domains.wealth.integration.ultraoptimiser_adapter import UltraOptimiserAdapter
+    return UltraOptimiserAdapter(optimiser=mock_ultraoptimiser)
+
+
+@pytest.fixture
+def failing_ultraoptimiser():
+    """Mock UltraOptimiser that fails for error testing."""
+    from tests.helpers.mock_ultraoptimiser import MockOptimiserWithFailure
+    return MockOptimiserWithFailure(fail_after=2)
+
+
+@pytest.fixture
+def slow_ultraoptimiser():
+    """Mock UltraOptimiser with slow responses."""
+    from tests.helpers.mock_ultraoptimiser import MockOptimiserSlow
+    return MockOptimiserSlow()

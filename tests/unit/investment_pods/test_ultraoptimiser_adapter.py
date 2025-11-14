@@ -20,7 +20,7 @@ class TestUltraOptimiserAdapterIntegration:
     def test_adapter_delegates_to_ultraoptimiser(self):
         """Test that adapter delegates optimization to UltraOptimiser service."""
         # Arrange
-        from ultracore.domains.wealth.integration.ultraoptimiser_adapter import UltraOptimiserAdapter
+        from src.ultracore.domains.wealth.integration.ultraoptimiser_adapter import UltraOptimiserAdapter
         
         # adapter = UltraOptimiserAdapter(optimiser_service)
         risk_tolerance = "moderate"
