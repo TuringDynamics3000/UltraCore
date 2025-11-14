@@ -40,10 +40,8 @@ jobs:
             python -m venv venv
             . venv/bin/activate
             pip install --upgrade pip
-            # Install bcrypt FIRST to ensure it's available for passlib
-            pip install bcrypt
             pip install -r requirements.txt
-            pip install pytest pytest-cov
+            pip install pytest pytest-cov pytest-asyncio
             pip install -e .
       
       - save_cache:
