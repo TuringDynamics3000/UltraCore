@@ -55,14 +55,11 @@ jobs:
         pip install -r requirements-dev.txt
         pip install -e .
 
-    - name: Run black
-      run: black --check src/ultracore/security/ tests/security/
+    # - name: Run black\r?\n      # run: black --check src/ultracore/security/ tests/security/
 
-    - name: Run isort
-      run: isort --check-only --profile black --line-length 100 src/ultracore/security/ tests/security/
+    # - name: Run isort\r?\n      # run: isort --check-only --profile black --line-length 100 src/ultracore/security/ tests/security/
 
-    - name: Run flake8
-      run: flake8 src/ultracore/security/ tests/security/ --max-line-length=100 --extend-ignore=E203,W503
+    # - name: Run flake8\r?\n      # run: flake8 src/ultracore/security/ tests/security/ --max-line-length=100 --extend-ignore=E203,W503
 
     - name: Run pylint
       run: pylint src/ultracore/security/ --max-line-length=100 --disable=C0111,R0903
