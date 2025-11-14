@@ -57,16 +57,43 @@ def kafka_bootstrap_servers():
 
 @pytest.fixture(scope="function")
 async def kafka_producer(kafka_bootstrap_servers):
-    """Create Kafka producer for tests."""
-    # TODO: Implement Kafka producer
-    yield None
+    """Create Kafka producer for event sourcing tests."""
+    try:
+        from src.ultracore.events.kafka_producer import KafkaEventProducer
+        
+        producer = KafkaEventProducer(
+            bootstrap_servers=kafka_bootstrap_servers,
+            client_id="ultracore-test-producer"
+        )
+        
+        yield producer
+        
+        # Cleanup
+        producer.close()
+    except ImportError:
+        # Kafka not available, return mock
+        yield None
 
 
 @pytest.fixture(scope="function")
 async def kafka_consumer(kafka_bootstrap_servers):
-    """Create Kafka consumer for tests."""
-    # TODO: Implement Kafka consumer
-    yield None
+    """Create Kafka consumer for event sourcing tests."""
+    try:
+        from src.ultracore.events.kafka_consumer import KafkaEventConsumer
+        
+        consumer = KafkaEventConsumer(
+            bootstrap_servers=kafka_bootstrap_servers,
+            group_id="ultracore-test-consumer",
+            topics=["ultracore.investment_pods.events"]
+        )
+        
+        yield consumer
+        
+        # Cleanup
+        consumer.close()
+    except ImportError:
+        # Kafka not available, return mock
+        yield None
 
 
 # ============================================================================
@@ -299,3 +326,26 @@ def reset_environment():
     """Reset environment after each test."""
     yield
     # Cleanup code here if needed
+
+
+# ============================================================================
+# Event Store Fixtures
+# ============================================================================
+
+@pytest.fixture(scope="function")
+async def event_store(kafka_bootstrap_servers):
+    """Event store for retrieving events from Kafka."""
+    try:
+        from src.ultracore.events.kafka_store import KafkaEventStore
+        
+        store = KafkaEventStore(
+            bootstrap_servers=kafka_bootstrap_servers
+        )
+        
+        yield store
+        
+        # Cleanup
+        store.close()
+    except ImportError:
+        # Kafka not available, return mock
+        yield None
