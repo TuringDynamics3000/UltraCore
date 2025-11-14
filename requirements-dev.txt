@@ -1,4 +1,4 @@
-﻿# UltraCore Development Requirements
+# UltraCore Development Requirements
 # Testing, linting, and development tools
 # Last updated: 2025-11-15
 
@@ -49,4 +49,4 @@ locust>=2.32.0
 # Database Testing
 faker>=33.0.0
 factory-boy>=3.3.0
-bcrypt>=4.1.0,<4.2.0
+bcrypt>=4.1.0,<5.0.0
