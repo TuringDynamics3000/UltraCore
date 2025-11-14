@@ -23,6 +23,24 @@ from .financial_products import (
     PaymentAnalytics,
     LoanPortfolio
 )
+from .wealth_risk_products import (
+    InvestmentPerformance,
+    RiskMetrics,
+    FraudSignals
+)
+from .compliance_products import (
+    ComplianceReports,
+    RegulatoryReporting
+)
+from .analytics_products import (
+    CustomerSegments,
+    ProductUsage,
+    ChannelAnalytics
+)
+from .reporting_products import (
+    OperationalMetrics,
+    FinancialReporting
+)
 
 __all__ = [
     # Base classes
@@ -43,16 +61,14 @@ __all__ = [
     "TransactionHistory",
     "PaymentAnalytics",
     "LoanPortfolio",
+    "InvestmentPerformance",
+    "RiskMetrics",
+    "FraudSignals",
+    "ComplianceReports",
+    "RegulatoryReporting",
+    "CustomerSegments",
+    "ProductUsage",
+    "ChannelAnalytics",
+    "OperationalMetrics",
+    "FinancialReporting",
 ]
-
-# TODO: Add remaining 10 data products:
-# - InvestmentPerformance
-# - RiskMetrics
-# - ComplianceReports
-# - FraudSignals
-# - CustomerSegments
-# - ProductUsage
-# - ChannelAnalytics
-# - OperationalMetrics
-# - FinancialReporting
-# - RegulatoryReporting
