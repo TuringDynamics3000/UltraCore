@@ -40,8 +40,10 @@ jobs:
             python -m venv venv
             . venv/bin/activate
             pip install --upgrade pip
+            # Install bcrypt FIRST to ensure it's available for passlib
+            pip install bcrypt
             pip install -r requirements.txt
-            pip install pytest pytest-cov bcrypt
+            pip install pytest pytest-cov
             pip install -e .
       
       - save_cache:
@@ -79,7 +81,7 @@ jobs:
               --cov=src/ultracore/security \
               --cov-report=xml \
               --cov-report=html \
-              --cov-report=term \
+              --cov-report=term-missing \
               --cov-fail-under=90 \
               --cov-config=.coveragerc-security
       
