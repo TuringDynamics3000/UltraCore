@@ -4,135 +4,137 @@ Permission system for UltraCore Digital Bank
 
 Digital-only bank: No tellers, no branches, API-first
 """
-from typing import List, Optional, Set
+
 from enum import Enum
-from fastapi import HTTPException, Depends
+from typing import List, Optional, Set
+
+from fastapi import Depends, HTTPException
 
 from ultracore.security.auth.jwt_auth import User, get_current_user
 
 
 class Permission(str, Enum):
     # Account permissions
-    ACCOUNT_CREATE = 'account:create'
-    ACCOUNT_READ = 'account:read'
-    ACCOUNT_UPDATE = 'account:update'
-    ACCOUNT_DELETE = 'account:delete'
-    ACCOUNT_CLOSE = 'account:close'
-    
+    ACCOUNT_CREATE = "account:create"
+    ACCOUNT_READ = "account:read"
+    ACCOUNT_UPDATE = "account:update"
+    ACCOUNT_DELETE = "account:delete"
+    ACCOUNT_CLOSE = "account:close"
+
     # Payment permissions
-    PAYMENT_INITIATE = 'payment:initiate'
-    PAYMENT_APPROVE = 'payment:approve'
-    PAYMENT_READ = 'payment:read'
-    PAYMENT_CANCEL = 'payment:cancel'
-    PAYMENT_BULK = 'payment:bulk'
-    
+    PAYMENT_INITIATE = "payment:initiate"
+    PAYMENT_APPROVE = "payment:approve"
+    PAYMENT_READ = "payment:read"
+    PAYMENT_CANCEL = "payment:cancel"
+    PAYMENT_BULK = "payment:bulk"
+
     # Loan permissions
-    LOAN_CREATE = 'loan:create'
-    LOAN_APPROVE = 'loan:approve'
-    LOAN_READ = 'loan:read'
-    LOAN_MODIFY = 'loan:modify'
-    
+    LOAN_CREATE = "loan:create"
+    LOAN_APPROVE = "loan:approve"
+    LOAN_READ = "loan:read"
+    LOAN_MODIFY = "loan:modify"
+
     # Card permissions
-    CARD_ISSUE = 'card:issue'
-    CARD_BLOCK = 'card:block'
-    CARD_UNBLOCK = 'card:unblock'
-    CARD_READ = 'card:read'
-    CARD_LIMITS = 'card:limits'
-    
+    CARD_ISSUE = "card:issue"
+    CARD_BLOCK = "card:block"
+    CARD_UNBLOCK = "card:unblock"
+    CARD_READ = "card:read"
+    CARD_LIMITS = "card:limits"
+
     # GL permissions
-    GL_POST = 'gl:post'
-    GL_READ = 'gl:read'
-    GL_RECONCILE = 'gl:reconcile'
-    GL_REPORTS = 'gl:reports'
-    
+    GL_POST = "gl:post"
+    GL_READ = "gl:read"
+    GL_RECONCILE = "gl:reconcile"
+    GL_REPORTS = "gl:reports"
+
     # Customer support permissions
-    SUPPORT_VIEW_CUSTOMER = 'support:view_customer'
-    SUPPORT_ASSIST = 'support:assist'
-    SUPPORT_ESCALATE = 'support:escalate'
-    
+    SUPPORT_VIEW_CUSTOMER = "support:view_customer"
+    SUPPORT_ASSIST = "support:assist"
+    SUPPORT_ESCALATE = "support:escalate"
+
     # Compliance permissions
-    COMPLIANCE_VIEW_ALL = 'compliance:view_all'
-    COMPLIANCE_REPORTS = 'compliance:reports'
-    COMPLIANCE_INVESTIGATIONS = 'compliance:investigations'
-    
+    COMPLIANCE_VIEW_ALL = "compliance:view_all"
+    COMPLIANCE_REPORTS = "compliance:reports"
+    COMPLIANCE_INVESTIGATIONS = "compliance:investigations"
+
     # Data & Analytics permissions
-    ANALYTICS_READ = 'analytics:read'
-    ANALYTICS_CREATE = 'analytics:create'
-    DATA_EXPORT = 'data:export'
-    
+    ANALYTICS_READ = "analytics:read"
+    ANALYTICS_CREATE = "analytics:create"
+    DATA_EXPORT = "data:export"
+
     # Risk permissions
-    RISK_ASSESSMENT = 'risk:assessment'
-    RISK_LIMITS = 'risk:limits'
-    
+    RISK_ASSESSMENT = "risk:assessment"
+    RISK_LIMITS = "risk:limits"
+
     # User management
-    USER_CREATE = 'user:create'
-    USER_READ = 'user:read'
-    USER_UPDATE = 'user:update'
-    USER_DELETE = 'user:delete'
-    
+    USER_CREATE = "user:create"
+    USER_READ = "user:read"
+    USER_UPDATE = "user:update"
+    USER_DELETE = "user:delete"
+
     # API permissions
-    API_FULL_ACCESS = 'api:full_access'
-    API_READ_ONLY = 'api:read_only'
-    
+    API_FULL_ACCESS = "api:full_access"
+    API_READ_ONLY = "api:read_only"
+
     # Admin permissions
-    ADMIN_FULL = 'admin:full'
+    ADMIN_FULL = "admin:full"
 
 
 class Role(str, Enum):
     """
     Digital-Only Bank Roles
-    
+
     No physical branches - all digital
     """
+
     # Executive/Admin
-    SUPER_ADMIN = 'SUPER_ADMIN'
-    ADMIN = 'ADMIN'
-    
+    SUPER_ADMIN = "SUPER_ADMIN"
+    ADMIN = "ADMIN"
+
     # Operations
-    OPERATIONS_MANAGER = 'OPERATIONS_MANAGER'
-    OPERATIONS_ANALYST = 'OPERATIONS_ANALYST'
-    
+    OPERATIONS_MANAGER = "OPERATIONS_MANAGER"
+    OPERATIONS_ANALYST = "OPERATIONS_ANALYST"
+
     # Finance & Accounting
-    ACCOUNTANT = 'ACCOUNTANT'
-    FINANCIAL_CONTROLLER = 'FINANCIAL_CONTROLLER'
-    
+    ACCOUNTANT = "ACCOUNTANT"
+    FINANCIAL_CONTROLLER = "FINANCIAL_CONTROLLER"
+
     # Customer Support (Digital-first)
-    CUSTOMER_SUPPORT_L1 = 'CUSTOMER_SUPPORT_L1'  # Level 1 support
-    CUSTOMER_SUPPORT_L2 = 'CUSTOMER_SUPPORT_L2'  # Level 2 support
-    CUSTOMER_SUPPORT_MANAGER = 'CUSTOMER_SUPPORT_MANAGER'
-    
+    CUSTOMER_SUPPORT_L1 = "CUSTOMER_SUPPORT_L1"  # Level 1 support
+    CUSTOMER_SUPPORT_L2 = "CUSTOMER_SUPPORT_L2"  # Level 2 support
+    CUSTOMER_SUPPORT_MANAGER = "CUSTOMER_SUPPORT_MANAGER"
+
     # Compliance & Risk
-    COMPLIANCE_OFFICER = 'COMPLIANCE_OFFICER'
-    RISK_ANALYST = 'RISK_ANALYST'
-    FRAUD_ANALYST = 'FRAUD_ANALYST'
-    
+    COMPLIANCE_OFFICER = "COMPLIANCE_OFFICER"
+    RISK_ANALYST = "RISK_ANALYST"
+    FRAUD_ANALYST = "FRAUD_ANALYST"
+
     # Lending
-    LOAN_OFFICER = 'LOAN_OFFICER'
-    CREDIT_ANALYST = 'CREDIT_ANALYST'
-    
+    LOAN_OFFICER = "LOAN_OFFICER"
+    CREDIT_ANALYST = "CREDIT_ANALYST"
+
     # Data & Analytics
-    DATA_ANALYST = 'DATA_ANALYST'
-    DATA_SCIENTIST = 'DATA_SCIENTIST'
-    
+    DATA_ANALYST = "DATA_ANALYST"
+    DATA_SCIENTIST = "DATA_SCIENTIST"
+
     # Engineering/Development
-    DEVELOPER = 'DEVELOPER'
-    DEVOPS = 'DEVOPS'
-    
+    DEVELOPER = "DEVELOPER"
+    DEVOPS = "DEVOPS"
+
     # End Users
-    CUSTOMER = 'CUSTOMER'  # End customer using the app
-    
+    CUSTOMER = "CUSTOMER"  # End customer using the app
+
     # External Integrations
-    API_CLIENT = 'API_CLIENT'
-    PARTNER_API = 'PARTNER_API'
+    API_CLIENT = "API_CLIENT"
+    PARTNER_API = "PARTNER_API"
 
 
 class RolePermissions:
     """Role to permissions mapping for digital-only bank"""
-    
+
     ROLE_PERMISSIONS = {
         # Executive/Admin Roles
         Role.SUPER_ADMIN: [Permission.ADMIN_FULL],  # All permissions
-        
         Role.ADMIN: [
             Permission.ACCOUNT_CREATE,
             Permission.ACCOUNT_READ,
@@ -153,7 +155,6 @@ class RolePermissions:
             Permission.COMPLIANCE_VIEW_ALL,
             Permission.ANALYTICS_READ,
         ],
-        
         # Operations Roles
         Role.OPERATIONS_MANAGER: [
             Permission.ACCOUNT_READ,
@@ -168,7 +169,6 @@ class RolePermissions:
             Permission.ANALYTICS_READ,
             Permission.RISK_ASSESSMENT,
         ],
-        
         Role.OPERATIONS_ANALYST: [
             Permission.ACCOUNT_READ,
             Permission.PAYMENT_READ,
@@ -176,7 +176,6 @@ class RolePermissions:
             Permission.GL_READ,
             Permission.ANALYTICS_READ,
         ],
-        
         # Finance & Accounting Roles
         Role.ACCOUNTANT: [
             Permission.GL_POST,
@@ -187,7 +186,6 @@ class RolePermissions:
             Permission.PAYMENT_READ,
             Permission.ANALYTICS_READ,
         ],
-        
         Role.FINANCIAL_CONTROLLER: [
             Permission.GL_POST,
             Permission.GL_READ,
@@ -200,7 +198,6 @@ class RolePermissions:
             Permission.ANALYTICS_CREATE,
             Permission.DATA_EXPORT,
         ],
-        
         # Customer Support Roles (Digital-first)
         Role.CUSTOMER_SUPPORT_L1: [
             Permission.ACCOUNT_READ,
@@ -209,7 +206,6 @@ class RolePermissions:
             Permission.PAYMENT_READ,
             Permission.CARD_READ,
         ],
-        
         Role.CUSTOMER_SUPPORT_L2: [
             Permission.ACCOUNT_READ,
             Permission.ACCOUNT_UPDATE,
@@ -222,7 +218,6 @@ class RolePermissions:
             Permission.CARD_BLOCK,
             Permission.CARD_UNBLOCK,
         ],
-        
         Role.CUSTOMER_SUPPORT_MANAGER: [
             Permission.ACCOUNT_READ,
             Permission.ACCOUNT_UPDATE,
@@ -239,7 +234,6 @@ class RolePermissions:
             Permission.CARD_ISSUE,
             Permission.ANALYTICS_READ,
         ],
-        
         # Compliance & Risk Roles
         Role.COMPLIANCE_OFFICER: [
             Permission.COMPLIANCE_VIEW_ALL,
@@ -253,7 +247,6 @@ class RolePermissions:
             Permission.ANALYTICS_READ,
             Permission.DATA_EXPORT,
         ],
-        
         Role.RISK_ANALYST: [
             Permission.RISK_ASSESSMENT,
             Permission.RISK_LIMITS,
@@ -263,7 +256,6 @@ class RolePermissions:
             Permission.ANALYTICS_READ,
             Permission.ANALYTICS_CREATE,
         ],
-        
         Role.FRAUD_ANALYST: [
             Permission.RISK_ASSESSMENT,
             Permission.ACCOUNT_READ,
@@ -272,7 +264,6 @@ class RolePermissions:
             Permission.ANALYTICS_READ,
             Permission.COMPLIANCE_INVESTIGATIONS,
         ],
-        
         # Lending Roles
         Role.LOAN_OFFICER: [
             Permission.LOAN_CREATE,
@@ -281,7 +272,6 @@ class RolePermissions:
             Permission.ACCOUNT_READ,
             Permission.RISK_ASSESSMENT,
         ],
-        
         Role.CREDIT_ANALYST: [
             Permission.LOAN_READ,
             Permission.LOAN_APPROVE,
@@ -289,7 +279,6 @@ class RolePermissions:
             Permission.RISK_ASSESSMENT,
             Permission.ANALYTICS_READ,
         ],
-        
         # Data & Analytics Roles
         Role.DATA_ANALYST: [
             Permission.ANALYTICS_READ,
@@ -299,7 +288,6 @@ class RolePermissions:
             Permission.PAYMENT_READ,
             Permission.LOAN_READ,
         ],
-        
         Role.DATA_SCIENTIST: [
             Permission.ANALYTICS_READ,
             Permission.ANALYTICS_CREATE,
@@ -309,7 +297,6 @@ class RolePermissions:
             Permission.LOAN_READ,
             Permission.GL_READ,
         ],
-        
         # Engineering/Development Roles
         Role.DEVELOPER: [
             Permission.API_FULL_ACCESS,
@@ -317,12 +304,10 @@ class RolePermissions:
             Permission.PAYMENT_READ,
             Permission.ANALYTICS_READ,
         ],
-        
         Role.DEVOPS: [
             Permission.API_FULL_ACCESS,
             Permission.ANALYTICS_READ,
         ],
-        
         # End User Role (Mobile App Users)
         Role.CUSTOMER: [
             Permission.ACCOUNT_READ,  # View own account
@@ -332,117 +317,118 @@ class RolePermissions:
             Permission.CARD_LIMITS,  # Set card limits
             Permission.LOAN_READ,  # View own loans
         ],
-        
         # External Integration Roles
         Role.API_CLIENT: [
             Permission.API_READ_ONLY,
             Permission.ACCOUNT_READ,
             Permission.PAYMENT_READ,
         ],
-        
         Role.PARTNER_API: [
             Permission.API_FULL_ACCESS,
             Permission.ACCOUNT_CREATE,
             Permission.ACCOUNT_READ,
             Permission.PAYMENT_INITIATE,
             Permission.PAYMENT_READ,
-        ]
+        ],
     }
-    
+
     @classmethod
     def get_permissions(cls, role: Role) -> Set[Permission]:
         """Get all permissions for a role"""
         if role == Role.SUPER_ADMIN:
             # Super admin has all permissions
             return set(Permission)
-        
+
         return set(cls.ROLE_PERMISSIONS.get(role, []))
-    
+
     @classmethod
     def get_user_permissions(cls, user: User) -> Set[Permission]:
         """Get all permissions for a user based on their roles"""
         permissions = set()
-        
+
         for role_str in user.roles:
             try:
                 role = Role(role_str)
                 permissions.update(cls.get_permissions(role))
             except ValueError:
                 continue
-        
+
         return permissions
 
 
 class PermissionChecker:
     """Check if user has required permissions"""
-    
+
     @staticmethod
     def has_permission(user: User, required_permission: Permission) -> bool:
         """Check if user has a specific permission"""
         user_permissions = RolePermissions.get_user_permissions(user)
-        
+
         # Super admin has all permissions
         if Permission.ADMIN_FULL in user_permissions:
             return True
-        
+
         return required_permission in user_permissions
-    
+
     @staticmethod
     def require_permission(required_permission: Permission):
         """
         Decorator to require specific permission
-        
+
         Usage:
         @require_permission(Permission.PAYMENT_APPROVE)
         async def approve_payment(...):
             ...
         """
+
         async def permission_checker(user: User = Depends(get_current_user)):
             if not PermissionChecker.has_permission(user, required_permission):
                 raise HTTPException(
                     status_code=403,
-                    detail=f"Permission denied: {required_permission.value} required"
+                    detail=f"Permission denied: {required_permission.value} required",
                 )
             return user
-        
+
         return permission_checker
-    
+
     @staticmethod
     def require_any_permission(required_permissions: List[Permission]):
         """Require at least one of the specified permissions"""
+
         async def permission_checker(user: User = Depends(get_current_user)):
             user_permissions = RolePermissions.get_user_permissions(user)
-            
+
             # Check if user has any of the required permissions
             if Permission.ADMIN_FULL in user_permissions:
                 return user
-            
+
             if not any(perm in user_permissions for perm in required_permissions):
                 raise HTTPException(
                     status_code=403,
-                    detail=f"Permission denied: One of {[p.value for p in required_permissions]} required"
+                    detail=f"Permission denied: One of {[p.value for p in required_permissions]} required",
                 )
             return user
-        
+
         return permission_checker
-    
+
     @staticmethod
     def require_all_permissions(required_permissions: List[Permission]):
         """Require all specified permissions"""
+
         async def permission_checker(user: User = Depends(get_current_user)):
             user_permissions = RolePermissions.get_user_permissions(user)
-            
+
             # Super admin has all permissions
             if Permission.ADMIN_FULL in user_permissions:
                 return user
-            
+
             if not all(perm in user_permissions for perm in required_permissions):
                 raise HTTPException(
                     status_code=403,
-                    detail=f"Permission denied: All of {[p.value for p in required_permissions]} required"
+                    detail=f"Permission denied: All of {[p.value for p in required_permissions]} required",
                 )
             return user
-        
+
         return permission_checker
 
 
@@ -466,7 +452,7 @@ def require_customer_support(user: User = Depends(get_current_user)) -> User:
     support_roles = [
         Role.CUSTOMER_SUPPORT_L1.value,
         Role.CUSTOMER_SUPPORT_L2.value,
-        Role.CUSTOMER_SUPPORT_MANAGER.value
+        Role.CUSTOMER_SUPPORT_MANAGER.value,
     ]
     if not any(role in support_roles for role in user.roles):
         raise HTTPException(status_code=403, detail="Customer support privileges required")

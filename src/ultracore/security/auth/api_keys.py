@@ -2,13 +2,14 @@
 API Key Management System
 For service-to-service authentication and external integrations
 """
-from typing import Optional, Dict, List, Tuple
-from datetime import datetime, timedelta
-import secrets
 import hashlib
+import secrets
+from datetime import datetime, timedelta
 from enum import Enum
+from typing import Dict, List, Optional, Tuple
 
-from ultracore.infrastructure.kafka_event_store.production_store import get_production_kafka_store
+from ultracore.infrastructure.kafka_event_store.production_store import \
+    get_production_kafka_store
 from ultracore.security.rbac.permissions import Role
 
 

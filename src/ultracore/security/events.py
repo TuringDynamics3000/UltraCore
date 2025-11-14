@@ -5,11 +5,11 @@ Event-sourced security events for authentication, authorization, and encryption
 
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Optional, List, Dict, Any
-from uuid import UUID, uuid4
 from enum import Enum
+from typing import Any, Dict, List, Optional
+from uuid import UUID, uuid4
 
-from ultracore.event_sourcing.base import EventType, EventMetadata, Event
+from ultracore.event_sourcing.base import Event, EventMetadata, EventType
 
 
 # Extend EventType with security events
