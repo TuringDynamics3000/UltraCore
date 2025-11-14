@@ -10,8 +10,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Any, Dict, Optional
 
-from ultracore.infrastructure.kafka_event_store.production_store import \
-    get_production_kafka_store
+from ultracore.infrastructure.kafka_event_store.production_store import get_production_kafka_store
 
 
 class AuditEventType(str, Enum):

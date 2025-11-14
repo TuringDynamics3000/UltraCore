@@ -7,9 +7,11 @@ from enum import Enum
 from typing import Dict, List, Optional, Set
 from uuid import UUID, uuid4
 
-from ultracore.security.events import (create_access_denied_event,
-                                       create_permission_granted_event,
-                                       create_role_assigned_event)
+from ultracore.security.events import (
+    create_access_denied_event,
+    create_permission_granted_event,
+    create_role_assigned_event,
+)
 
 
 class Permission(str, Enum):

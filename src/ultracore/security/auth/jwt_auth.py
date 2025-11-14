@@ -16,8 +16,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 
-from ultracore.infrastructure.kafka_event_store.production_store import \
-    get_production_kafka_store
+from ultracore.infrastructure.kafka_event_store.production_store import get_production_kafka_store
 
 SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
 if not SECRET_KEY:

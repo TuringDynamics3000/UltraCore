@@ -10,8 +10,7 @@ from typing import Dict, List, Optional
 
 from fastapi import HTTPException, Request
 
-from ultracore.security.audit.audit_logger import (AuditEventType, AuditLogger,
-                                                   AuditSeverity)
+from ultracore.security.audit.audit_logger import AuditEventType, AuditLogger, AuditSeverity
 
 
 class RateLimiter:

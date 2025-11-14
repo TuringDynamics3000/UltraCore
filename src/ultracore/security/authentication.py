@@ -13,9 +13,11 @@ from uuid import UUID, uuid4
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 
-from ultracore.security.events import (create_password_changed_event,
-                                       create_token_created_event,
-                                       create_user_authenticated_event)
+from ultracore.security.events import (
+    create_password_changed_event,
+    create_token_created_event,
+    create_user_authenticated_event,
+)
 
 # Security configuration
 SECRET_KEY = os.environ.get("JWT_SECRET_KEY", secrets.token_urlsafe(32))

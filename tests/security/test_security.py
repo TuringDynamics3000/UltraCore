@@ -8,8 +8,7 @@ from unittest.mock import AsyncMock, Mock, patch
 import pytest
 
 from ultracore.security.authentication import AuthenticationService
-from ultracore.security.authorization import (AuthorizationService, Permission,
-                                              Role)
+from ultracore.security.authorization import AuthorizationService, Permission, Role
 from ultracore.security.encryption import EncryptionService
 
 
@@ -569,8 +568,7 @@ class TestFullCoverage:
     @pytest.mark.asyncio
     async def test_authorization_revoke_permission_with_event_store(self, mock_event_store):
         """Test permission revocation publishes events"""
-        from ultracore.security.authorization import (AuthorizationService,
-                                                      Permission)
+        from ultracore.security.authorization import AuthorizationService, Permission
 
         service = AuthorizationService(event_store=mock_event_store, tenant_id="TEST")
 
