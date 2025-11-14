@@ -59,7 +59,7 @@ jobs:
       run: black --check src/ultracore/security/ tests/security/
 
     - name: Run isort
-      run: isort --check-only src/ultracore/security/ tests/security/
+      run: isort --check-only --profile black --line-length 100 src/ultracore/security/ tests/security/
 
     - name: Run flake8
       run: flake8 src/ultracore/security/ tests/security/ --max-line-length=100 --extend-ignore=E203,W503
