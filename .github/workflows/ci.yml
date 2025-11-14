@@ -83,7 +83,7 @@ jobs:
         REDIS_URL: redis://localhost:6379/0
         ENVIRONMENT: test
       run: |
-        pytest tests/security/ -v --cov=src/ultracore/security --cov-report=xml --cov-report=html --cov-report=term --cov-fail-under=90
+        pytest tests/security/ -v --cov=src/ultracore/security --cov-report=xml --cov-report=html --cov-report=term --cov-fail-under=90 --cov-config=/dev/null
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4
