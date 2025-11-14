@@ -23,6 +23,21 @@
 
 ---
 
+## 🔐 Security
+
+UltraCore includes a comprehensive suite of event-sourced security modules for authentication, authorization, and encryption.
+
+**Key Features:**
+- **Event-Sourced Architecture**: Complete audit trail and state reconstruction.
+- **Kafka-First**: Scalable and resilient event backbone.
+- **Multi-Tenant**: Data isolation and security between tenants.
+- **CQRS**: Optimized read and write models.
+- **Idempotency**: Exactly-once event processing.
+
+For more information, see the [security module documentation](docs/security.md).
+
+---
+
 ## 📊 What is UltraCore?
 
 UltraCore is a **multi-tenant, event-sourced banking platform** designed for institutional-grade financial services. Built on Apache Kafka and PostgreSQL, it provides:
@@ -285,6 +300,8 @@ Built with:
 ---
 
 **Made with ❤️ by Turing Dynamics 3000 / Michael Milne**
-#   T e s t   C I  
- #   C I / C D   T e s t  
+#   T e s t   C I 
+ 
+ #   C I / C D   T e s t 
+ 
  
