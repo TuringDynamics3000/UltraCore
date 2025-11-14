@@ -149,6 +149,50 @@ class TestAuthentication:
         assert new_hash != stored_hash
         assert auth_service.verify_password(new_password, new_hash)
         mock_event_store.append_event.assert_called_once()
+    
+    def test_password_validation_no_lowercase(self, auth_service):
+        """Test password validation rejects passwords without lowercase"""
+        with pytest.raises(ValueError, match='must contain lowercase letters'):
+            auth_service.validate_password_strength('PASSWORD123!')
+    
+    def test_password_validation_no_numbers(self, auth_service):
+        """Test password validation rejects passwords without numbers"""
+        with pytest.raises(ValueError, match='must contain numbers'):
+            auth_service.validate_password_strength('PasswordABC!')
+    
+    def test_password_validation_no_special_chars(self, auth_service):
+        """Test password validation rejects passwords without special characters"""
+        with pytest.raises(ValueError, match='must contain special characters'):
+            auth_service.validate_password_strength('Password123')
+    
+    def test_token_tenant_mismatch(self, auth_service):
+        """Test that tokens from different tenants are rejected"""
+        # Create service with different tenant
+        other_service = AuthenticationService(tenant_id="OTHER-TENANT")
+        token = other_service.create_access_token({"user_id": "user123"})
+        
+        # Try to verify with original service
+        with pytest.raises(ValueError, match='Token tenant mismatch'):
+            auth_service.verify_token(token)
+    
+    def test_invalid_jwt_token(self, auth_service):
+        """Test that invalid JWT tokens are rejected"""
+        with pytest.raises(ValueError, match='Invalid token'):
+            auth_service.verify_token('invalid.token.here')
+    
+    def test_create_token_without_event_store(self):
+        """Test token creation without event store"""
+        service = AuthenticationService(event_store=None, tenant_id="TEST")
+        token = service.create_access_token({"user_id": "user123"})
+        assert token is not None
+        assert isinstance(token, str)
+    
+    def test_create_refresh_token_without_event_store(self):
+        """Test refresh token creation without event store"""
+        service = AuthenticationService(event_store=None, tenant_id="TEST")
+        token = service.create_refresh_token("user123")
+        assert token is not None
+        assert isinstance(token, str)
 
 
 class TestAuthorization:
@@ -426,3 +470,254 @@ class TestEncryption:
         # SSN should be decrypted (or remain encrypted if format doesn't match)
         assert 'ssn' in decrypted_data
         assert 'user_id' in decrypted_data
+
+
+class TestAuthorizationEdgeCases:
+    """Test authorization edge cases for full coverage"""
+    
+    @pytest.fixture
+    def mock_event_store(self):
+        """Mock event store for testing"""
+        store = Mock()
+        store.append_event = AsyncMock()
+        return store
+    
+    @pytest.fixture
+    def authz_service(self, mock_event_store):
+        """Create authorization service with mocked event store"""
+        return AuthorizationService(event_store=mock_event_store, tenant_id="TEST-TENANT")
+    
+    @pytest.mark.asyncio
+    async def test_revoke_permission_without_event_store(self):
+        """Test permission revocation without event store"""
+        service = AuthorizationService(event_store=None, tenant_id="TEST")
+        await service.grant_permission("user123", Permission.READ, "admin")
+        await service.revoke_permission("user123", Permission.READ, "admin")
+        assert not service.has_permission("user123", Permission.READ)
+
+
+class TestEncryptionEdgeCases:
+    """Test encryption edge cases for full coverage"""
+    
+    @pytest.fixture
+    def mock_event_store(self):
+        """Mock event store for testing"""
+        store = Mock()
+        store.append_event = AsyncMock()
+        return store
+    
+    def test_encryption_with_no_key(self, mock_event_store):
+        """Test encryption service generates key when none provided"""
+        with patch.dict('os.environ', {}, clear=True):
+            service = EncryptionService(event_store=mock_event_store, tenant_id="TEST")
+            assert service.key is not None
+            assert len(service.key) > 0
+    
+    def test_encryption_with_env_key(self, mock_event_store):
+        """Test encryption service uses environment key from environment"""
+        from cryptography.fernet import Fernet
+        test_key = Fernet.generate_key()
+        with patch.dict('os.environ', {'ENCRYPTION_KEY': test_key.decode()}, clear=True):
+            service = EncryptionService(event_store=mock_event_store, tenant_id="TEST")
+            assert service.key == test_key
+    
+    @pytest.mark.asyncio
+    async def test_encrypt_without_event_store(self):
+        """Test encryption without event store"""
+        service = EncryptionService(event_store=None, tenant_id="TEST")
+        encrypted = await service.encrypt("test data", "user123", "test_type", "test_field")
+        assert encrypted != "test data"
+    
+    def test_decrypt_without_event_store(self):
+        """Test decryption without event store"""
+        service = EncryptionService(event_store=None, tenant_id="TEST")
+        # Use synchronous encrypt for testing decrypt
+        test_data = "test data"
+        encrypted = service.fernet.encrypt(test_data.encode())
+        import base64
+        encrypted_b64 = base64.b64encode(encrypted).decode('utf-8')
+        decrypted = service.decrypt(encrypted_b64)
+        assert decrypted == test_data
+    
+    def test_hash_without_event_store(self):
+        """Test hashing without event store"""
+        service = EncryptionService(event_store=None, tenant_id="TEST")
+        hashed = service.hash_data("test data", "sha256")
+        assert hashed != "test data"
+        assert len(hashed) == 64  # SHA256 produces 64 hex characters
+    
+    def test_generate_key(self):
+        """Test key generation"""
+        service = EncryptionService(event_store=None, tenant_id="TEST")
+        new_key = service.generate_key()
+        assert new_key is not None
+        assert len(new_key) > 0
+    
+    def test_derive_key_without_event_store(self):
+        """Test key derivation without event store"""
+        service = EncryptionService(event_store=None, tenant_id="TEST")
+        derived, salt = service.derive_key_from_password("password123", b"salt123")
+        assert derived is not None
+        assert len(derived) > 0
+        assert salt is not None
+
+
+
+class TestFullCoverage:
+    """Additional tests to achieve 100% coverage"""
+    
+    @pytest.fixture
+    def mock_event_store(self):
+        """Mock event store for testing"""
+        store = Mock()
+        store.append_event = AsyncMock()
+        return store
+    
+    @pytest.mark.asyncio
+    async def test_authentication_with_event_store(self, mock_event_store):
+        """Test authentication publishes events when event store is present"""
+        service = AuthenticationService(event_store=mock_event_store, tenant_id="TEST")
+        stored_hash = service.hash_password("TestPass123!")
+        
+        result = await service.authenticate_user(
+            user_id="user123",
+            password="TestPass123!",
+            stored_hash=stored_hash,
+            authentication_method="password",
+            ip_address="127.0.0.1",
+            user_agent="TestAgent"
+        )
+        
+        assert result is True
+        mock_event_store.append_event.assert_called_once()
+    
+    @pytest.mark.asyncio
+    async def test_change_password_with_event_store(self, mock_event_store):
+        """Test password change publishes events when event store is present"""
+        service = AuthenticationService(event_store=mock_event_store, tenant_id="TEST")
+        old_hash = service.hash_password("OldPass123!")
+        
+        new_hash = await service.change_password(
+            user_id="user123",
+            old_password="OldPass123!",
+            new_password="NewPass123!",
+            stored_hash=old_hash,
+            changed_by="user123"
+        )
+        
+        assert new_hash != old_hash
+        mock_event_store.append_event.assert_called_once()
+    
+    @pytest.mark.asyncio
+    async def test_authorization_revoke_permission_with_event_store(self, mock_event_store):
+        """Test permission revocation publishes events"""
+        from ultracore.security.authorization import AuthorizationService, Permission
+        service = AuthorizationService(event_store=mock_event_store, tenant_id="TEST")
+        
+        # Grant permission first
+        await service.grant_permission("user123", Permission.READ, "admin")
+        
+        # Revoke permission
+        await service.revoke_permission("user123", Permission.READ, "admin")
+        
+        assert not service.has_permission("user123", Permission.READ)
+        # Should have 2 calls: one for grant, one for revoke
+        assert mock_event_store.append_event.call_count == 2
+    
+    @pytest.mark.asyncio
+    async def test_encryption_with_event_store(self, mock_event_store):
+        """Test encryption publishes events when event store is present"""
+        service = EncryptionService(event_store=mock_event_store, tenant_id="TEST")
+        
+        encrypted = await service.encrypt(
+            data="sensitive data",
+            user_id="user123",
+            data_type="ssn",
+            field_name="social_security"
+        )
+        
+        assert encrypted != "sensitive data"
+        mock_event_store.append_event.assert_called_once()
+    
+    def test_encryption_with_provided_key(self, mock_event_store):
+        """Test encryption service with explicitly provided key"""
+        from cryptography.fernet import Fernet
+        test_key = Fernet.generate_key().decode()
+        service = EncryptionService(
+            encryption_key=test_key,
+            event_store=mock_event_store,
+            tenant_id="TEST"
+        )
+        assert service.key == test_key.encode()
+    
+    def test_hash_sha512(self):
+        """Test SHA512 hashing algorithm"""
+        service = EncryptionService(event_store=None, tenant_id="TEST")
+        hashed = service.hash_data("test data", "sha512")
+        assert len(hashed) == 128  # SHA512 produces 128 hex characters
+    
+    def test_hash_sha1(self):
+        """Test SHA1 hashing algorithm"""
+        service = EncryptionService(event_store=None, tenant_id="TEST")
+        hashed = service.hash_data("test data", "sha1")
+        assert len(hashed) == 40  # SHA1 produces 40 hex characters
+    
+    def test_hash_unsupported_algorithm(self):
+        """Test that unsupported hash algorithms raise error"""
+        service = EncryptionService(event_store=None, tenant_id="TEST")
+        with pytest.raises(ValueError, match="Unsupported hash algorithm"):
+            service.hash_data("test data", "md5")
+    
+    def test_decrypt_invalid_data(self):
+        """Test that decryption of invalid data raises error"""
+        service = EncryptionService(event_store=None, tenant_id="TEST")
+        with pytest.raises(ValueError, match="Decryption failed"):
+            service.decrypt("invalid_encrypted_data")
+    
+    @pytest.mark.asyncio
+    async def test_encrypt_field(self):
+        """Test encrypt_field wrapper method"""
+        service = EncryptionService(event_store=None, tenant_id="TEST")
+        encrypted = await service.encrypt_field(
+            field_value="sensitive value",
+            field_name="ssn",
+            user_id="user123",
+            data_type="personal"
+        )
+        assert encrypted != "sensitive value"
+    
+    def test_decrypt_field(self):
+        """Test decrypt_field wrapper method"""
+        service = EncryptionService(event_store=None, tenant_id="TEST")
+        # Encrypt first
+        test_data = "test value"
+        encrypted = service.fernet.encrypt(test_data.encode())
+        import base64
+        encrypted_b64 = base64.b64encode(encrypted).decode('utf-8')
+        
+        # Decrypt using decrypt_field
+        decrypted = service.decrypt_field(encrypted_b64, "test_field")
+        assert decrypted == test_data
+    
+    def test_get_key(self):
+        """Test get_key method"""
+        service = EncryptionService(event_store=None, tenant_id="TEST")
+        key = service.get_key()
+        assert key is not None
+        assert isinstance(key, str)
+        assert len(key) > 0
+    
+    def test_decrypt_sensitive_data_with_invalid_value(self):
+        """Test decrypt_sensitive_data handles decryption failures gracefully"""
+        service = EncryptionService(event_store=None, tenant_id="TEST")
+        data = {
+            'user_id': 'USER-001',
+            'ssn': 'invalid_encrypted_data',  # This will fail to decrypt
+            'name': 'John Doe'
+        }
+        
+        decrypted = service.decrypt_sensitive_data(data)
+        
+        # Should keep invalid encrypted data as-is
+        assert decrypted['ssn'] == 'invalid_encrypted_data'
+        assert decrypted['name'] == 'John Doe'
