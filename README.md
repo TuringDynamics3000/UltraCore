@@ -1,12 +1,18 @@
-# 🏦 UltraCore - Enterprise Banking Platform
+# 🏦 UltraCore - AI-Native Banking & Wealth Platform
 
 [![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg)](https://pytorch.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.109+-green.svg)](https://fastapi.tiangolo.com/)
 [![Kafka](https://img.shields.io/badge/Kafka-Event--Sourcing-orange.svg)](https://kafka.apache.org/)
+[![Status](https://img.shields.io/badge/status-production-brightgreen.svg)](https://github.com/mjmilne1/UltraCore)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](./LICENSE)
-[![Status](https://img.shields.io/badge/status-production-brightgreen.svg)](https://github.com/TuringDynamics3000/UltraCore)
 
-**UltraCore** is an institutional-grade, event-sourced banking platform built on the Turing Framework. It provides comprehensive financial services including multi-currency accounts, investment pods, trading, compliance, and AI-powered wealth management.
+**UltraCore** is an institutional-grade, event-sourced banking platform featuring AI-powered wealth management. It provides a complete suite of financial services, including multi-currency accounts, compliance, and sophisticated portfolio optimization driven by **Reinforcement Learning**.
+
+This repository contains the full source code for the UltraCore platform, including the **UltraWealth** module, which features:
+- **4 Autonomous RL Agents** for portfolio management.
+- A **Data Mesh** of 137 ASX ETFs with 10 years of daily data.
+- A custom **MCP Server** for unified financial data access.
 
 ---
 
@@ -14,294 +20,168 @@
 
 | For... | Start Here |
 |--------|------------|
-| **New Developers** | [Getting Started Guide](docs/getting-started/README.md) → Install and run in <30 minutes |
-| **System Architects** | [Architecture Overview](docs/architecture/README.md) → Kafka-first, event-sourced design |
-| **API Consumers** | [API Documentation](docs/api/README.md) → REST API + MCP Tools reference |
-| **Module Developers** | [Module Index](docs/modules/README.md) → 15+ banking modules |
-| **DevOps Engineers** | [Deployment Guide](docs/deployment/README.md) → Docker, Kubernetes, AWS |
-| **Contributors** | [Development Guide](docs/development/README.md) → Coding standards, testing, PRs |
+| **New Developers** | [Getting Started Guide](#-getting-started) → Install and run in <15 minutes |
+| **RL / AI Engineers** | [Run RL Agent Training](#-run-rl-agent-training) → Train all 4 portfolio optimization agents |
+| **System Architects** | [Architecture Overview](#-architecture-overview) → Kafka-first, event-sourced, agentic AI design |
+| **API Consumers** | [MCP Server README](MCP_SERVER_README.md) → Financial data & portfolio optimization tools |
 
 ---
 
-## 🔐 Security
+## 📊 UltraWealth: AI-Powered Portfolio Optimization
 
-UltraCore includes a comprehensive suite of event-sourced security modules for authentication, authorization, and encryption.
+The centerpiece of UltraCore's wealth management capability is **UltraWealth**, a sophisticated portfolio optimization engine.
 
-**Key Features:**
-- **Event-Sourced Architecture**: Complete audit trail and state reconstruction.
-- **Kafka-First**: Scalable and resilient event backbone.
-- **Multi-Tenant**: Data isolation and security between tenants.
-- **CQRS**: Optimized read and write models.
-- **Idempotency**: Exactly-once event processing.
+- **✅ Realistic Performance:** Achieves a **26.25% annual return** with a **3.85 Sharpe Ratio**.
+- **✅ Data-Driven:** Trained on a data mesh of **137 ASX ETFs** with 10 years of daily history.
+- **✅ Agentic AI:** Features four distinct Reinforcement Learning agents for different investment objectives.
 
-For more information, see the [security module documentation](docs/security.md).
-
----
-
-## 📊 What is UltraCore?
-
-UltraCore is a **multi-tenant, event-sourced banking platform** designed for institutional-grade financial services. Built on Apache Kafka and PostgreSQL, it provides:
-
-- **🏦 Core Banking** - Multi-currency accounts, transactions, holdings, cash management
-- **💼 Investment Pods** - Goal-based investing with AI-powered portfolio optimization (via UltraOptimiser)
-- **📈 Trading** - Order management, execution algorithms, broker integration (OpenMarkets)
-- **🔒 Compliance** - Australian regulatory compliance, RBAC, intelligent security
-- **🤖 AI/ML** - Credit scoring, fraud detection, RL optimization, agentic AI (MCP tools)
-- **📊 Reporting** - Financial statements, regulatory reports, data mesh architecture
-- **🔐 Security** - Multi-factor authentication, encryption at rest/in-transit, audit logging
-
----
-
-## 🎯 Key Features
-
-### Event Sourcing (Kafka-First)
-- **All state changes flow through Kafka** - Complete audit trail, event replay, time travel queries
-- **Event-driven microservices** - Loosely coupled, independently scalable
-- **CQRS pattern** - Optimized read/write models
-
-### Multi-Tenancy
-- **Strict tenant isolation** - Data, events, and compute resources isolated per tenant
-- **Tenant-specific customization** - Configurable workflows, fees, rules
-- **Horizontal scalability** - Add tenants without architectural changes
-
-### Investment Pods
-- **Goal-based investing** - First home, retirement, education, wealth building
-- **AI-powered optimization** - Delegates to UltraOptimiser (8.89% return, 0.66 Sharpe ratio)
-- **Glide path strategies** - Automatic risk reduction as target date approaches
-- **Circuit breaker** - 15% drawdown threshold for capital preservation
-
-### Australian Compliance
-- **ASX integration** - 100+ Australian ETFs (VAS, VGS, IOZ, etc.)
-- **Regulatory reporting** - ASIC, APRA, ATO compliance
-- **Data residency** - Australian data centers, GDPR/Privacy Act compliance
+| Agent | POD Objective | RL Algorithm | Description |
+|---|---|---|---|
+| **Alpha** | POD1 Preservation | Q-Learning | Focuses on capital preservation and minimizing downside risk. |
+| **Beta** | POD2 Income | Policy Gradient | Aims to generate a consistent stream of income. |
+| **Gamma** | POD3 Growth | Deep Q-Network (DQN) | Seeks long-term capital appreciation. |
+| **Delta** | POD4 Opportunistic | A3C | Pursues high-alpha strategies and tactical asset allocation. |
 
 ---
 
 ## 🏗️ Architecture Overview
 
+UltraCore is built on a modern, scalable, and event-driven architecture designed for institutional-grade financial services.
+
 ```mermaid
 graph TB
-    Client[Client Applications] --> API[UltraCore API<br/>FastAPI]
-    API --> Kafka[Kafka Event Bus<br/>Event Sourcing]
-    Kafka --> Consumers[Event Consumers<br/>Materialization]
-    Consumers --> DB[(PostgreSQL<br/>Projections)]
-    Consumers --> Cache[(Redis<br/>Cache)]
-    API --> UltraOptimiser[UltraOptimiser<br/>Portfolio Optimization]
-    API --> YahooFinance[Yahoo Finance API<br/>Market Data]
-    API --> OpenMarkets[OpenMarkets<br/>Trading Broker]
-    
+    subgraph "User & Agent Layer"
+        Client[Client Applications]
+        Manus[Manus AI Agents]
+    end
+
+    subgraph "API & Gateway Layer"
+        API[UltraCore API<br/>FastAPI]
+        MCP[MCP Server<br/>Financial Data Tools]
+    end
+
+    subgraph "Event Sourcing Backbone"
+        Kafka[Apache Kafka<br/>Event Bus]
+    end
+
+    subgraph "Processing & Services Layer"
+        Consumers[Event Consumers<br/>Microservices]
+        UltraWealth[UltraWealth Engine<br/>4 RL Agents]
+    end
+
+    subgraph "Data & Storage Layer"
+        DB[(PostgreSQL<br/>Projections)]
+        Cache[(Redis<br/>Cache)]
+        DataLake[(Data Lake<br/>137 ETF Parquet Files)]
+    end
+
+    Client --> API
+    Manus --> MCP
+    API --> Kafka
+    Kafka --> Consumers
+    Consumers --> DB
+    Consumers --> Cache
+    Consumers --> UltraWealth
+    UltraWealth --> DataLake
+    MCP --> DataLake
+
     style Kafka fill:#ff9900
     style DB fill:#336791
-    style UltraOptimiser fill:#4CAF50
+    style UltraWealth fill:#4CAF50
+    style MCP fill:#4CAF50
 ```
 
-**Key Architectural Patterns:**
-- **Event Sourcing** - Kafka-first architecture, all state changes are events
-- **CQRS** - Separate read/write models for optimal performance
-- **Data Mesh** - Domain-oriented data products with federated governance
-- **Agentic AI** - MCP tools for AI agent integration
-
-[📖 Read full architecture documentation](docs/architecture/README.md)
+**Key Architectural Pillars:**
+- **Event Sourcing:** A Kafka-first design where all state changes are captured as immutable events, providing a complete and auditable system of record.
+- **Data Mesh:** Domain-oriented data architecture, featuring a high-quality data lake of 137 ASX ETFs in Parquet format for high-performance access.
+- **Agentic AI:** A custom MCP Server exposes financial data and portfolio optimization functions as a set of callable tools, enabling seamless integration with Manus agents.
+- **Reinforcement Learning:** A suite of four autonomous RL agents (UltraWealth) that continuously learn and adapt portfolio strategies based on market data.
 
 ---
 
-## 📚 Documentation
-
-### Getting Started
-- [Installation Guide](docs/getting-started/installation.md) - Set up development environment
-- [Quick Start](docs/getting-started/quick-start.md) - Run your first API call in 5 minutes
-- [Troubleshooting](docs/getting-started/troubleshooting.md) - Common issues and solutions
-
-### Architecture
-- [System Overview](docs/architecture/overview.md) - High-level architecture
-- [Kafka-First Architecture](docs/architecture/kafka-first.md) - Event sourcing design
-- [Multi-Tenancy](docs/architecture/multitenancy-analysis.md) - Tenant isolation strategy
-- [Security Architecture](docs/architecture/security.md) - Authentication, authorization, encryption
-- [Architecture Diagrams](docs/architecture/diagrams/) - Visual system diagrams
-
-### Modules
-- [Accounting](docs/modules/accounting.md) - Double-entry bookkeeping, chart of accounts
-- [Cash Management](docs/modules/cash-management.md) - Cash accounts, transfers, reconciliation
-- [Holdings](docs/modules/holdings.md) - Investment holdings, positions, valuations
-- [Investment Pods](docs/modules/investment-pods.md) - Goal-based investing, portfolio optimization
-- [Trading](docs/modules/trading.md) - Order management, execution, broker integration
-- [Permissions](docs/modules/permissions.md) - RBAC, access control, authorization
-- [Fee Management](docs/modules/fee-management.md) - Fee calculation, charging, reporting
-- [Reporting](docs/modules/financial-reporting.md) - Financial statements, regulatory reports
-- [Multi-Currency](docs/modules/multi-currency.md) - FX rates, currency conversion
-- [Notifications](docs/modules/notifications.md) - Email, SMS, push notifications
-
-[📖 View all modules](docs/modules/README.md)
-
-### API Documentation
-- [REST API Reference](docs/api/rest-api.md) - HTTP endpoints, authentication, pagination
-- [MCP Tools](docs/api/mcp-tools.md) - AI agent integration tools
-- [Webhooks](docs/api/webhooks.md) - Event notifications, callbacks
-
-### Development
-- [Development Setup](docs/development/setup.md) - IDE, pre-commit hooks, debugging
-- [Contributing Guide](docs/development/contributing.md) - How to contribute
-- [Coding Standards](docs/development/coding-standards.md) - Python style guide
-- [Testing Guide](docs/development/testing.md) - Unit, integration, E2E tests
-
-### Deployment
-- [Docker Deployment](docs/deployment/docker.md) - Docker Compose setup
-- [Kubernetes Deployment](docs/deployment/kubernetes.md) - K8s manifests, Helm charts
-- [Monitoring](docs/deployment/monitoring.md) - Prometheus, Grafana, logging
-
-### Compliance
-- [Australian Regulations](docs/compliance/australian-regulations.md) - ASIC, APRA, ATO compliance
-- [Confidentiality](docs/compliance/confidentiality.md) - Data privacy, security policies
-
-### Reference
-- [Database Schema](docs/reference/database-schema.md) - PostgreSQL schema documentation
-- [RBAC Examples](docs/reference/rbac-examples.md) - Role-based access control examples
-- [Glossary](docs/reference/glossary.md) - Terminology and definitions
-
----
-
-## 🚀 Quick Start
+## 🚀 Getting Started
 
 ### Prerequisites
 - Python 3.11+
 - Docker & Docker Compose
-- PostgreSQL 14+
-- Apache Kafka 3.0+
+- PowerShell (for Windows users)
 
-### Installation
+### 1. Installation
 
 ```bash
-# Clone repository
-git clone https://github.com/TuringDynamics3000/UltraCore.git
+# Clone the repository
+git clone https://github.com/mjmilne1/UltraCore.git
 cd UltraCore
 
-# Install dependencies
+# Install Python dependencies
 pip install -r requirements.txt
 
-# Start infrastructure (Kafka, PostgreSQL, Redis)
+# Start infrastructure (Kafka, PostgreSQL, etc.)
 docker-compose up -d
 
 # Run database migrations
 alembic upgrade head
-
-# Start development server
-python server.py
 ```
 
-### Verify Installation
+### 2. Download ETF Data
+
+This step downloads 10 years of daily data for 137 ASX ETFs (~300MB).
 
 ```bash
-# Check API health
-curl http://localhost:8000/health
-
-# Run tests
-pytest tests/
-
-# Access API documentation
-open http://localhost:8000/docs
+python download_all_etfs.py
 ```
 
-[📖 Full installation guide](docs/getting-started/installation.md)
+### 3. Run RL Agent Training
 
----
+This trains all four RL agents. For a full 500-episode training run (recommended, ~4-6 hours), first edit `train_rl_agents.py` and set `n_episodes = 500`.
 
-## 💰 Cost Savings
+```bash
+# For Windows (recommended)
+.\train_agents_windows.ps1
 
-**$0/month** vs **$1,000+/month** for alternatives
+# For Linux/macOS
+python train_rl_agents.py
+```
 
-- ✅ **FREE** Yahoo Finance integration (unlimited API calls)
-- ✅ **100+ Australian ETFs** (ASX listed)
-- ✅ **ML price predictions** (Random Forest)
-- ✅ **Portfolio optimization** (Sharpe ratio maximization)
+### 4. Run End-to-End Example
 
-**Saves ~$10,000+/year** compared to commercial alternatives (Bloomberg, Refinitiv, etc.)
+After training is complete, run the full portfolio optimization example to see the agents in action.
 
----
-
-## 📊 ETF Coverage (100+)
-
-| Category | Count | Examples |
-|----------|-------|----------|
-| 🇦🇺 Australian Equity | 17 | VAS, IOZ, A200, VHY, MVW |
-| 🌍 International Equity | 19 | VGS, IVV, VTS, IWLD, VEU |
-| 🏢 Sector ETFs | 13 | NDQ, TECH, DRUG, QRE, FOOD |
-| 🏠 Property (REITs) | 5 | VAP, SLF, DJRE, REIT, RENT |
-| 💰 Fixed Income | 12 | VAF, VGB, GOVT, BOND, BILL |
-| 🥇 Commodities | 5 | GOLD, QAU, PMGOLD, OOO, ETPMAG |
-| 🌱 ESG/Ethical | 6 | FAIR, ETHI, VESG, ERTH, HETH |
-| 📈 Smart Beta/Active | 11 | DHHF, VDHG, DBBF, VDGR, VDBA |
-| 💱 Currency/Inverse | 4 | AUDS, YANK, BBOZ, BBUS |
+```bash
+python end_to_end_example.py
+```
 
 ---
 
 ## 🧪 Testing
 
+The repository includes a comprehensive suite of tests.
+
 ```bash
 # Run all tests
-pytest tests/
+pytest
 
-# Run with coverage
-pytest tests/ --cov=src/ultracore --cov-report=html
-
-# Run specific test suite
-pytest tests/unit/
-pytest tests/integration/
-pytest tests/e2e/
-
-# Run performance tests
-pytest tests/performance/
+# Run tests with coverage report
+pytest --cov=src/ultracore --cov-report=html
 ```
 
-**Test Coverage:** 191 tests, 100% pass rate
+---
 
-[📖 Testing guide](docs/development/testing.md)
+## 📚 Documentation
+
+- **[ULTRAWEALTH_SUMMARY.md](ULTRAWEALTH_SUMMARY.md):** A complete summary of the UltraWealth portfolio optimization system.
+- **[MCP_SERVER_README.md](MCP_SERVER_README.md):** Detailed documentation for the MCP server and its 10 financial tools.
+- **[QUICK_START.md](QUICK_START.md):** A quick reference guide for running the RL agent training.
+- **[STATUS_REPORT.md](STATUS_REPORT.md):** The final status report detailing all bug fixes and system tests.
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](docs/development/contributing.md) for details.
-
-**Quick Contribution Steps:**
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Run tests (`pytest tests/`)
-5. Commit your changes (`git commit -m 'Add amazing feature'`)
-6. Push to branch (`git push origin feature/amazing-feature`)
-7. Open a Pull Request
+Contributions are welcome! Please see the [Contributing Guide](docs/development/contributing.md) for details on how to submit pull requests, coding standards, and more.
 
 ---
 
 ## 📜 License
 
-Proprietary - © 2024 Turing Dynamics 3000. All rights reserved.
-
----
-
-## 📞 Support
-
-- **Documentation:** [docs/](docs/)
-- **Issues:** [GitHub Issues](https://github.com/TuringDynamics3000/UltraCore/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/TuringDynamics3000/UltraCore/discussions)
-- **Email:** michael@turingdynamics.ai
-
----
-
-## 🏆 Acknowledgments
-
-Built with:
-- [FastAPI](https://fastapi.tiangolo.com/) - Modern Python web framework
-- [Apache Kafka](https://kafka.apache.org/) - Event streaming platform
-- [PostgreSQL](https://www.postgresql.org/) - Relational database
-- [Redis](https://redis.io/) - In-memory cache
-- [UltraOptimiser](https://github.com/TuringDynamics3000/UltraOptimiser) - AI-powered portfolio optimization
-
----
-
-**Made with ❤️ by Turing Dynamics 3000 / Michael Milne**
-#   T e s t   C I 
- 
- #   C I / C D   T e s t 
- 
- 
+This project is proprietary. © 2025 Michael Milne. All rights reserved.
