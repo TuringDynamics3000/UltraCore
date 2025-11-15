@@ -240,7 +240,7 @@ export default function Home() {
               <span className="text-sm font-medium text-green-600">Operational</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm">MCP Server (Anya AI)</span>
+              <span className="text-sm">MCP Server (Larry AI)</span>
               <span className="text-sm font-medium text-green-600">Operational</span>
             </div>
           </div>

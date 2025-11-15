@@ -955,3 +955,85 @@ export const securityRelationships = mysqlTable("security_relationships", {
 
 export type SecurityRelationship = typeof securityRelationships.$inferSelect;
 export type InsertSecurityRelationship = typeof securityRelationships.$inferInsert;
+
+
+// ============================================================================
+// ANYA OPERATIONS AI
+// ============================================================================
+
+export const conversations = mysqlTable("conversations", {
+  id: varchar("id", { length: 64 }).primaryKey(),
+  userId: int("user_id").notNull().references(() => users.id),
+  title: varchar("title", { length: 500 }),
+  summary: text("summary"),
+  status: mysqlEnum("status", ["active", "archived"]).default("active").notNull(),
+  messageCount: int("message_count").default(0).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  lastMessageAt: timestamp("last_message_at"),
+});
+
+export type Conversation = typeof conversations.$inferSelect;
+export type InsertConversation = typeof conversations.$inferInsert;
+
+export const messages = mysqlTable("messages", {
+  id: varchar("id", { length: 64 }).primaryKey(),
+  conversationId: varchar("conversation_id", { length: 64 }).notNull().references(() => conversations.id),
+  role: mysqlEnum("role", ["user", "assistant", "system", "tool"]).notNull(),
+  content: text("content"),
+  toolCalls: json("tool_calls"), // Array of {id, name, arguments}
+  toolCallId: varchar("tool_call_id", { length: 64 }), // For tool response messages
+  reasoning: text("reasoning"), // Larry's internal reasoning trace
+  tokens: int("tokens"), // Token count for this message
+  model: varchar("model", { length: 100 }), // OpenAI model used
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export type Message = typeof messages.$inferSelect;
+export type InsertMessage = typeof messages.$inferInsert;
+
+export const toolExecutions = mysqlTable("tool_executions", {
+  id: varchar("id", { length: 64 }).primaryKey(),
+  messageId: varchar("message_id", { length: 64 }).notNull().references(() => messages.id),
+  toolName: varchar("tool_name", { length: 200 }).notNull(),
+  input: json("input").notNull(),
+  output: json("output"),
+  error: text("error"),
+  duration: int("duration"), // Milliseconds
+  status: mysqlEnum("status", ["pending", "success", "error"]).default("pending").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  completedAt: timestamp("completed_at"),
+});
+
+export type ToolExecution = typeof toolExecutions.$inferSelect;
+export type InsertToolExecution = typeof toolExecutions.$inferInsert;
+
+export const insights = mysqlTable("insights", {
+  id: varchar("id", { length: 64 }).primaryKey(),
+  type: mysqlEnum("type", ["anomaly", "opportunity", "risk", "recommendation"]).notNull(),
+  severity: mysqlEnum("severity", ["low", "medium", "high", "critical"]).notNull(),
+  title: varchar("title", { length: 500 }).notNull(),
+  description: text("description").notNull(),
+  data: json("data"), // Related data (security, portfolio, agent, etc.)
+  source: varchar("source", { length: 200 }), // kafka_event, scheduled_analysis, etc.
+  acknowledged: boolean("acknowledged").default(false).notNull(),
+  acknowledgedBy: int("acknowledged_by").references(() => users.id),
+  acknowledgedAt: timestamp("acknowledged_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export type Insight = typeof insights.$inferSelect;
+export type InsertInsight = typeof insights.$inferInsert;
+
+export const conversationEmbeddings = mysqlTable("conversation_embeddings", {
+  id: varchar("id", { length: 64 }).primaryKey(),
+  conversationId: varchar("conversation_id", { length: 64 }).notNull().references(() => conversations.id),
+  messageId: varchar("message_id", { length: 64 }).references(() => messages.id),
+  embedding: json("embedding").notNull(), // Vector embedding for RAG
+  content: text("content").notNull(), // Text that was embedded
+  metadata: json("metadata"), // Additional context
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export type ConversationEmbedding = typeof conversationEmbeddings.$inferSelect;
+export type InsertConversationEmbedding = typeof conversationEmbeddings.$inferInsert;

@@ -18,6 +18,7 @@ import MCP from "./pages/MCP";
 import Securities from "./pages/Securities";
 import SecurityDetail from "./pages/SecurityDetail";
 import KafkaEvents from "./pages/KafkaEvents";
+import Larry from "./pages/Larry";
 
 function Router() {
   return (
@@ -87,6 +88,10 @@ function Router() {
         <DashboardLayout>
           <KafkaEvents />
         </DashboardLayout>
+      </Route>
+      <Route path="/larry">
+        {/* Larry has its own layout, no DashboardLayout wrapper */}
+        <Larry />
       </Route>
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}

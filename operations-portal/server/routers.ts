@@ -8,6 +8,8 @@ import { fiscalAI } from "./fiscal-ai";
 import { callDataApi } from "./_core/dataApi";
 import { persistYahooPriceData, enrichSecurityData } from "./enrichment";
 import { getKafkaConsumer } from "./kafka-consumer";
+import { createConversation, getUserConversations, getMessages, getConversationStats } from "./larry-conversation";
+import { chatWithLarry } from "./larry-openai";
 
 // ============================================================================
 // PORTFOLIO ROUTER
@@ -699,6 +701,53 @@ export const appRouter = router({
   kafka: kafkaRouter,
   dataMesh: dataMeshRouter,
   mcp: mcpRouter,
+
+  // Larry Operations AI
+  larry: router({
+    // Create new conversation
+    createConversation: protectedProcedure
+      .input(z.object({ title: z.string().optional() }))
+      .mutation(async ({ ctx, input }) => {
+        const conversationId = await createConversation(ctx.user.id, input.title);
+        return { conversationId };
+      }),
+
+    // Get user's conversations
+    getConversations: protectedProcedure.query(async ({ ctx }) => {
+      return await getUserConversations(ctx.user.id);
+    }),
+
+    // Get messages for a conversation
+    getMessages: protectedProcedure
+      .input(z.object({ conversationId: z.string(), limit: z.number().optional() }))
+      .query(async ({ input }) => {
+        return await getMessages(input.conversationId, input.limit);
+      }),
+
+    // Send message to Larry
+    sendMessage: protectedProcedure
+      .input(
+        z.object({
+          conversationId: z.string(),
+          message: z.string(),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        const response = await chatWithLarry({
+          conversationId: input.conversationId,
+          userMessage: input.message,
+          userId: ctx.user.id,
+        });
+        return response;
+      }),
+
+    // Get conversation stats
+    getStats: protectedProcedure
+      .input(z.object({ conversationId: z.string() }))
+      .query(async ({ input }) => {
+        return await getConversationStats(input.conversationId);
+      }),
+  }),
   audit: auditRouter,
   securities: securitiesRouter,
 });

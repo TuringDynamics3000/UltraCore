@@ -278,3 +278,53 @@
 - [x] Check responsive design on mobile/tablet
 - [ ] Final checkpoint and commit to GitHub
 - [x] Create deployment guide
+
+
+## Current Sprint: Anya Operations AI Agent
+- [ ] Design event-sourced conversation architecture
+- [ ] Create conversations and messages tables for persistence
+- [ ] Implement OpenAI Realtime API integration with streaming
+- [ ] Add structured outputs with latest OpenAI schemas
+- [ ] Build MCP tool registry (Data Mesh queries, Securities lookup, RL metrics)
+- [ ] Create function calling handlers for all MCP tools
+- [ ] Implement conversation context management with embeddings
+- [ ] Build chat UI component with streaming responses
+- [ ] Add voice interface (speech-to-text, text-to-speech)
+- [ ] Create proactive insights engine monitoring Kafka events
+- [ ] Implement RAG over securities/portfolio data with vector search
+- [ ] Add explainable AI with reasoning trace visualization
+- [ ] Build multi-turn memory with conversation summarization
+- [ ] Add agentic workflows with tool chaining
+- [ ] Create Anya sidebar widget accessible from all pages
+- [ ] Implement conversation history and search
+- [ ] Add conversation export and sharing
+- [ ] Test end-to-end with complex queries
+
+
+## Current Sprint: Larry Chat UI
+- [x] Create Larry chat page component with split layout
+- [x] Build conversation history sidebar
+- [x] Add new conversation button
+- [x] Implement message list with streaming support
+- [x] Add markdown rendering with Streamdown
+- [x] Create tool execution indicators
+- [x] Add message input with auto-resize textarea
+- [x] Add route for /larry page
+- [x] Add Larry AI link to sidebar navigation
+- [ ] Create floating chat button component
+- [ ] Test streaming, history, and tool indicators
+
+
+## Current: Fix Naming Consistency
+- [x] Update System Status "MCP Server (Anya AI)" to "MCP Server (Larry AI)"
+- [x] Search for any other Anya references in the codebase
+- [x] Verify all references are consistent
+
+
+## Current: Complete Larry AI System
+- [ ] Commit Larry AI to GitHub (TuringDynamics3000/UltraCore)
+- [ ] Test live conversations with sample queries
+- [ ] Verify OpenAI integration and tool execution
+- [ ] Create floating chat button component
+- [ ] Integrate floating button into all pages
+- [ ] Test complete Larry system end-to-end

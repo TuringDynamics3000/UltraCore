@@ -31,7 +31,8 @@ import {
   Activity,
   Database,
   Wrench,
-  Building2
+  Building2,
+  Bot
 } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
@@ -48,6 +49,7 @@ const menuItems = [
   { icon: Activity, label: "Kafka Events", path: "/kafka" },
   { icon: Database, label: "Data Mesh", path: "/data-mesh" },
   { icon: Wrench, label: "MCP Tools", path: "/mcp" },
+  { icon: Bot, label: "Larry AI", path: "/larry" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
