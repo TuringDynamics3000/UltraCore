@@ -10,7 +10,7 @@ from uuid import UUID
 import pandas as pd
 import numpy as np
 
-from ultracore.data_mesh.products.base import DataProduct
+# Simplified to standalone class - no DataProduct inheritance needed
 from ultracore.market_data.etf.aggregates.etf_aggregate import ETFAggregate, ETFPriceData
 
 
@@ -32,7 +32,7 @@ class ETFDataQuality:
         )
 
 
-class ETFDataProduct(DataProduct):
+class ETFDataProduct:
     """
     ETF Historical Data Product
     
@@ -44,14 +44,11 @@ class ETFDataProduct(DataProduct):
     """
     
     def __init__(self):
-        super().__init__(
-            product_id="etf-historical-data",
-            name="ASX ETF Historical Market Data",
-            description="Complete historical OHLCV data for all Australian ETFs",
-            owner="Market Data Team",
-            domain="Market Data"
-        )
-        
+        self.product_id = "etf-historical-data"
+        self.name = "ASX ETF Historical Market Data"
+        self.description = "Complete historical OHLCV data for all Australian ETFs"
+        self.owner = "Market Data Team"
+        self.domain = "Market Data"
         self.etf_data: Dict[str, ETFAggregate] = {}
         
     def add_etf(self, etf: ETFAggregate) -> None:
