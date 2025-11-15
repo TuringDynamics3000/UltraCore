@@ -34,6 +34,12 @@ class YahooFinanceCollector:
     
     def __init__(self):
         self.asx_suffix = ".AX"
+        # Set user agent to avoid Yahoo Finance blocking
+        import requests
+        self.session = requests.Session()
+        self.session.headers.update({
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        })
         
     def _format_ticker(self, ticker: str) -> str:
         """Format ticker for Yahoo Finance (add .AX for ASX)"""
@@ -81,20 +87,13 @@ class YahooFinanceCollector:
             yf_ticker = self._format_ticker(ticker)
             logger.info(f"Downloading historical data for {ticker} ({yf_ticker})")
             
-            # Download data
+            # Download data using Ticker object with custom session
+            etf = yf.Ticker(yf_ticker, session=self.session)
+            
             if start_date and end_date:
-                df = yf.download(
-                    yf_ticker,
-                    start=start_date,
-                    end=end_date,
-                    progress=False
-                )
+                df = etf.history(start=start_date, end=end_date)
             else:
-                df = yf.download(
-                    yf_ticker,
-                    period=period,
-                    progress=False
-                )
+                df = etf.history(period=period)
             
             if df.empty:
                 return CollectionResult(
