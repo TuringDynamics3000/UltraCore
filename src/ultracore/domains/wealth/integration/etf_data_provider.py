@@ -485,7 +485,10 @@ class ETFDataProvider:
     def get_available_etfs(self) -> List[str]:
         """Get list of all available ETF tickers"""
         if self.use_event_sourcing and self.data_product:
-            return self.data_product.get_all_tickers()
+            event_sourced_tickers = self.data_product.get_all_tickers()
+            # If event sourcing returns empty, fallback to Parquet files
+            if event_sourced_tickers:
+                return event_sourced_tickers
         return self.available_etfs
     
     def check_data_availability(self, tickers: List[str]) -> Dict[str, bool]:

@@ -1,0 +1,1419 @@
+2025-11-14 21:18:17,705 - INFO - Manus Yahoo Finance collector initialized
+2025-11-14 21:18:17,705 - INFO - Collecting data for A200.AX
+2025-11-14 21:18:18,838 - INFO -   Name: BetaShares Australia 200 ETF
+2025-11-14 21:18:18,838 - INFO -   Exchange: ASX
+2025-11-14 21:18:18,838 - INFO -   Currency: AUD
+2025-11-14 21:18:18,843 - INFO -   Collected 394 data points for A200.AX
+2025-11-14 21:18:18,844 - INFO -   Date range: 2018-05-06 10:00:00 to 2025-11-14 00:17:45
+2025-11-14 21:18:18,873 - INFO - Saved A200 data to data/etf/historical/A200.parquet
+2025-11-14 21:18:18,873 - INFO - Collecting data for AAA.AX
+2025-11-14 21:18:20,470 - INFO -   Name: BetaShares Australian High Interest Cash ETF
+2025-11-14 21:18:20,471 - INFO -   Exchange: ASX
+2025-11-14 21:18:20,471 - INFO -   Currency: AUD
+2025-11-14 21:18:20,474 - INFO -   Collected 165 data points for AAA.AX
+2025-11-14 21:18:20,475 - INFO -   Date range: 2012-03-31 09:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:18:20,477 - INFO - Saved AAA data to data/etf/historical/AAA.parquet
+2025-11-14 21:18:20,477 - INFO - Collecting data for ASAO.AX
+2025-11-14 21:18:21,383 - INFO -   Name: abrdn Sustainable Asian Opportunities Fund Active ETF (Managed Fund) Class E
+2025-11-14 21:18:21,383 - INFO -   Exchange: ASX
+2025-11-14 21:18:21,383 - INFO -   Currency: AUD
+2025-11-14 21:18:21,386 - INFO -   Collected 162 data points for ASAO.AX
+2025-11-14 21:18:21,387 - INFO -   Date range: 2022-10-16 09:00:00 to 2025-11-13 23:20:34
+2025-11-14 21:18:21,389 - INFO - Saved ASAO data to data/etf/historical/ASAO.parquet
+2025-11-14 21:18:21,389 - INFO - Collecting data for ASIA.AX
+2025-11-14 21:18:22,515 - INFO -   Name: BetaShares Asia Technology Tigers ETF
+2025-11-14 21:18:22,516 - INFO -   Exchange: ASX
+2025-11-14 21:18:22,516 - INFO -   Currency: AUD
+2025-11-14 21:18:22,519 - INFO -   Collected 375 data points for ASIA.AX
+2025-11-14 21:18:22,519 - INFO -   Date range: 2018-09-16 10:00:00 to 2025-11-14 00:16:13
+2025-11-14 21:18:22,522 - INFO - Saved ASIA data to data/etf/historical/ASIA.parquet
+2025-11-14 21:18:22,522 - INFO - Collecting data for ATEC.AX
+2025-11-14 21:18:23,610 - INFO -   Name: BetaShares S&P/ASX Australian Technology ETF
+2025-11-14 21:18:23,610 - INFO -   Exchange: ASX
+2025-11-14 21:18:23,610 - INFO -   Currency: AUD
+2025-11-14 21:18:23,613 - INFO -   Collected 299 data points for ATEC.AX
+2025-11-14 21:18:23,613 - INFO -   Date range: 2020-03-01 08:00:00 to 2025-11-14 00:17:47
+2025-11-14 21:18:23,616 - INFO - Saved ATEC data to data/etf/historical/ATEC.parquet
+2025-11-14 21:18:23,616 - INFO - Collecting data for AYLD.AX
+2025-11-14 21:18:24,799 - INFO -   Name: Global X S&P/ASX 200 Covered Call ETF
+2025-11-14 21:18:24,800 - INFO -   Exchange: ASX
+2025-11-14 21:18:24,800 - INFO -   Currency: AUD
+2025-11-14 21:18:24,803 - INFO -   Collected 147 data points for AYLD.AX
+2025-11-14 21:18:24,803 - INFO -   Date range: 2023-01-29 08:00:00 to 2025-11-13 23:02:06
+2025-11-14 21:18:24,805 - INFO - Saved AYLD data to data/etf/historical/AYLD.parquet
+2025-11-14 21:18:24,806 - INFO - Collecting data for BBOZ.AX
+2025-11-14 21:18:26,033 - INFO -   Name: Betashares Australian Equities Strong Bear Complex ETF
+2025-11-14 21:18:26,033 - INFO -   Exchange: ASX
+2025-11-14 21:18:26,033 - INFO -   Currency: AUD
+2025-11-14 21:18:26,036 - INFO -   Collected 128 data points for BBOZ.AX
+2025-11-14 21:18:26,036 - INFO -   Date range: 2015-04-30 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:18:26,038 - INFO - Saved BBOZ data to data/etf/historical/BBOZ.parquet
+2025-11-14 21:18:26,039 - INFO - Collecting data for BBUS.AX
+2025-11-14 21:18:27,042 - INFO -   Name: Betashares US Equities Strong Bear Currency Hedged Complex ETF
+2025-11-14 21:18:27,043 - INFO -   Exchange: ASX
+2025-11-14 21:18:27,043 - INFO -   Currency: AUD
+2025-11-14 21:18:27,045 - INFO -   Collected 124 data points for BBUS.AX
+2025-11-14 21:18:27,046 - INFO -   Date range: 2015-08-31 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:18:27,048 - INFO - Saved BBUS data to data/etf/historical/BBUS.parquet
+2025-11-14 21:18:27,048 - INFO - Collecting data for BEAR.AX
+2025-11-14 21:18:28,591 - INFO -   Name: BetaShares Australian Equities Bear Hedge Fund
+2025-11-14 21:18:28,592 - INFO -   Exchange: ASX
+2025-11-14 21:18:28,592 - INFO -   Currency: AUD
+2025-11-14 21:18:28,594 - INFO -   Collected 161 data points for BEAR.AX
+2025-11-14 21:18:28,594 - INFO -   Date range: 2012-07-31 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:18:28,596 - INFO - Saved BEAR data to data/etf/historical/BEAR.parquet
+2025-11-14 21:18:28,597 - INFO - Collecting data for BILL.AX
+2025-11-14 21:18:29,864 - INFO -   Name: iShares Core Cash ETF
+2025-11-14 21:18:29,865 - INFO -   Exchange: ASX
+2025-11-14 21:18:29,865 - INFO -   Currency: AUD
+2025-11-14 21:18:29,868 - INFO -   Collected 443 data points for BILL.AX
+2025-11-14 21:18:29,868 - INFO -   Date range: 2017-05-28 10:00:00 to 2025-11-13 23:52:21
+2025-11-14 21:18:29,870 - INFO - Saved BILL data to data/etf/historical/BILL.parquet
+2025-11-14 21:18:29,870 - INFO - Collecting data for BNDS.AX
+2025-11-14 21:18:30,952 - INFO -   Name: BetaShares Western Asset Australian Bond Active ETF
+2025-11-14 21:18:30,953 - INFO -   Exchange: ASX
+2025-11-14 21:18:30,953 - INFO -   Currency: AUD
+2025-11-14 21:18:30,955 - INFO -   Collected 368 data points for BNDS.AX
+2025-11-14 21:18:30,956 - INFO -   Date range: 2018-11-04 08:00:00 to 2025-11-13 23:38:09
+2025-11-14 21:18:30,958 - INFO - Saved BNDS data to data/etf/historical/BNDS.parquet
+2025-11-14 21:18:30,958 - INFO - Collecting data for CETF.AX
+2025-11-14 21:18:32,125 - INFO -   Name: VanEck FTSE China A50 ETF
+2025-11-14 21:18:32,125 - INFO -   Exchange: ASX
+2025-11-14 21:18:32,125 - INFO -   Currency: AUD
+2025-11-14 21:18:32,128 - INFO -   Collected 126 data points for CETF.AX
+2025-11-14 21:18:32,128 - INFO -   Date range: 2015-06-30 10:00:00 to 2025-11-13 23:57:00
+2025-11-14 21:18:32,130 - INFO - Saved CETF data to data/etf/historical/CETF.parquet
+2025-11-14 21:18:32,130 - INFO - Collecting data for CLDD.AX
+2025-11-14 21:18:33,003 - INFO -   Name: BetaShares Cloud Computing ETF
+2025-11-14 21:18:33,004 - INFO -   Exchange: ASX
+2025-11-14 21:18:33,004 - INFO -   Currency: AUD
+2025-11-14 21:18:33,007 - INFO -   Collected 248 data points for CLDD.AX
+2025-11-14 21:18:33,007 - INFO -   Date range: 2021-02-21 08:00:00 to 2025-11-13 23:37:54
+2025-11-14 21:18:33,010 - INFO - Saved CLDD data to data/etf/historical/CLDD.parquet
+2025-11-14 21:18:33,010 - INFO - Collecting data for CRED.AX
+2025-11-14 21:18:34,321 - INFO -   Name: BetaShares Australian Investment Grade Corporate Bond ETF
+2025-11-14 21:18:34,322 - INFO -   Exchange: ASX
+2025-11-14 21:18:34,322 - INFO -   Currency: AUD
+2025-11-14 21:18:34,325 - INFO -   Collected 391 data points for CRED.AX
+2025-11-14 21:18:34,325 - INFO -   Date range: 2018-05-27 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:18:34,328 - INFO - Saved CRED data to data/etf/historical/CRED.parquet
+2025-11-14 21:18:34,328 - INFO - Collecting data for DHHF.AX
+2025-11-14 21:18:35,639 - INFO -   Name: BetaShares Diversified All Growth ETF
+2025-11-14 21:18:35,639 - INFO -   Exchange: ASX
+2025-11-14 21:18:35,639 - INFO -   Currency: AUD
+2025-11-14 21:18:35,642 - INFO -   Collected 312 data points for DHHF.AX
+2025-11-14 21:18:35,643 - INFO -   Date range: 2019-12-01 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:18:35,645 - INFO - Saved DHHF data to data/etf/historical/DHHF.parquet
+2025-11-14 21:18:35,645 - INFO - Collecting data for DIFF.AX
+2025-11-14 21:18:37,449 - INFO -   Name: Perpetual Diversified Income Active ETF
+2025-11-14 21:18:37,450 - INFO -   Exchange: ASX
+2025-11-14 21:18:37,450 - INFO -   Currency: AUD
+2025-11-14 21:18:37,451 - ERROR - Error collecting data for DIFF.AX: All arrays must be of the same length
+2025-11-14 21:18:37,451 - INFO - Collecting data for DIVI.AX
+2025-11-14 21:18:42,875 - INFO -   Name: Ausbil Active Dividend Income Fund - Active ETF
+2025-11-14 21:18:42,875 - INFO -   Exchange: ASX
+2025-11-14 21:18:42,875 - INFO -   Currency: AUD
+2025-11-14 21:18:42,876 - ERROR - Error collecting data for DIVI.AX: All arrays must be of the same length
+2025-11-14 21:18:42,876 - INFO - Collecting data for DJRE.AX
+2025-11-14 21:18:48,808 - INFO -   Name: SPDR Dow Jones Global Real Estate ESG Tilted ETF
+2025-11-14 21:18:48,809 - INFO -   Exchange: ASX
+2025-11-14 21:18:48,809 - INFO -   Currency: AUD
+2025-11-14 21:18:48,811 - INFO -   Collected 146 data points for DJRE.AX
+2025-11-14 21:18:48,812 - INFO -   Date range: 2013-10-31 09:00:00 to 2025-11-13 23:45:59
+2025-11-14 21:18:48,814 - INFO - Saved DJRE data to data/etf/historical/DJRE.parquet
+2025-11-14 21:18:48,814 - INFO - Collecting data for DRGN.AX
+2025-11-14 21:18:50,198 - INFO -   Name: Global X China Tech ETF
+2025-11-14 21:18:50,199 - INFO -   Exchange: ASX
+2025-11-14 21:18:50,199 - INFO -   Currency: AUD
+2025-11-14 21:18:50,201 - INFO -   Collected 139 data points for DRGN.AX
+2025-11-14 21:18:50,202 - INFO -   Date range: 2025-05-05 20:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:18:50,204 - INFO - Saved DRGN data to data/etf/historical/DRGN.parquet
+2025-11-14 21:18:50,204 - INFO - Collecting data for DRIV.AX
+2025-11-14 21:18:51,604 - INFO -   Name: BetaShares Electric Vhcl & Fut Mblty ETF
+2025-11-14 21:18:51,605 - INFO -   Exchange: ASX
+2025-11-14 21:18:51,605 - INFO -   Currency: AUD
+2025-11-14 21:18:51,607 - INFO -   Collected 206 data points for DRIV.AX
+2025-11-14 21:18:51,608 - INFO -   Date range: 2021-12-12 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:18:51,610 - INFO - Saved DRIV data to data/etf/historical/DRIV.parquet
+2025-11-14 21:18:51,610 - INFO - Collecting data for DRUG.AX
+2025-11-14 21:18:52,627 - INFO -   Name: Betashares Global Healthcare Currency Hedged ETF
+2025-11-14 21:18:52,628 - INFO -   Exchange: ASX
+2025-11-14 21:18:52,628 - INFO -   Currency: AUD
+2025-11-14 21:18:52,631 - INFO -   Collected 486 data points for DRUG.AX
+2025-11-14 21:18:52,632 - INFO -   Date range: 2016-07-31 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:18:52,634 - INFO - Saved DRUG data to data/etf/historical/DRUG.parquet
+2025-11-14 21:18:52,634 - INFO - Collecting data for DVDY.AX
+2025-11-14 21:18:53,962 - INFO -   Name: VanEck Morningstar Australian Moat Income ETF
+2025-11-14 21:18:53,963 - INFO -   Exchange: ASX
+2025-11-14 21:18:53,963 - INFO -   Currency: AUD
+2025-11-14 21:18:53,966 - INFO -   Collected 272 data points for DVDY.AX
+2025-11-14 21:18:53,966 - INFO -   Date range: 2020-09-06 10:00:00 to 2025-11-13 23:55:48
+2025-11-14 21:18:53,968 - INFO - Saved DVDY data to data/etf/historical/DVDY.parquet
+2025-11-14 21:18:53,969 - INFO - Collecting data for DZZF.AX
+2025-11-14 21:18:55,786 - INFO -   Name: BetaShares Ethical Diversified High Growth ETF
+2025-11-14 21:18:55,787 - INFO -   Exchange: ASX
+2025-11-14 21:18:55,787 - INFO -   Currency: AUD
+2025-11-14 21:18:55,790 - INFO -   Collected 311 data points for DZZF.AX
+2025-11-14 21:18:55,790 - INFO -   Date range: 2019-12-08 08:00:00 to 2025-11-13 23:34:31
+2025-11-14 21:18:55,792 - INFO - Saved DZZF data to data/etf/historical/DZZF.parquet
+2025-11-14 21:18:55,793 - INFO - Collecting data for EAFZ.AX
+2025-11-14 21:18:57,396 - INFO -   Name: Ellerston Asia Growth Fund Complex ETF
+2025-11-14 21:18:57,396 - INFO -   Exchange: ASX
+2025-11-14 21:18:57,396 - INFO -   Currency: AUD
+2025-11-14 21:18:57,399 - INFO -   Collected 128 data points for EAFZ.AX
+2025-11-14 21:18:57,399 - INFO -   Date range: 2023-06-04 10:00:00 to 2025-11-13 23:17:00
+2025-11-14 21:18:57,401 - INFO - Saved EAFZ data to data/etf/historical/EAFZ.parquet
+2025-11-14 21:18:57,402 - INFO - Collecting data for EEU.AX
+2025-11-14 21:18:58,871 - INFO -   Name: BetaShares Euro ETF
+2025-11-14 21:18:58,872 - INFO -   Exchange: ASX
+2025-11-14 21:18:58,872 - INFO -   Currency: AUD
+2025-11-14 21:18:58,874 - INFO -   Collected 149 data points for EEU.AX
+2025-11-14 21:18:58,875 - INFO -   Date range: 2011-07-31 10:00:00 to 2023-11-30 08:00:00
+2025-11-14 21:18:58,877 - INFO - Saved EEU data to data/etf/historical/EEU.parquet
+2025-11-14 21:18:58,877 - INFO - Collecting data for EIGA.AX
+2025-11-14 21:19:00,203 - INFO -   Name: Perennial Income Generator Fund
+2025-11-14 21:19:00,204 - INFO -   Exchange: ASX
+2025-11-14 21:19:00,204 - INFO -   Currency: AUD
+2025-11-14 21:19:00,207 - INFO -   Collected 394 data points for EIGA.AX
+2025-11-14 21:19:00,207 - INFO -   Date range: 2018-05-06 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:19:00,209 - INFO - Saved EIGA data to data/etf/historical/EIGA.parquet
+2025-11-14 21:19:00,210 - INFO - Collecting data for EINC.AX
+2025-11-14 21:19:01,362 - INFO -   Name: Betashares Capital Ltd. -  Legg Mason Equity Income (Managed) Fund
+2025-11-14 21:19:01,363 - INFO -   Exchange: ASX
+2025-11-14 21:19:01,363 - INFO -   Currency: AUD
+2025-11-14 21:19:01,366 - INFO -   Collected 364 data points for EINC.AX
+2025-11-14 21:19:01,367 - INFO -   Date range: 2018-02-11 08:00:00 to 2025-01-26 08:00:00
+2025-11-14 21:19:01,369 - INFO - Saved EINC data to data/etf/historical/EINC.parquet
+2025-11-14 21:19:01,369 - INFO - Collecting data for EQIN.AX
+2025-11-14 21:19:02,911 - INFO -   Name: Investors Mutual Equity Income - Complex ETF
+2025-11-14 21:19:02,911 - INFO -   Exchange: ASX
+2025-11-14 21:19:02,911 - INFO -   Currency: AUD
+2025-11-14 21:19:02,912 - ERROR - Error collecting data for EQIN.AX: All arrays must be of the same length
+2025-11-14 21:19:02,912 - INFO - Collecting data for ERTH.AX
+2025-11-14 21:19:04,152 - INFO -   Name: BetaShares Climate Change Innovation ETF
+2025-11-14 21:19:04,153 - INFO -   Exchange: ASX
+2025-11-14 21:19:04,153 - INFO -   Currency: AUD
+2025-11-14 21:19:04,156 - INFO -   Collected 246 data points for ERTH.AX
+2025-11-14 21:19:04,156 - INFO -   Date range: 2021-03-07 08:00:00 to 2025-11-13 23:53:23
+2025-11-14 21:19:04,158 - INFO - Saved ERTH data to data/etf/historical/ERTH.parquet
+2025-11-14 21:19:04,159 - INFO - Collecting data for ESGI.AX
+2025-11-14 21:19:05,493 - INFO -   Name: VanEck MSCI International Sustainable Equity ETF
+2025-11-14 21:19:05,494 - INFO -   Exchange: ASX
+2025-11-14 21:19:05,494 - INFO -   Currency: AUD
+2025-11-14 21:19:05,497 - INFO -   Collected 403 data points for ESGI.AX
+2025-11-14 21:19:05,497 - INFO -   Date range: 2018-03-04 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:19:05,500 - INFO - Saved ESGI data to data/etf/historical/ESGI.parquet
+2025-11-14 21:19:05,500 - INFO - Collecting data for ETHI.AX
+2025-11-14 21:19:07,144 - INFO -   Name: BetaShares Global Sustainability Leaders ETF
+2025-11-14 21:19:07,145 - INFO -   Exchange: ASX
+2025-11-14 21:19:07,145 - INFO -   Currency: AUD
+2025-11-14 21:19:07,148 - INFO -   Collected 464 data points for ETHI.AX
+2025-11-14 21:19:07,149 - INFO -   Date range: 2017-01-01 08:00:00 to 2025-11-13 23:59:54
+2025-11-14 21:19:07,151 - INFO - Saved ETHI data to data/etf/historical/ETHI.parquet
+2025-11-14 21:19:07,151 - INFO - Collecting data for ETPMAG.AX
+2025-11-14 21:19:08,288 - INFO -   Name: Global X Physical Silver Structured
+2025-11-14 21:19:08,289 - INFO -   Exchange: YHD
+2025-11-14 21:19:08,289 - INFO -   Currency: AUD
+2025-11-14 21:19:08,292 - INFO -   Collected 203 data points for ETPMAG.AX
+2025-11-14 21:19:08,292 - INFO -   Date range: 2009-01-01 00:00:00 to 2025-11-01 00:00:00
+2025-11-14 21:19:08,294 - INFO - Saved ETPMAG data to data/etf/historical/ETPMAG.parquet
+2025-11-14 21:19:08,295 - INFO - Collecting data for ETPMPD.AX
+2025-11-14 21:19:09,748 - INFO -   Name: Global X Physical Palladium Structured
+2025-11-14 21:19:09,749 - INFO -   Exchange: YHD
+2025-11-14 21:19:09,749 - INFO -   Currency: AUD
+2025-11-14 21:19:09,752 - INFO -   Collected 203 data points for ETPMPD.AX
+2025-11-14 21:19:09,752 - INFO -   Date range: 2009-01-01 00:00:00 to 2025-11-01 00:00:00
+2025-11-14 21:19:09,754 - INFO - Saved ETPMPD data to data/etf/historical/ETPMPD.parquet
+2025-11-14 21:19:09,755 - INFO - Collecting data for ETPMPM.AX
+2025-11-14 21:19:11,343 - INFO -   Name: Global X Physical Precious Metals Basket Structured
+2025-11-14 21:19:11,343 - INFO -   Exchange: YHD
+2025-11-14 21:19:11,343 - INFO -   Currency: AUD
+2025-11-14 21:19:11,346 - INFO -   Collected 203 data points for ETPMPM.AX
+2025-11-14 21:19:11,346 - INFO -   Date range: 2009-01-01 00:00:00 to 2025-11-01 00:00:00
+2025-11-14 21:19:11,348 - INFO - Saved ETPMPM data to data/etf/historical/ETPMPM.parquet
+2025-11-14 21:19:11,349 - INFO - Collecting data for ETPMPT.AX
+2025-11-14 21:19:12,319 - INFO -   Name: Global X Physical Platinum Structured
+2025-11-14 21:19:12,320 - INFO -   Exchange: YHD
+2025-11-14 21:19:12,320 - INFO -   Currency: AUD
+2025-11-14 21:19:12,324 - INFO -   Collected 203 data points for ETPMPT.AX
+2025-11-14 21:19:12,324 - INFO -   Date range: 2009-01-01 00:00:00 to 2025-11-01 00:00:00
+2025-11-14 21:19:12,327 - INFO - Saved ETPMPT data to data/etf/historical/ETPMPT.parquet
+2025-11-14 21:19:12,327 - INFO - Collecting data for FAIR.AX
+2025-11-14 21:19:13,598 - INFO -   Name: BetaShares Australian Sustainability Leaders ETF
+2025-11-14 21:19:13,599 - INFO -   Exchange: ASX
+2025-11-14 21:19:13,599 - INFO -   Currency: AUD
+2025-11-14 21:19:13,602 - INFO -   Collected 417 data points for FAIR.AX
+2025-11-14 21:19:13,602 - INFO -   Date range: 2017-11-26 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:19:13,604 - INFO - Saved FAIR data to data/etf/historical/FAIR.parquet
+2025-11-14 21:19:13,605 - INFO - Collecting data for FANG.AX
+2025-11-14 21:19:15,023 - INFO -   Name: Global X FANG+ ETF
+2025-11-14 21:19:15,023 - INFO -   Exchange: ASX
+2025-11-14 21:19:15,024 - INFO -   Currency: AUD
+2025-11-14 21:19:15,026 - INFO -   Collected 300 data points for FANG.AX
+2025-11-14 21:19:15,027 - INFO -   Date range: 2020-02-23 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:19:15,029 - INFO - Saved FANG data to data/etf/historical/FANG.parquet
+2025-11-14 21:19:15,029 - INFO - Collecting data for FASI.AX
+2025-11-14 21:19:16,658 - INFO -   Name: Fidelity Asia Active ETF
+2025-11-14 21:19:16,658 - INFO -   Exchange: ASX
+2025-11-14 21:19:16,658 - INFO -   Currency: AUD
+2025-11-14 21:19:16,661 - INFO -   Collected 263 data points for FASI.AX
+2025-11-14 21:19:16,662 - INFO -   Date range: 2024-05-30 20:00:00 to 2025-11-13 23:56:53
+2025-11-14 21:19:16,664 - INFO - Saved FASI data to data/etf/historical/FASI.parquet
+2025-11-14 21:19:16,664 - INFO - Collecting data for FEMX.AX
+2025-11-14 21:19:17,894 - INFO -   Name: Fidelity Global Emerging Markets ETF
+2025-11-14 21:19:17,895 - INFO -   Exchange: ASX
+2025-11-14 21:19:17,895 - INFO -   Currency: AUD
+2025-11-14 21:19:17,898 - INFO -   Collected 369 data points for FEMX.AX
+2025-11-14 21:19:17,898 - INFO -   Date range: 2018-10-28 09:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:19:17,900 - INFO - Saved FEMX data to data/etf/historical/FEMX.parquet
+2025-11-14 21:19:17,901 - INFO - Collecting data for FIIN.AX
+2025-11-14 21:19:19,298 - INFO -   Name: Fidelity India Active ETF
+2025-11-14 21:19:19,298 - INFO -   Exchange: ASX
+2025-11-14 21:19:19,298 - INFO -   Currency: AUD
+2025-11-14 21:19:19,301 - INFO -   Collected 349 data points for FIIN.AX
+2025-11-14 21:19:19,302 - INFO -   Date range: 2024-05-30 20:00:00 to 2025-11-13 21:16:24
+2025-11-14 21:19:19,304 - INFO - Saved FIIN data to data/etf/historical/FIIN.parquet
+2025-11-14 21:19:19,305 - INFO - Collecting data for FOOD.AX
+2025-11-14 21:19:20,432 - INFO -   Name: Betashares Global Agriculture Companies Currency Hedged ETF
+2025-11-14 21:19:20,433 - INFO -   Exchange: ASX
+2025-11-14 21:19:20,433 - INFO -   Currency: AUD
+2025-11-14 21:19:20,436 - INFO -   Collected 486 data points for FOOD.AX
+2025-11-14 21:19:20,436 - INFO -   Date range: 2016-07-31 10:00:00 to 2025-11-13 23:24:00
+2025-11-14 21:19:20,439 - INFO - Saved FOOD data to data/etf/historical/FOOD.parquet
+2025-11-14 21:19:20,439 - INFO - Collecting data for FUEL.AX
+2025-11-14 21:19:21,497 - INFO -   Name: Betashares Global Energy Companies Currency Hedged ETF
+2025-11-14 21:19:21,498 - INFO -   Exchange: ASX
+2025-11-14 21:19:21,498 - INFO -   Currency: AUD
+2025-11-14 21:19:21,501 - INFO -   Collected 114 data points for FUEL.AX
+2025-11-14 21:19:21,501 - INFO -   Date range: 2016-06-30 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:19:21,504 - INFO - Saved FUEL data to data/etf/historical/FUEL.parquet
+2025-11-14 21:19:21,504 - INFO - Collecting data for GBND.AX
+2025-11-14 21:19:23,687 - INFO -   Name: Betashares Global Green Bond Currency Hedged ETF
+2025-11-14 21:19:23,687 - INFO -   Exchange: ASX
+2025-11-14 21:19:23,687 - INFO -   Currency: AUD
+2025-11-14 21:19:23,690 - INFO -   Collected 313 data points for GBND.AX
+2025-11-14 21:19:23,691 - INFO -   Date range: 2019-11-24 08:00:00 to 2025-11-13 23:46:28
+2025-11-14 21:19:23,693 - INFO - Saved GBND data to data/etf/historical/GBND.parquet
+2025-11-14 21:19:23,693 - INFO - Collecting data for GEAR.AX
+2025-11-14 21:19:25,288 - INFO -   Name: Betashares Geared Australian Equities Complex ETF
+2025-11-14 21:19:25,289 - INFO -   Exchange: ASX
+2025-11-14 21:19:25,289 - INFO -   Currency: AUD
+2025-11-14 21:19:25,291 - INFO -   Collected 140 data points for GEAR.AX
+2025-11-14 21:19:25,292 - INFO -   Date range: 2014-04-30 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:19:25,294 - INFO - Saved GEAR data to data/etf/historical/GEAR.parquet
+2025-11-14 21:19:25,294 - INFO - Collecting data for GGOV.AX
+2025-11-14 21:19:26,630 - INFO -   Name: Betashares US Treasury Bond 20+ Year Currency Hedged ETF
+2025-11-14 21:19:26,631 - INFO -   Exchange: ASX
+2025-11-14 21:19:26,631 - INFO -   Currency: AUD
+2025-11-14 21:19:26,634 - INFO -   Collected 290 data points for GGOV.AX
+2025-11-14 21:19:26,634 - INFO -   Date range: 2020-05-03 10:00:00 to 2025-11-13 22:55:07
+2025-11-14 21:19:26,636 - INFO - Saved GGOV data to data/etf/historical/GGOV.parquet
+2025-11-14 21:19:26,637 - INFO - Collecting data for GGUS.AX
+2025-11-14 21:19:28,050 - INFO -   Name: Betashares Geared US Equities Currency Hedged Complex ETF
+2025-11-14 21:19:28,050 - INFO -   Exchange: ASX
+2025-11-14 21:19:28,050 - INFO -   Currency: AUD
+2025-11-14 21:19:28,054 - INFO -   Collected 124 data points for GGUS.AX
+2025-11-14 21:19:28,054 - INFO -   Date range: 2015-08-31 10:00:00 to 2025-11-13 23:59:25
+2025-11-14 21:19:28,056 - INFO - Saved GGUS data to data/etf/historical/GGUS.parquet
+2025-11-14 21:19:28,057 - INFO - Collecting data for GOLD.AX
+2025-11-14 21:19:29,180 - INFO -   Name: Global X Physical Gold Structured
+2025-11-14 21:19:29,181 - INFO -   Exchange: ASX
+2025-11-14 21:19:29,181 - INFO -   Currency: AUD
+2025-11-14 21:19:29,184 - INFO -   Collected 216 data points for GOLD.AX
+2025-11-14 21:19:29,184 - INFO -   Date range: 2007-12-31 08:00:00 to 2025-11-14 00:10:17
+2025-11-14 21:19:29,186 - INFO - Saved GOLD data to data/etf/historical/GOLD.parquet
+2025-11-14 21:19:29,186 - INFO - Collecting data for GRIN.AX
+2025-11-14 21:19:30,522 - INFO -   Name: VanEck India Growth Leaders ETF
+2025-11-14 21:19:30,523 - INFO -   Exchange: ASX
+2025-11-14 21:19:30,524 - INFO -   Currency: AUD
+2025-11-14 21:19:30,535 - INFO -   Collected 145 data points for GRIN.AX
+2025-11-14 21:19:30,536 - INFO -   Date range: 2025-04-23 20:00:00 to 2025-11-13 22:26:54
+2025-11-14 21:19:30,540 - INFO - Saved GRIN data to data/etf/historical/GRIN.parquet
+2025-11-14 21:19:30,541 - INFO - Collecting data for HACK.AX
+2025-11-14 21:19:31,835 - INFO -   Name: BetaShares Global Cybersecurity ETF
+2025-11-14 21:19:31,835 - INFO -   Exchange: ASX
+2025-11-14 21:19:31,835 - INFO -   Currency: AUD
+2025-11-14 21:19:31,838 - INFO -   Collected 482 data points for HACK.AX
+2025-11-14 21:19:31,839 - INFO -   Date range: 2016-08-28 10:00:00 to 2025-11-13 23:59:27
+2025-11-14 21:19:31,841 - INFO - Saved HACK data to data/etf/historical/HACK.parquet
+2025-11-14 21:19:31,841 - INFO - Collecting data for HBRD.AX
+2025-11-14 21:19:33,514 - INFO -   Name: Betashares Australian Hybrids Active ETF
+2025-11-14 21:19:33,514 - INFO -   Exchange: ASX
+2025-11-14 21:19:33,515 - INFO -   Currency: AUD
+2025-11-14 21:19:33,517 - INFO -   Collected 419 data points for HBRD.AX
+2025-11-14 21:19:33,518 - INFO -   Date range: 2017-11-12 08:00:00 to 2025-11-13 23:51:57
+2025-11-14 21:19:33,520 - INFO - Saved HBRD data to data/etf/historical/HBRD.parquet
+2025-11-14 21:19:33,520 - INFO - Collecting data for HEUR.AX
+2025-11-14 21:19:34,489 - INFO -   Name: Betashares Europe Currency Hedged ETF
+2025-11-14 21:19:34,489 - INFO -   Exchange: ASX
+2025-11-14 21:19:34,489 - INFO -   Currency: AUD
+2025-11-14 21:19:34,492 - INFO -   Collected 115 data points for HEUR.AX
+2025-11-14 21:19:34,492 - INFO -   Date range: 2016-05-31 10:00:00 to 2025-11-13 23:43:09
+2025-11-14 21:19:34,494 - INFO - Saved HEUR data to data/etf/historical/HEUR.parquet
+2025-11-14 21:19:34,494 - INFO - Collecting data for HJPN.AX
+2025-11-14 21:19:36,077 - INFO -   Name: Betashares Japan Currency Hedged ETF
+2025-11-14 21:19:36,077 - INFO -   Exchange: ASX
+2025-11-14 21:19:36,077 - INFO -   Currency: AUD
+2025-11-14 21:19:36,080 - INFO -   Collected 115 data points for HJPN.AX
+2025-11-14 21:19:36,080 - INFO -   Date range: 2016-05-31 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:19:36,083 - INFO - Saved HJPN data to data/etf/historical/HJPN.parquet
+2025-11-14 21:19:36,083 - INFO - Collecting data for HNDQ.AX
+2025-11-14 21:19:37,329 - INFO -   Name: Betashares Nasdaq 100 Currency Hedged ETF
+2025-11-14 21:19:37,329 - INFO -   Exchange: ASX
+2025-11-14 21:19:37,329 - INFO -   Currency: AUD
+2025-11-14 21:19:37,332 - INFO -   Collected 279 data points for HNDQ.AX
+2025-11-14 21:19:37,332 - INFO -   Date range: 2020-07-19 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:19:37,334 - INFO - Saved HNDQ data to data/etf/historical/HNDQ.parquet
+2025-11-14 21:19:37,335 - INFO - Collecting data for HVST.AX
+2025-11-14 21:19:38,649 - INFO -   Name: Betashares Australian Dividend Harvester Active ETF
+2025-11-14 21:19:38,650 - INFO -   Exchange: ASX
+2025-11-14 21:19:38,650 - INFO -   Currency: AUD
+2025-11-14 21:19:38,652 - INFO -   Collected 134 data points for HVST.AX
+2025-11-14 21:19:38,652 - INFO -   Date range: 2014-10-31 09:00:00 to 2025-11-13 23:47:58
+2025-11-14 21:19:38,654 - INFO - Saved HVST data to data/etf/historical/HVST.parquet
+2025-11-14 21:19:38,655 - INFO - Collecting data for HYLD.AX
+2025-11-14 21:19:39,855 - INFO -   Name: Betashares S&P Australian Shares High Yield ETF
+2025-11-14 21:19:39,856 - INFO -   Exchange: ASX
+2025-11-14 21:19:39,856 - INFO -   Currency: AUD
+2025-11-14 21:19:39,856 - ERROR - Error collecting data for HYLD.AX: All arrays must be of the same length
+2025-11-14 21:19:39,857 - INFO - Collecting data for IAA.AX
+2025-11-14 21:19:41,376 - INFO -   Name: iShares Asia 50 ETF (AU)
+2025-11-14 21:19:41,376 - INFO -   Exchange: ASX
+2025-11-14 21:19:41,377 - INFO -   Currency: AUD
+2025-11-14 21:19:41,379 - INFO -   Collected 207 data points for IAA.AX
+2025-11-14 21:19:41,379 - INFO -   Date range: 2008-09-30 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:19:41,381 - INFO - Saved IAA data to data/etf/historical/IAA.parquet
+2025-11-14 21:19:41,382 - INFO - Collecting data for IAF.AX
+2025-11-14 21:19:42,648 - INFO -   Name: iShares Core Composite Bond ETF
+2025-11-14 21:19:42,648 - INFO -   Exchange: ASX
+2025-11-14 21:19:42,648 - INFO -   Currency: AUD
+2025-11-14 21:19:42,650 - INFO -   Collected 165 data points for IAF.AX
+2025-11-14 21:19:42,651 - INFO -   Date range: 2012-03-31 09:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:19:42,653 - INFO - Saved IAF data to data/etf/historical/IAF.parquet
+2025-11-14 21:19:42,653 - INFO - Collecting data for IEM.AX
+2025-11-14 21:19:43,739 - INFO -   Name: iShares MSCI Emerging Markets ETF (AU)
+2025-11-14 21:19:43,740 - INFO -   Exchange: ASX
+2025-11-14 21:19:43,740 - INFO -   Currency: AUD
+2025-11-14 21:19:43,742 - INFO -   Collected 215 data points for IEM.AX
+2025-11-14 21:19:43,743 - INFO -   Date range: 2008-01-31 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:19:43,745 - INFO - Saved IEM data to data/etf/historical/IEM.parquet
+2025-11-14 21:19:43,745 - INFO - Collecting data for IEU.AX
+2025-11-14 21:19:45,406 - INFO -   Name: iShares Europe ETF (AU)
+2025-11-14 21:19:45,407 - INFO -   Exchange: ASX
+2025-11-14 21:19:45,407 - INFO -   Currency: AUD
+2025-11-14 21:19:45,415 - INFO -   Collected 215 data points for IEU.AX
+2025-11-14 21:19:45,421 - INFO -   Date range: 2008-01-31 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:19:45,425 - INFO - Saved IEU data to data/etf/historical/IEU.parquet
+2025-11-14 21:19:45,427 - INFO - Collecting data for IFRA.AX
+2025-11-14 21:19:46,485 - INFO -   Name: VanEck FTSE Global Infrastructure (AUD Hedged) ETF
+2025-11-14 21:19:46,486 - INFO -   Exchange: ASX
+2025-11-14 21:19:46,486 - INFO -   Currency: AUD
+2025-11-14 21:19:46,488 - INFO -   Collected 116 data points for IFRA.AX
+2025-11-14 21:19:46,489 - INFO -   Date range: 2016-04-30 10:00:00 to 2025-11-13 23:59:53
+2025-11-14 21:19:46,491 - INFO - Saved IFRA data to data/etf/historical/IFRA.parquet
+2025-11-14 21:19:46,491 - INFO - Collecting data for IHD.AX
+2025-11-14 21:19:48,023 - INFO -   Name: iShares S&P/ASX Dividend Opportunities ESG Screened ETF
+2025-11-14 21:19:48,024 - INFO -   Exchange: ASX
+2025-11-14 21:19:48,024 - INFO -   Currency: AUD
+2025-11-14 21:19:48,026 - INFO -   Collected 180 data points for IHD.AX
+2025-11-14 21:19:48,027 - INFO -   Date range: 2010-12-31 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:19:48,029 - INFO - Saved IHD data to data/etf/historical/IHD.parquet
+2025-11-14 21:19:48,029 - INFO - Collecting data for IHEB.AX
+2025-11-14 21:19:59,482 - INFO -   Name: iShares JP Morgan USD Emerging Markets Bond (AUD Hedged) ETF
+2025-11-14 21:19:59,483 - INFO -   Exchange: ASX
+2025-11-14 21:19:59,483 - INFO -   Currency: AUD
+2025-11-14 21:19:59,486 - INFO -   Collected 120 data points for IHEB.AX
+2025-11-14 21:19:59,486 - INFO -   Date range: 2015-12-31 08:00:00 to 2025-11-13 23:36:32
+2025-11-14 21:19:59,488 - INFO - Saved IHEB data to data/etf/historical/IHEB.parquet
+2025-11-14 21:19:59,489 - INFO - Collecting data for IHHY.AX
+2025-11-14 21:20:00,807 - INFO -   Name: iShares Global High Yield Bond (AUD Hedged) ETF
+2025-11-14 21:20:00,808 - INFO -   Exchange: ASX
+2025-11-14 21:20:00,808 - INFO -   Currency: AUD
+2025-11-14 21:20:00,811 - INFO -   Collected 120 data points for IHHY.AX
+2025-11-14 21:20:00,811 - INFO -   Date range: 2015-12-31 08:00:00 to 2025-11-13 23:50:18
+2025-11-14 21:20:00,813 - INFO - Saved IHHY data to data/etf/historical/IHHY.parquet
+2025-11-14 21:20:00,814 - INFO - Collecting data for IHVV.AX
+2025-11-14 21:20:02,155 - INFO -   Name: iShares S&P 500 AUD Hedged ETF
+2025-11-14 21:20:02,155 - INFO -   Exchange: ASX
+2025-11-14 21:20:02,155 - INFO -   Currency: AUD
+2025-11-14 21:20:02,158 - INFO -   Collected 132 data points for IHVV.AX
+2025-11-14 21:20:02,158 - INFO -   Date range: 2014-12-31 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:20:02,161 - INFO - Saved IHVV data to data/etf/historical/IHVV.parquet
+2025-11-14 21:20:02,161 - INFO - Collecting data for IIND.AX
+2025-11-14 21:20:03,352 - INFO -   Name: BetaShares India Quality ETF
+2025-11-14 21:20:03,353 - INFO -   Exchange: ASX
+2025-11-14 21:20:03,353 - INFO -   Currency: AUD
+2025-11-14 21:20:03,356 - INFO -   Collected 330 data points for IIND.AX
+2025-11-14 21:20:03,356 - INFO -   Date range: 2019-07-28 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:20:03,359 - INFO - Saved IIND data to data/etf/historical/IIND.parquet
+2025-11-14 21:20:03,359 - INFO - Collecting data for IJP.AX
+2025-11-14 21:20:04,524 - INFO -   Name: iShares MSCI Japan ETF (AU)
+2025-11-14 21:20:04,525 - INFO -   Exchange: ASX
+2025-11-14 21:20:04,525 - INFO -   Currency: AUD
+2025-11-14 21:20:04,527 - INFO -   Collected 215 data points for IJP.AX
+2025-11-14 21:20:04,528 - INFO -   Date range: 2008-01-31 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:20:04,530 - INFO - Saved IJP data to data/etf/historical/IJP.parquet
+2025-11-14 21:20:04,531 - INFO - Collecting data for IKO.AX
+2025-11-14 21:20:06,161 - INFO -   Name: iShares MSCI South Korea ETF (AU)
+2025-11-14 21:20:06,162 - INFO -   Exchange: ASX
+2025-11-14 21:20:06,162 - INFO -   Currency: AUD
+2025-11-14 21:20:06,166 - INFO -   Collected 215 data points for IKO.AX
+2025-11-14 21:20:06,166 - INFO -   Date range: 2008-01-31 08:00:00 to 2025-11-13 23:59:19
+2025-11-14 21:20:06,169 - INFO - Saved IKO data to data/etf/historical/IKO.parquet
+2025-11-14 21:20:06,169 - INFO - Collecting data for ILB.AX
+2025-11-14 21:20:07,421 - INFO -   Name: iShares Government Inflation ETF
+2025-11-14 21:20:07,421 - INFO -   Exchange: ASX
+2025-11-14 21:20:07,421 - INFO -   Currency: AUD
+2025-11-14 21:20:07,424 - INFO -   Collected 165 data points for ILB.AX
+2025-11-14 21:20:07,424 - INFO -   Date range: 2012-03-31 09:00:00 to 2025-11-13 23:49:51
+2025-11-14 21:20:07,426 - INFO - Saved ILB data to data/etf/historical/ILB.parquet
+2025-11-14 21:20:07,427 - INFO - Collecting data for IMLC.AX
+2025-11-14 21:20:08,936 - INFO -   Name: IML Concentrated Australian Share Fund (Quoted Managed Fund)
+2025-11-14 21:20:08,936 - INFO -   Exchange: ASX
+2025-11-14 21:20:08,936 - INFO -   Currency: AUD
+2025-11-14 21:20:08,939 - INFO -   Collected 115 data points for IMLC.AX
+2025-11-14 21:20:08,939 - INFO -   Date range: 2023-09-10 10:00:00 to 2025-11-10 23:07:05
+2025-11-14 21:20:08,941 - INFO - Saved IMLC data to data/etf/historical/IMLC.parquet
+2025-11-14 21:20:08,941 - INFO - Collecting data for INIF.AX
+2025-11-14 21:20:10,516 - INFO -   Name: Intelligent Investor Australian Equity Income ETF
+2025-11-14 21:20:10,517 - INFO -   Exchange: ASX
+2025-11-14 21:20:10,517 - INFO -   Currency: AUD
+2025-11-14 21:20:10,519 - INFO -   Collected 388 data points for INIF.AX
+2025-11-14 21:20:10,520 - INFO -   Date range: 2018-06-17 10:00:00 to 2025-11-13 19:02:04
+2025-11-14 21:20:10,522 - INFO - Saved INIF data to data/etf/historical/INIF.parquet
+2025-11-14 21:20:10,522 - INFO - Collecting data for IOO.AX
+2025-11-14 21:20:11,800 - INFO -   Name: iShares Global 100 ETF (AU)
+2025-11-14 21:20:11,800 - INFO -   Exchange: ASX
+2025-11-14 21:20:11,800 - INFO -   Currency: AUD
+2025-11-14 21:20:11,803 - INFO -   Collected 215 data points for IOO.AX
+2025-11-14 21:20:11,803 - INFO -   Date range: 2008-01-31 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:20:11,806 - INFO - Saved IOO data to data/etf/historical/IOO.parquet
+2025-11-14 21:20:11,806 - INFO - Collecting data for IOZ.AX
+2025-11-14 21:20:13,113 - INFO -   Name: iShares Core S&P/ASX 200 ETF
+2025-11-14 21:20:13,114 - INFO -   Exchange: ASX
+2025-11-14 21:20:13,114 - INFO -   Currency: AUD
+2025-11-14 21:20:13,116 - INFO -   Collected 180 data points for IOZ.AX
+2025-11-14 21:20:13,116 - INFO -   Date range: 2010-12-31 08:00:00 to 2025-11-14 00:11:11
+2025-11-14 21:20:13,118 - INFO - Saved IOZ data to data/etf/historical/IOZ.parquet
+2025-11-14 21:20:13,119 - INFO - Collecting data for IVV.AX
+2025-11-14 21:20:14,802 - INFO -   Name: iShares S&P 500 ETF
+2025-11-14 21:20:14,802 - INFO -   Exchange: ASX
+2025-11-14 21:20:14,802 - INFO -   Currency: AUD
+2025-11-14 21:20:14,805 - INFO -   Collected 215 data points for IVV.AX
+2025-11-14 21:20:14,805 - INFO -   Date range: 2008-01-31 08:00:00 to 2025-11-14 00:21:15
+2025-11-14 21:20:14,807 - INFO - Saved IVV data to data/etf/historical/IVV.parquet
+2025-11-14 21:20:14,807 - INFO - Collecting data for IXJ.AX
+2025-11-14 21:20:16,439 - INFO -   Name: iShares Global Healthcare ETF (AU)
+2025-11-14 21:20:16,440 - INFO -   Exchange: ASX
+2025-11-14 21:20:16,440 - INFO -   Currency: AUD
+2025-11-14 21:20:16,442 - INFO -   Collected 201 data points for IXJ.AX
+2025-11-14 21:20:16,442 - INFO -   Date range: 2009-03-31 09:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:20:16,444 - INFO - Saved IXJ data to data/etf/historical/IXJ.parquet
+2025-11-14 21:20:16,445 - INFO - Collecting data for IZZ.AX
+2025-11-14 21:20:18,055 - INFO -   Name: iShares China Large-Cap ETF (AU)
+2025-11-14 21:20:18,055 - INFO -   Exchange: ASX
+2025-11-14 21:20:18,056 - INFO -   Currency: AUD
+2025-11-14 21:20:18,058 - INFO -   Collected 215 data points for IZZ.AX
+2025-11-14 21:20:18,058 - INFO -   Date range: 2008-01-31 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:20:18,060 - INFO - Saved IZZ data to data/etf/historical/IZZ.parquet
+2025-11-14 21:20:18,060 - INFO - Collecting data for MA1.AX
+2025-11-14 21:20:19,364 - INFO -   Name: N/A
+2025-11-14 21:20:19,364 - INFO -   Exchange: ASX
+2025-11-14 21:20:19,364 - INFO -   Currency: AUD
+2025-11-14 21:20:19,367 - INFO -   Collected 178 data points for MA1.AX
+2025-11-14 21:20:19,367 - INFO -   Date range: 2025-03-04 18:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:20:19,369 - INFO - Saved MA1 data to data/etf/historical/MA1.parquet
+2025-11-14 21:20:19,369 - INFO - Collecting data for MNRS.AX
+2025-11-14 21:20:20,348 - INFO -   Name: Betashares Global Gold Miners Currency Hedged ETF
+2025-11-14 21:20:20,348 - INFO -   Exchange: ASX
+2025-11-14 21:20:20,348 - INFO -   Currency: AUD
+2025-11-14 21:20:20,351 - INFO -   Collected 487 data points for MNRS.AX
+2025-11-14 21:20:20,351 - INFO -   Date range: 2016-07-24 10:00:00 to 2025-11-13 23:59:13
+2025-11-14 21:20:20,353 - INFO - Saved MNRS data to data/etf/historical/MNRS.parquet
+2025-11-14 21:20:20,354 - INFO - Collecting data for MVA.AX
+2025-11-14 21:20:22,856 - INFO -   Name: VanEck Australian Property ETF
+2025-11-14 21:20:22,857 - INFO -   Exchange: ASX
+2025-11-14 21:20:22,857 - INFO -   Currency: AUD
+2025-11-14 21:20:22,859 - INFO -   Collected 146 data points for MVA.AX
+2025-11-14 21:20:22,859 - INFO -   Date range: 2013-10-31 09:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:20:22,861 - INFO - Saved MVA data to data/etf/historical/MVA.parquet
+2025-11-14 21:20:22,861 - INFO - Collecting data for MVB.AX
+2025-11-14 21:20:29,389 - INFO -   Name: VanEck Australian Banks ETF
+2025-11-14 21:20:29,390 - INFO -   Exchange: ASX
+2025-11-14 21:20:29,390 - INFO -   Currency: AUD
+2025-11-14 21:20:29,392 - INFO -   Collected 146 data points for MVB.AX
+2025-11-14 21:20:29,392 - INFO -   Date range: 2013-10-31 09:00:00 to 2025-11-13 23:59:22
+2025-11-14 21:20:29,394 - INFO - Saved MVB data to data/etf/historical/MVB.parquet
+2025-11-14 21:20:29,395 - INFO - Collecting data for MVE.AX
+2025-11-14 21:20:30,077 - ERROR - Invalid response for MVE.AX
+2025-11-14 21:20:30,078 - INFO - Collecting data for MVR.AX
+2025-11-14 21:20:31,733 - INFO -   Name: VanEck Australian Resources ETF
+2025-11-14 21:20:31,734 - INFO -   Exchange: ASX
+2025-11-14 21:20:31,734 - INFO -   Currency: AUD
+2025-11-14 21:20:31,736 - INFO -   Collected 146 data points for MVR.AX
+2025-11-14 21:20:31,736 - INFO -   Date range: 2013-10-31 09:00:00 to 2025-11-13 23:58:01
+2025-11-14 21:20:31,738 - INFO - Saved MVR data to data/etf/historical/MVR.parquet
+2025-11-14 21:20:31,739 - INFO - Collecting data for MVW.AX
+2025-11-14 21:20:33,990 - INFO -   Name: VanEck Australian Equal Weight ETF
+2025-11-14 21:20:33,990 - INFO -   Exchange: ASX
+2025-11-14 21:20:33,990 - INFO -   Currency: AUD
+2025-11-14 21:20:33,993 - INFO -   Collected 141 data points for MVW.AX
+2025-11-14 21:20:33,993 - INFO -   Date range: 2014-03-31 09:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:20:33,995 - INFO - Saved MVW data to data/etf/historical/MVW.parquet
+2025-11-14 21:20:33,995 - INFO - Collecting data for NDIA.AX
+2025-11-14 21:20:35,064 - INFO -   Name: Global X India Nifty 50 ETF
+2025-11-14 21:20:35,065 - INFO -   Exchange: ASX
+2025-11-14 21:20:35,065 - INFO -   Currency: AUD
+2025-11-14 21:20:35,067 - INFO -   Collected 336 data points for NDIA.AX
+2025-11-14 21:20:35,068 - INFO -   Date range: 2019-06-16 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:20:35,070 - INFO - Saved NDIA data to data/etf/historical/NDIA.parquet
+2025-11-14 21:20:35,070 - INFO - Collecting data for NDQ.AX
+2025-11-14 21:20:36,233 - INFO -   Name: BetaShares NASDAQ 100 ETF
+2025-11-14 21:20:36,233 - INFO -   Exchange: ASX
+2025-11-14 21:20:36,233 - INFO -   Currency: AUD
+2025-11-14 21:20:36,235 - INFO -   Collected 127 data points for NDQ.AX
+2025-11-14 21:20:36,236 - INFO -   Date range: 2015-05-31 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:20:36,237 - INFO - Saved NDQ data to data/etf/historical/NDQ.parquet
+2025-11-14 21:20:36,238 - INFO - Collecting data for OOO.AX
+2025-11-14 21:20:37,251 - INFO -   Name: Betashares Crude Oil Index Currency Hedged Complex ETF
+2025-11-14 21:20:37,251 - INFO -   Exchange: ASX
+2025-11-14 21:20:37,251 - INFO -   Currency: AUD
+2025-11-14 21:20:37,254 - INFO -   Collected 169 data points for OOO.AX
+2025-11-14 21:20:37,254 - INFO -   Date range: 2011-11-30 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:20:37,256 - INFO - Saved OOO data to data/etf/historical/OOO.parquet
+2025-11-14 21:20:37,256 - INFO - Collecting data for OZF.AX
+2025-11-14 21:20:38,239 - INFO -   Name: SPDR S&P/ASX 200 Financials EX A-REIT ETF
+2025-11-14 21:20:38,240 - INFO -   Exchange: ASX
+2025-11-14 21:20:38,240 - INFO -   Currency: AUD
+2025-11-14 21:20:38,242 - INFO -   Collected 176 data points for OZF.AX
+2025-11-14 21:20:38,242 - INFO -   Date range: 2011-04-30 10:00:00 to 2025-11-13 23:16:28
+2025-11-14 21:20:38,244 - INFO - Saved OZF data to data/etf/historical/OZF.parquet
+2025-11-14 21:20:38,245 - INFO - Collecting data for OZR.AX
+2025-11-14 21:20:39,634 - INFO -   Name: SPDR S&P/ASX 200 Resources ETF
+2025-11-14 21:20:39,635 - INFO -   Exchange: ASX
+2025-11-14 21:20:39,635 - INFO -   Currency: AUD
+2025-11-14 21:20:39,637 - INFO -   Collected 176 data points for OZR.AX
+2025-11-14 21:20:39,638 - INFO -   Date range: 2011-04-30 10:00:00 to 2025-11-13 23:55:51
+2025-11-14 21:20:39,639 - INFO - Saved OZR data to data/etf/historical/OZR.parquet
+2025-11-14 21:20:39,640 - INFO - Collecting data for PAXX.AX
+2025-11-14 21:20:41,234 - INFO -   Name: Platinum Asia Fund (Quoted Managed Hedge Fund)
+2025-11-14 21:20:41,235 - INFO -   Exchange: ASX
+2025-11-14 21:20:41,235 - INFO -   Currency: AUD
+2025-11-14 21:20:41,248 - INFO -   Collected 428 data points for PAXX.AX
+2025-11-14 21:20:41,249 - INFO -   Date range: 2017-09-10 10:00:00 to 2025-11-13 23:15:18
+2025-11-14 21:20:41,258 - INFO - Saved PAXX data to data/etf/historical/PAXX.parquet
+2025-11-14 21:20:41,259 - INFO - Collecting data for PLUS.AX
+2025-11-14 21:20:42,448 - INFO -   Name: VanEck Australian Corporate Bond Plus ETF
+2025-11-14 21:20:42,448 - INFO -   Exchange: ASX
+2025-11-14 21:20:42,448 - INFO -   Currency: AUD
+2025-11-14 21:20:42,451 - INFO -   Collected 446 data points for PLUS.AX
+2025-11-14 21:20:42,451 - INFO -   Date range: 2017-05-07 10:00:00 to 2025-11-13 23:15:43
+2025-11-14 21:20:42,453 - INFO - Saved PLUS data to data/etf/historical/PLUS.parquet
+2025-11-14 21:20:42,454 - INFO - Collecting data for PMGOLD.AX
+2025-11-14 21:20:43,771 - INFO -   Name: Perth Mint Gold Structured Product
+2025-11-14 21:20:43,772 - INFO -   Exchange: ASX
+2025-11-14 21:20:43,772 - INFO -   Currency: None
+2025-11-14 21:20:43,775 - INFO -   Collected 202 data points for PMGOLD.AX
+2025-11-14 21:20:43,775 - INFO -   Date range: 2009-01-31 08:00:00 to 2025-10-31 09:00:00
+2025-11-14 21:20:43,777 - INFO - Saved PMGOLD data to data/etf/historical/PMGOLD.parquet
+2025-11-14 21:20:43,778 - INFO - Collecting data for POU.AX
+2025-11-14 21:20:45,454 - INFO -   Name: BetaShares British Pound ETF
+2025-11-14 21:20:45,455 - INFO -   Exchange: ASX
+2025-11-14 21:20:45,455 - INFO -   Currency: AUD
+2025-11-14 21:20:45,457 - INFO -   Collected 149 data points for POU.AX
+2025-11-14 21:20:45,457 - INFO -   Date range: 2011-07-31 10:00:00 to 2023-11-30 08:00:00
+2025-11-14 21:20:45,459 - INFO - Saved POU data to data/etf/historical/POU.parquet
+2025-11-14 21:20:45,460 - INFO - Collecting data for QAG.AX
+2025-11-14 21:20:46,765 - INFO -   Name: BetaShares Agriculture ETF Currency Hedged (Synthetic)
+2025-11-14 21:20:46,765 - INFO -   Exchange: ASX
+2025-11-14 21:20:46,765 - INFO -   Currency: AUD
+2025-11-14 21:20:46,768 - INFO -   Collected 110 data points for QAG.AX
+2025-11-14 21:20:46,768 - INFO -   Date range: 2011-11-30 08:00:00 to 2020-12-31 08:00:00
+2025-11-14 21:20:46,770 - INFO - Saved QAG data to data/etf/historical/QAG.parquet
+2025-11-14 21:20:46,770 - INFO - Collecting data for QAU.AX
+2025-11-14 21:20:48,726 - INFO -   Name: Betashares Gold Bullion Currency Hedged ETF
+2025-11-14 21:20:48,727 - INFO -   Exchange: ASX
+2025-11-14 21:20:48,727 - INFO -   Currency: AUD
+2025-11-14 21:20:48,729 - INFO -   Collected 175 data points for QAU.AX
+2025-11-14 21:20:48,729 - INFO -   Date range: 2011-05-31 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:20:48,731 - INFO - Saved QAU data to data/etf/historical/QAU.parquet
+2025-11-14 21:20:48,731 - INFO - Collecting data for QFN.AX
+2025-11-14 21:20:50,350 - INFO -   Name: BetaShares Australian Financials Sector ETF
+2025-11-14 21:20:50,350 - INFO -   Exchange: ASX
+2025-11-14 21:20:50,350 - INFO -   Currency: AUD
+2025-11-14 21:20:50,352 - INFO -   Collected 180 data points for QFN.AX
+2025-11-14 21:20:50,353 - INFO -   Date range: 2010-12-31 08:00:00 to 2025-11-13 23:17:09
+2025-11-14 21:20:50,355 - INFO - Saved QFN data to data/etf/historical/QFN.parquet
+2025-11-14 21:20:50,355 - INFO - Collecting data for QLTY.AX
+2025-11-14 21:21:18,495 - INFO -   Name: BetaShares Global Quality Leaders ETF
+2025-11-14 21:21:18,496 - INFO -   Exchange: ASX
+2025-11-14 21:21:18,496 - INFO -   Currency: AUD
+2025-11-14 21:21:18,499 - INFO -   Collected 368 data points for QLTY.AX
+2025-11-14 21:21:18,499 - INFO -   Date range: 2018-11-04 08:00:00 to 2025-11-13 23:59:54
+2025-11-14 21:21:18,501 - INFO - Saved QLTY data to data/etf/historical/QLTY.parquet
+2025-11-14 21:21:18,502 - INFO - Collecting data for QPON.AX
+2025-11-14 21:21:20,023 - INFO -   Name: BetaShares Australian Bank Senior Floating Rate Bond ETF
+2025-11-14 21:21:20,024 - INFO -   Exchange: ASX
+2025-11-14 21:21:20,024 - INFO -   Currency: AUD
+2025-11-14 21:21:20,027 - INFO -   Collected 443 data points for QPON.AX
+2025-11-14 21:21:20,028 - INFO -   Date range: 2017-05-28 10:00:00 to 2025-11-13 23:41:33
+2025-11-14 21:21:20,030 - INFO - Saved QPON data to data/etf/historical/QPON.parquet
+2025-11-14 21:21:20,030 - INFO - Collecting data for QUAL.AX
+2025-11-14 21:21:21,103 - INFO -   Name: Vaneck Msci International Quality Etf
+2025-11-14 21:21:21,104 - INFO -   Exchange: ASX
+2025-11-14 21:21:21,104 - INFO -   Currency: AUD
+2025-11-14 21:21:21,106 - INFO -   Collected 134 data points for QUAL.AX
+2025-11-14 21:21:21,107 - INFO -   Date range: 2014-10-31 09:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:21:21,109 - INFO - Saved QUAL data to data/etf/historical/QUAL.parquet
+2025-11-14 21:21:21,109 - INFO - Collecting data for QUS.AX
+2025-11-14 21:21:22,451 - INFO -   Name: BetaShares S&P 500 Equal Weight ETF
+2025-11-14 21:21:22,451 - INFO -   Exchange: ASX
+2025-11-14 21:21:22,452 - INFO -   Currency: AUD
+2025-11-14 21:21:22,454 - INFO -   Collected 132 data points for QUS.AX
+2025-11-14 21:21:22,455 - INFO -   Date range: 2014-12-31 08:00:00 to 2025-11-13 23:40:36
+2025-11-14 21:21:22,457 - INFO - Saved QUS data to data/etf/historical/QUS.parquet
+2025-11-14 21:21:22,457 - INFO - Collecting data for RARI.AX
+2025-11-14 21:21:27,795 - INFO -   Name: Russell Investments Australian Responsible Investment ETF
+2025-11-14 21:21:27,796 - INFO -   Exchange: ASX
+2025-11-14 21:21:27,796 - INFO -   Currency: AUD
+2025-11-14 21:21:27,798 - INFO -   Collected 129 data points for RARI.AX
+2025-11-14 21:21:27,799 - INFO -   Date range: 2015-03-31 09:00:00 to 2025-11-13 22:41:23
+2025-11-14 21:21:27,801 - INFO - Saved RARI data to data/etf/historical/RARI.parquet
+================================================================================
+ASX ETF Historical Data Download
+================================================================================
+Start time: 2025-11-14 21:18:17.705517
+
+Total ETFs to download: 139
+
+Output directory: /home/ubuntu/UltraCore/data/etf/historical
+
+Starting download...
+--------------------------------------------------------------------------------
+
+[1/139] Processing A200...
+  ✅ Success: 394 rows (2018-05-06 to 2025-11-14)
+
+[2/139] Processing AAA...
+  ✅ Success: 165 rows (2012-03-31 to 2025-11-14)
+
+[3/139] Processing ASAO...
+  ✅ Success: 162 rows (2022-10-16 to 2025-11-13)
+
+[4/139] Processing ASIA...
+  ✅ Success: 375 rows (2018-09-16 to 2025-11-14)
+
+[5/139] Processing ATEC...
+  ✅ Success: 299 rows (2020-03-01 to 2025-11-14)
+
+[6/139] Processing AYLD...
+  ✅ Success: 147 rows (2023-01-29 to 2025-11-13)
+
+[7/139] Processing BBOZ...
+  ✅ Success: 128 rows (2015-04-30 to 2025-11-14)
+
+[8/139] Processing BBUS...
+  ✅ Success: 124 rows (2015-08-31 to 2025-11-14)
+
+[9/139] Processing BEAR...
+  ✅ Success: 161 rows (2012-07-31 to 2025-11-14)
+
+[10/139] Processing BILL...
+  ✅ Success: 443 rows (2017-05-28 to 2025-11-13)
+
+[11/139] Processing BNDS...
+  ✅ Success: 368 rows (2018-11-04 to 2025-11-13)
+
+[12/139] Processing CETF...
+  ✅ Success: 126 rows (2015-06-30 to 2025-11-13)
+
+[13/139] Processing CLDD...
+  ✅ Success: 248 rows (2021-02-21 to 2025-11-13)
+
+[14/139] Processing CRED...
+  ✅ Success: 391 rows (2018-05-27 to 2025-11-14)
+
+[15/139] Processing DHHF...
+  ✅ Success: 312 rows (2019-12-01 to 2025-11-14)
+
+[16/139] Processing DIFF...
+  ❌ Failed: No data returned
+
+[17/139] Processing DIVI...
+  ❌ Failed: No data returned
+
+[18/139] Processing DJRE...
+  ✅ Success: 146 rows (2013-10-31 to 2025-11-13)
+
+[19/139] Processing DRGN...
+  ✅ Success: 139 rows (2025-05-05 to 2025-11-14)
+
+[20/139] Processing DRIV...
+  ✅ Success: 206 rows (2021-12-12 to 2025-11-14)
+
+[21/139] Processing DRUG...
+  ✅ Success: 486 rows (2016-07-31 to 2025-11-14)
+
+[22/139] Processing DVDY...
+  ✅ Success: 272 rows (2020-09-06 to 2025-11-13)
+
+[23/139] Processing DZZF...
+  ✅ Success: 311 rows (2019-12-08 to 2025-11-13)
+
+[24/139] Processing EAFZ...
+  ✅ Success: 128 rows (2023-06-04 to 2025-11-13)
+
+[25/139] Processing EEU...
+  ✅ Success: 149 rows (2011-07-31 to 2023-11-30)
+
+[26/139] Processing EIGA...
+  ✅ Success: 394 rows (2018-05-06 to 2025-11-14)
+
+[27/139] Processing EINC...
+  ✅ Success: 364 rows (2018-02-11 to 2025-01-26)
+
+[28/139] Processing EQIN...
+  ❌ Failed: No data returned
+
+[29/139] Processing ERTH...
+  ✅ Success: 246 rows (2021-03-07 to 2025-11-13)
+
+[30/139] Processing ESGI...
+  ✅ Success: 403 rows (2018-03-04 to 2025-11-14)
+
+[31/139] Processing ETHI...
+  ✅ Success: 464 rows (2017-01-01 to 2025-11-13)
+
+[32/139] Processing ETPMAG...
+  ✅ Success: 203 rows (2009-01-01 to 2025-11-01)
+
+[33/139] Processing ETPMPD...
+  ✅ Success: 203 rows (2009-01-01 to 2025-11-01)
+
+[34/139] Processing ETPMPM...
+  ✅ Success: 203 rows (2009-01-01 to 2025-11-01)
+
+[35/139] Processing ETPMPT...
+  ✅ Success: 203 rows (2009-01-01 to 2025-11-01)
+
+[36/139] Processing FAIR...
+  ✅ Success: 417 rows (2017-11-26 to 2025-11-14)
+
+[37/139] Processing FANG...
+  ✅ Success: 300 rows (2020-02-23 to 2025-11-14)
+
+[38/139] Processing FASI...
+  ✅ Success: 263 rows (2024-05-30 to 2025-11-13)
+
+[39/139] Processing FEMX...
+  ✅ Success: 369 rows (2018-10-28 to 2025-11-14)
+
+[40/139] Processing FIIN...
+  ✅ Success: 349 rows (2024-05-30 to 2025-11-13)
+
+[41/139] Processing FOOD...
+  ✅ Success: 486 rows (2016-07-31 to 2025-11-13)
+
+[42/139] Processing FUEL...
+  ✅ Success: 114 rows (2016-06-30 to 2025-11-14)
+
+[43/139] Processing GBND...
+  ✅ Success: 313 rows (2019-11-24 to 2025-11-13)
+
+[44/139] Processing GEAR...
+  ✅ Success: 140 rows (2014-04-30 to 2025-11-14)
+
+[45/139] Processing GGOV...
+  ✅ Success: 290 rows (2020-05-03 to 2025-11-13)
+
+[46/139] Processing GGUS...
+  ✅ Success: 124 rows (2015-08-31 to 2025-11-13)
+
+[47/139] Processing GOLD...
+  ✅ Success: 216 rows (2007-12-31 to 2025-11-14)
+
+[48/139] Processing GRIN...
+  ✅ Success: 145 rows (2025-04-23 to 2025-11-13)
+
+[49/139] Processing HACK...
+  ✅ Success: 482 rows (2016-08-28 to 2025-11-13)
+
+[50/139] Processing HBRD...
+  ✅ Success: 419 rows (2017-11-12 to 2025-11-13)
+
+[51/139] Processing HEUR...
+  ✅ Success: 115 rows (2016-05-31 to 2025-11-13)
+
+[52/139] Processing HJPN...
+  ✅ Success: 115 rows (2016-05-31 to 2025-11-14)
+
+[53/139] Processing HNDQ...
+  ✅ Success: 279 rows (2020-07-19 to 2025-11-14)
+
+[54/139] Processing HVST...
+  ✅ Success: 134 rows (2014-10-31 to 2025-11-13)
+
+[55/139] Processing HYLD...
+  ❌ Failed: No data returned
+
+[56/139] Processing IAA...
+  ✅ Success: 207 rows (2008-09-30 to 2025-11-14)
+
+[57/139] Processing IAF...
+  ✅ Success: 165 rows (2012-03-31 to 2025-11-14)
+
+[58/139] Processing IEM...
+  ✅ Success: 215 rows (2008-01-31 to 2025-11-14)
+
+[59/139] Processing IEU...
+  ✅ Success: 215 rows (2008-01-31 to 2025-11-14)
+
+[60/139] Processing IFRA...
+  ✅ Success: 116 rows (2016-04-30 to 2025-11-13)
+
+[61/139] Processing IHD...
+  ✅ Success: 180 rows (2010-12-31 to 2025-11-14)
+
+[62/139] Processing IHEB...
+  ✅ Success: 120 rows (2015-12-31 to 2025-11-13)
+
+[63/139] Processing IHHY...
+  ✅ Success: 120 rows (2015-12-31 to 2025-11-13)
+
+[64/139] Processing IHVV...
+  ✅ Success: 132 rows (2014-12-31 to 2025-11-14)
+
+[65/139] Processing IIND...
+  ✅ Success: 330 rows (2019-07-28 to 2025-11-14)
+
+[66/139] Processing IJP...
+  ✅ Success: 215 rows (2008-01-31 to 2025-11-14)
+
+[67/139] Processing IKO...
+  ✅ Success: 215 rows (2008-01-31 to 2025-11-13)
+
+[68/139] Processing ILB...
+  ✅ Success: 165 rows (2012-03-31 to 2025-11-13)
+
+[69/139] Processing IMLC...
+  ✅ Success: 115 rows (2023-09-10 to 2025-11-10)
+
+[70/139] Processing INIF...
+  ✅ Success: 388 rows (2018-06-17 to 2025-11-13)
+
+[71/139] Processing IOO...
+  ✅ Success: 215 rows (2008-01-31 to 2025-11-14)
+
+[72/139] Processing IOZ...
+  ✅ Success: 180 rows (2010-12-31 to 2025-11-14)
+
+[73/139] Processing IVV...
+  ✅ Success: 215 rows (2008-01-31 to 2025-11-14)
+
+[74/139] Processing IXJ...
+  ✅ Success: 201 rows (2009-03-31 to 2025-11-14)
+
+[75/139] Processing IZZ...
+  ✅ Success: 215 rows (2008-01-31 to 2025-11-14)
+
+[76/139] Processing MA1...
+  ✅ Success: 178 rows (2025-03-04 to 2025-11-14)
+
+[77/139] Processing MNRS...
+  ✅ Success: 487 rows (2016-07-24 to 2025-11-13)
+
+[78/139] Processing MVA...
+  ✅ Success: 146 rows (2013-10-31 to 2025-11-14)
+
+[79/139] Processing MVB...
+  ✅ Success: 146 rows (2013-10-31 to 2025-11-13)
+
+[80/139] Processing MVE...
+  ❌ Failed: No data returned
+
+[81/139] Processing MVR...
+  ✅ Success: 146 rows (2013-10-31 to 2025-11-13)
+
+[82/139] Processing MVW...
+  ✅ Success: 141 rows (2014-03-31 to 2025-11-14)
+
+[83/139] Processing NDIA...
+  ✅ Success: 336 rows (2019-06-16 to 2025-11-14)
+
+[84/139] Processing NDQ...
+  ✅ Success: 127 rows (2015-05-31 to 2025-11-14)
+
+[85/139] Processing OOO...
+  ✅ Success: 169 rows (2011-11-30 to 2025-11-14)
+
+[86/139] Processing OZF...
+  ✅ Success: 176 rows (2011-04-30 to 2025-11-13)
+
+[87/139] Processing OZR...
+  ✅ Success: 176 rows (2011-04-30 to 2025-11-13)
+
+[88/139] Processing PAXX...
+  ✅ Success: 428 rows (2017-09-10 to 2025-11-13)
+
+[89/139] Processing PLUS...
+  ✅ Success: 446 rows (2017-05-07 to 2025-11-13)
+
+[90/139] Processing PMGOLD...
+  ✅ Success: 202 rows (2009-01-31 to 2025-10-31)
+
+[91/139] Processing POU...
+  ✅ Success: 149 rows (2011-07-31 to 2023-11-30)
+
+[92/139] Processing QAG...
+  ✅ Success: 110 rows (2011-11-30 to 2020-12-31)
+
+[93/139] Processing QAU...
+  ✅ Success: 175 rows (2011-05-31 to 2025-11-14)
+
+[94/139] Processing QFN...
+  ✅ Success: 180 rows (2010-12-31 to 2025-11-13)
+
+[95/139] Processing QLTY...
+  ✅ Success: 368 rows (2018-11-04 to 2025-11-13)
+
+[96/139] Processing QPON...
+  ✅ Success: 443 rows (2017-05-28 to 2025-11-13)
+
+[97/139] Processing QUAL...
+  ✅ Success: 134 rows (2014-10-31 to 2025-11-14)
+
+[98/139] Processing QUS...
+  ✅ Success: 132 rows (2014-12-31 to 2025-11-13)
+
+[99/139] Processing RARI...
+2025-11-14 21:21:27,801 - INFO - Collecting data for RDV.AX
+2025-11-14 21:21:34,773 - INFO -   Name: Russell Investments High Dividend Australian Shares ETF
+2025-11-14 21:21:34,774 - INFO -   Exchange: ASX
+2025-11-14 21:21:34,774 - INFO -   Currency: AUD
+2025-11-14 21:21:34,776 - INFO -   Collected 187 data points for RDV.AX
+2025-11-14 21:21:34,777 - INFO -   Date range: 2010-05-31 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:21:34,779 - INFO - Saved RDV data to data/etf/historical/RDV.parquet
+2025-11-14 21:21:34,779 - INFO - Collecting data for REIT.AX
+2025-11-14 21:21:35,977 - INFO -   Name: VanEck FTSE International Property (AUD Hedged) ETF
+2025-11-14 21:21:35,978 - INFO -   Exchange: ASX
+2025-11-14 21:21:35,978 - INFO -   Currency: AUD
+2025-11-14 21:21:35,980 - INFO -   Collected 348 data points for REIT.AX
+2025-11-14 21:21:35,981 - INFO -   Date range: 2019-03-24 09:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:21:35,983 - INFO - Saved REIT data to data/etf/historical/REIT.parquet
+2025-11-14 21:21:35,983 - INFO - Collecting data for RINC.AX
+2025-11-14 21:21:37,377 - INFO -   Name: BetaShares Legg Mason Real Income Fund (Managed Fund)
+2025-11-14 21:21:37,378 - INFO -   Exchange: ASX
+2025-11-14 21:21:37,378 - INFO -   Currency: AUD
+2025-11-14 21:21:37,381 - INFO -   Collected 365 data points for RINC.AX
+2025-11-14 21:21:37,381 - INFO -   Date range: 2018-02-11 08:00:00 to 2025-02-02 08:00:00
+2025-11-14 21:21:37,383 - INFO - Saved RINC data to data/etf/historical/RINC.parquet
+2025-11-14 21:21:37,384 - INFO - Collecting data for ROBO.AX
+2025-11-14 21:21:38,686 - INFO -   Name: Global X ROBO Global Robotics & Automation ETF
+2025-11-14 21:21:38,686 - INFO -   Exchange: ASX
+2025-11-14 21:21:38,686 - INFO -   Currency: AUD
+2025-11-14 21:21:38,689 - INFO -   Collected 428 data points for ROBO.AX
+2025-11-14 21:21:38,690 - INFO -   Date range: 2017-09-10 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:21:38,692 - INFO - Saved ROBO data to data/etf/historical/ROBO.parquet
+2025-11-14 21:21:38,693 - INFO - Collecting data for SEMI.AX
+2025-11-14 21:21:40,372 - INFO -   Name: Global X Semiconductor ETF
+2025-11-14 21:21:40,373 - INFO -   Exchange: ASX
+2025-11-14 21:21:40,373 - INFO -   Currency: AUD
+2025-11-14 21:21:40,376 - INFO -   Collected 222 data points for SEMI.AX
+2025-11-14 21:21:40,376 - INFO -   Date range: 2021-08-22 10:00:00 to 2025-11-14 00:20:20
+2025-11-14 21:21:40,378 - INFO - Saved SEMI data to data/etf/historical/SEMI.parquet
+2025-11-14 21:21:40,379 - INFO - Collecting data for SMLL.AX
+2025-11-14 21:21:41,727 - INFO -   Name: BetaShares Australian Small Companies Select ETF
+2025-11-14 21:21:41,728 - INFO -   Exchange: ASX
+2025-11-14 21:21:41,728 - INFO -   Currency: AUD
+2025-11-14 21:21:41,731 - INFO -   Collected 451 data points for SMLL.AX
+2025-11-14 21:21:41,732 - INFO -   Date range: 2017-04-02 10:00:00 to 2025-11-13 23:43:54
+2025-11-14 21:21:41,734 - INFO - Saved SMLL data to data/etf/historical/SMLL.parquet
+2025-11-14 21:21:41,734 - INFO - Collecting data for SPY.AX
+2025-11-14 21:21:43,482 - INFO -   Name: SPDR S&P 500 ETF
+2025-11-14 21:21:43,482 - INFO -   Exchange: ASX
+2025-11-14 21:21:43,482 - INFO -   Currency: AUD
+2025-11-14 21:21:43,485 - INFO -   Collected 134 data points for SPY.AX
+2025-11-14 21:21:43,485 - INFO -   Date range: 2014-10-31 09:00:00 to 2025-11-13 23:58:55
+2025-11-14 21:21:43,487 - INFO - Saved SPY data to data/etf/historical/SPY.parquet
+2025-11-14 21:21:43,488 - INFO - Collecting data for STW.AX
+2025-11-14 21:21:44,749 - INFO -   Name: SPDR S&P/ASX 200 ETF
+2025-11-14 21:21:44,750 - INFO -   Exchange: ASX
+2025-11-14 21:21:44,750 - INFO -   Currency: AUD
+2025-11-14 21:21:44,752 - INFO -   Collected 216 data points for STW.AX
+2025-11-14 21:21:44,753 - INFO -   Date range: 2007-12-31 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:21:44,755 - INFO - Saved STW data to data/etf/historical/STW.parquet
+2025-11-14 21:21:44,756 - INFO - Collecting data for SYI.AX
+2025-11-14 21:21:55,932 - INFO -   Name: SPDR MSCI Australia Select High Dividend Yield ETF
+2025-11-14 21:21:55,933 - INFO -   Exchange: ASX
+2025-11-14 21:21:55,933 - INFO -   Currency: AUD
+2025-11-14 21:21:55,935 - INFO -   Collected 183 data points for SYI.AX
+2025-11-14 21:21:55,935 - INFO -   Date range: 2010-09-30 10:00:00 to 2025-11-13 23:59:57
+2025-11-14 21:21:55,938 - INFO - Saved SYI data to data/etf/historical/SYI.parquet
+2025-11-14 21:21:55,938 - INFO - Collecting data for UMAX.AX
+2025-11-14 21:21:57,332 - INFO -   Name: Betashares S&P 500 Yield Maximiser Complex ETF
+2025-11-14 21:21:57,333 - INFO -   Exchange: ASX
+2025-11-14 21:21:57,333 - INFO -   Currency: AUD
+2025-11-14 21:21:57,335 - INFO -   Collected 135 data points for UMAX.AX
+2025-11-14 21:21:57,336 - INFO -   Date range: 2014-09-30 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:21:57,338 - INFO - Saved UMAX data to data/etf/historical/UMAX.parquet
+2025-11-14 21:21:57,338 - INFO - Collecting data for USA.AX
+2025-11-14 21:21:58,521 - INFO -   Name: UraniumSA Limited
+2025-11-14 21:21:58,521 - INFO -   Exchange: YHD
+2025-11-14 21:21:58,521 - INFO -   Currency: None
+2025-11-14 21:21:58,521 - ERROR - No timestamps in data for USA.AX
+2025-11-14 21:21:58,522 - INFO - Collecting data for USD.AX
+2025-11-14 21:22:00,573 - INFO -   Name: BetaShares U.S. Dollar ETF
+2025-11-14 21:22:00,574 - INFO -   Exchange: ASX
+2025-11-14 21:22:00,574 - INFO -   Currency: AUD
+2025-11-14 21:22:00,578 - INFO -   Collected 179 data points for USD.AX
+2025-11-14 21:22:00,578 - INFO -   Date range: 2011-01-31 08:00:00 to 2025-11-13 18:20:33
+2025-11-14 21:22:00,582 - INFO - Saved USD data to data/etf/historical/USD.parquet
+2025-11-14 21:22:00,582 - INFO - Collecting data for VAE.AX
+2025-11-14 21:22:01,836 - INFO -   Name: Vanguard FTSE Asia ex Japan Shares Index ETF
+2025-11-14 21:22:01,837 - INFO -   Exchange: ASX
+2025-11-14 21:22:01,837 - INFO -   Currency: AUD
+2025-11-14 21:22:01,839 - INFO -   Collected 120 data points for VAE.AX
+2025-11-14 21:22:01,839 - INFO -   Date range: 2015-12-31 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:22:01,842 - INFO - Saved VAE data to data/etf/historical/VAE.parquet
+2025-11-14 21:22:01,842 - INFO - Collecting data for VAF.AX
+2025-11-14 21:22:03,133 - INFO -   Name: Vanguard Australian Fixed Interest Index ETF
+2025-11-14 21:22:03,134 - INFO -   Exchange: ASX
+2025-11-14 21:22:03,134 - INFO -   Currency: AUD
+2025-11-14 21:22:03,137 - INFO -   Collected 158 data points for VAF.AX
+2025-11-14 21:22:03,138 - INFO -   Date range: 2012-10-31 09:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:22:03,140 - INFO - Saved VAF data to data/etf/historical/VAF.parquet
+2025-11-14 21:22:03,141 - INFO - Collecting data for VAP.AX
+2025-11-14 21:22:04,710 - INFO -   Name: Vanguard Australian Property Securities Index ETF
+2025-11-14 21:22:04,711 - INFO -   Exchange: ASX
+2025-11-14 21:22:04,711 - INFO -   Currency: AUD
+2025-11-14 21:22:04,713 - INFO -   Collected 182 data points for VAP.AX
+2025-11-14 21:22:04,714 - INFO -   Date range: 2010-10-31 09:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:22:04,716 - INFO - Saved VAP data to data/etf/historical/VAP.parquet
+2025-11-14 21:22:04,716 - INFO - Collecting data for VAS.AX
+2025-11-14 21:22:06,363 - INFO -   Name: Vanguard Australian Shares Index ETF
+2025-11-14 21:22:06,364 - INFO -   Exchange: ASX
+2025-11-14 21:22:06,364 - INFO -   Currency: AUD
+2025-11-14 21:22:06,366 - INFO -   Collected 200 data points for VAS.AX
+2025-11-14 21:22:06,367 - INFO -   Date range: 2009-04-30 10:00:00 to 2025-11-14 00:21:17
+2025-11-14 21:22:06,369 - INFO - Saved VAS data to data/etf/historical/VAS.parquet
+2025-11-14 21:22:06,369 - INFO - Collecting data for VBND.AX
+2025-11-14 21:22:08,011 - INFO -   Name: Vanguard Global Aggregate Bond (Hedged) Index ETF
+2025-11-14 21:22:08,011 - INFO -   Exchange: ASX
+2025-11-14 21:22:08,011 - INFO -   Currency: AUD
+2025-11-14 21:22:08,014 - INFO -   Collected 424 data points for VBND.AX
+2025-11-14 21:22:08,015 - INFO -   Date range: 2017-10-08 09:00:00 to 2025-11-13 23:49:05
+2025-11-14 21:22:08,017 - INFO - Saved VBND data to data/etf/historical/VBND.parquet
+2025-11-14 21:22:08,018 - INFO - Collecting data for VDBA.AX
+2025-11-14 21:22:09,271 - INFO -   Name: Vanguard Diversified Balanced Index ETF
+2025-11-14 21:22:09,272 - INFO -   Exchange: ASX
+2025-11-14 21:22:09,272 - INFO -   Currency: AUD
+2025-11-14 21:22:09,275 - INFO -   Collected 418 data points for VDBA.AX
+2025-11-14 21:22:09,275 - INFO -   Date range: 2017-11-19 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:22:09,278 - INFO - Saved VDBA data to data/etf/historical/VDBA.parquet
+2025-11-14 21:22:09,278 - INFO - Collecting data for VDCO.AX
+2025-11-14 21:22:10,586 - INFO -   Name: Vanguard Diversified Conservative Index ETF
+2025-11-14 21:22:10,587 - INFO -   Exchange: ASX
+2025-11-14 21:22:10,587 - INFO -   Currency: AUD
+2025-11-14 21:22:10,590 - INFO -   Collected 418 data points for VDCO.AX
+2025-11-14 21:22:10,590 - INFO -   Date range: 2017-11-19 08:00:00 to 2025-11-13 23:16:35
+2025-11-14 21:22:10,592 - INFO - Saved VDCO data to data/etf/historical/VDCO.parquet
+2025-11-14 21:22:10,593 - INFO - Collecting data for VDGR.AX
+2025-11-14 21:22:11,850 - INFO -   Name: Vanguard Diversified Growth Index ETF
+2025-11-14 21:22:11,851 - INFO -   Exchange: ASX
+2025-11-14 21:22:11,851 - INFO -   Currency: AUD
+2025-11-14 21:22:11,854 - INFO -   Collected 418 data points for VDGR.AX
+2025-11-14 21:22:11,854 - INFO -   Date range: 2017-11-19 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:22:11,857 - INFO - Saved VDGR data to data/etf/historical/VDGR.parquet
+2025-11-14 21:22:11,857 - INFO - Collecting data for VDHG.AX
+2025-11-14 21:22:13,015 - INFO -   Name: Vanguard Diversified High Growth Index ETF
+2025-11-14 21:22:13,016 - INFO -   Exchange: ASX
+2025-11-14 21:22:13,016 - INFO -   Currency: AUD
+2025-11-14 21:22:13,019 - INFO -   Collected 418 data points for VDHG.AX
+2025-11-14 21:22:13,019 - INFO -   Date range: 2017-11-19 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:22:13,022 - INFO - Saved VDHG data to data/etf/historical/VDHG.parquet
+2025-11-14 21:22:13,022 - INFO - Collecting data for VEQ.AX
+2025-11-14 21:22:14,366 - INFO -   Name: Vanguard FTSE Europe Shares ETF
+2025-11-14 21:22:14,367 - INFO -   Exchange: ASX
+2025-11-14 21:22:14,367 - INFO -   Currency: AUD
+2025-11-14 21:22:14,370 - INFO -   Collected 120 data points for VEQ.AX
+2025-11-14 21:22:14,370 - INFO -   Date range: 2015-12-31 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:22:14,372 - INFO - Saved VEQ data to data/etf/historical/VEQ.parquet
+2025-11-14 21:22:14,373 - INFO - Collecting data for VESG.AX
+2025-11-14 21:22:15,751 - INFO -   Name: Vanguard Ethically Conscious International Shares Index ETF
+2025-11-14 21:22:15,752 - INFO -   Exchange: ASX
+2025-11-14 21:22:15,752 - INFO -   Currency: AUD
+2025-11-14 21:22:15,755 - INFO -   Collected 376 data points for VESG.AX
+2025-11-14 21:22:15,755 - INFO -   Date range: 2018-09-09 10:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:22:15,758 - INFO - Saved VESG data to data/etf/historical/VESG.parquet
+2025-11-14 21:22:15,758 - INFO - Collecting data for VETH.AX
+2025-11-14 21:22:17,537 - INFO -   Name: Vanguard Ethically Conscious Australian Shares ETF
+2025-11-14 21:22:17,537 - INFO -   Exchange: ASX
+2025-11-14 21:22:17,537 - INFO -   Currency: AUD
+2025-11-14 21:22:17,540 - INFO -   Collected 267 data points for VETH.AX
+2025-11-14 21:22:17,541 - INFO -   Date range: 2020-10-11 09:00:00 to 2025-11-13 23:57:59
+2025-11-14 21:22:17,543 - INFO - Saved VETH data to data/etf/historical/VETH.parquet
+2025-11-14 21:22:17,543 - INFO - Collecting data for VGAD.AX
+2025-11-14 21:22:22,308 - INFO -   Name: Vanguard MSCI Index International Shares (Hedged) ETF
+2025-11-14 21:22:22,308 - INFO -   Exchange: ASX
+2025-11-14 21:22:22,308 - INFO -   Currency: AUD
+2025-11-14 21:22:22,310 - INFO -   Collected 133 data points for VGAD.AX
+2025-11-14 21:22:22,311 - INFO -   Date range: 2014-11-30 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:22:22,313 - INFO - Saved VGAD data to data/etf/historical/VGAD.parquet
+2025-11-14 21:22:22,313 - INFO - Collecting data for VGB.AX
+2025-11-14 21:22:23,774 - INFO -   Name: Vanguard Australian Government Bond Index ETF
+2025-11-14 21:22:23,775 - INFO -   Exchange: ASX
+2025-11-14 21:22:23,775 - INFO -   Currency: AUD
+2025-11-14 21:22:23,777 - INFO -   Collected 164 data points for VGB.AX
+2025-11-14 21:22:23,777 - INFO -   Date range: 2012-04-30 10:00:00 to 2025-11-13 23:38:11
+2025-11-14 21:22:23,779 - INFO - Saved VGB data to data/etf/historical/VGB.parquet
+2025-11-14 21:22:23,780 - INFO - Collecting data for VGE.AX
+2025-11-14 21:22:25,135 - INFO -   Name: Vanguard FTSE Emerging Markets Shares ETF
+2025-11-14 21:22:25,135 - INFO -   Exchange: ASX
+2025-11-14 21:22:25,135 - INFO -   Currency: AUD
+2025-11-14 21:22:25,137 - INFO -   Collected 145 data points for VGE.AX
+2025-11-14 21:22:25,138 - INFO -   Date range: 2013-11-30 08:00:00 to 2025-11-13 23:56:11
+2025-11-14 21:22:25,140 - INFO - Saved VGE data to data/etf/historical/VGE.parquet
+2025-11-14 21:22:25,140 - INFO - Collecting data for VGS.AX
+2025-11-14 21:22:26,409 - INFO -   Name: Vanguard MSCI Index International Shares ETF
+2025-11-14 21:22:26,409 - INFO -   Exchange: ASX
+2025-11-14 21:22:26,409 - INFO -   Currency: AUD
+2025-11-14 21:22:26,412 - INFO -   Collected 133 data points for VGS.AX
+2025-11-14 21:22:26,412 - INFO -   Date range: 2014-11-30 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:22:26,414 - INFO - Saved VGS data to data/etf/historical/VGS.parquet
+2025-11-14 21:22:26,414 - INFO - Collecting data for VHY.AX
+2025-11-14 21:22:27,299 - INFO -   Name: Vanguard Australian Shares High Yield ETF
+2025-11-14 21:22:27,299 - INFO -   Exchange: ASX
+2025-11-14 21:22:27,299 - INFO -   Currency: AUD
+2025-11-14 21:22:27,302 - INFO -   Collected 175 data points for VHY.AX
+2025-11-14 21:22:27,302 - INFO -   Date range: 2011-05-31 10:00:00 to 2025-11-14 00:17:03
+2025-11-14 21:22:27,304 - INFO - Saved VHY data to data/etf/historical/VHY.parquet
+2025-11-14 21:22:27,304 - INFO - Collecting data for VIF.AX
+2025-11-14 21:22:28,203 - INFO -   Name: Vanguard International Fixed Interest Index (Hedged) ETF
+2025-11-14 21:22:28,203 - INFO -   Exchange: ASX
+2025-11-14 21:22:28,203 - INFO -   Currency: AUD
+2025-11-14 21:22:28,205 - INFO -   Collected 120 data points for VIF.AX
+2025-11-14 21:22:28,206 - INFO -   Date range: 2015-12-31 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:22:28,208 - INFO - Saved VIF data to data/etf/historical/VIF.parquet
+2025-11-14 21:22:28,208 - INFO - Collecting data for VSO.AX
+2025-11-14 21:22:29,432 - INFO -   Name: Vanguard MSCI Australian Small Companies Index ETF
+2025-11-14 21:22:29,432 - INFO -   Exchange: ASX
+2025-11-14 21:22:29,432 - INFO -   Currency: AUD
+2025-11-14 21:22:29,434 - INFO -   Collected 175 data points for VSO.AX
+2025-11-14 21:22:29,435 - INFO -   Date range: 2011-05-31 10:00:00 to 2025-11-14 00:20:43
+2025-11-14 21:22:29,437 - INFO - Saved VSO data to data/etf/historical/VSO.parquet
+2025-11-14 21:22:29,437 - INFO - Collecting data for VTS.AX
+2025-11-14 21:22:30,876 - INFO -   Name: Vanguard US Total Market Shares Index ETF
+2025-11-14 21:22:30,876 - INFO -   Exchange: ASX
+2025-11-14 21:22:30,877 - INFO -   Currency: AUD
+2025-11-14 21:22:30,879 - INFO -   Collected 199 data points for VTS.AX
+2025-11-14 21:22:30,880 - INFO -   Date range: 2009-05-31 10:00:00 to 2025-11-14 00:14:24
+2025-11-14 21:22:30,882 - INFO - Saved VTS data to data/etf/historical/VTS.parquet
+2025-11-14 21:22:30,883 - INFO - Collecting data for WMX.AX
+2025-11-14 21:22:31,910 - INFO -   Name: N/A
+2025-11-14 21:22:31,911 - INFO -   Exchange: ASX
+2025-11-14 21:22:31,911 - INFO -   Currency: AUD
+2025-11-14 21:22:31,913 - INFO -   Collected 138 data points for WMX.AX
+2025-11-14 21:22:31,914 - INFO -   Date range: 2025-05-04 20:00:00 to 2025-11-13 23:40:59
+2025-11-14 21:22:31,915 - INFO - Saved WMX data to data/etf/historical/WMX.parquet
+2025-11-14 21:22:31,916 - INFO - Collecting data for WSMG.AX
+2025-11-14 21:22:32,974 - ERROR - API error for WSMG.AX: {'code': 'Not Found', 'description': 'No data found, symbol may be delisted'}
+2025-11-14 21:22:32,974 - INFO - Collecting data for WXOZ.AX
+2025-11-14 21:22:34,357 - INFO -   Name: SPDR S&P World ex Australia Carbon Aware ETF
+2025-11-14 21:22:34,358 - INFO -   Exchange: ASX
+2025-11-14 21:22:34,358 - INFO -   Currency: AUD
+2025-11-14 21:22:34,360 - INFO -   Collected 153 data points for WXOZ.AX
+2025-11-14 21:22:34,360 - INFO -   Date range: 2013-03-31 09:00:00 to 2025-11-13 23:43:19
+2025-11-14 21:22:34,362 - INFO - Saved WXOZ data to data/etf/historical/WXOZ.parquet
+2025-11-14 21:22:34,363 - INFO - Collecting data for XARO.AX
+2025-11-14 21:22:35,758 - INFO -   Name: Ardea Real Outcome Bond Complex ETF
+2025-11-14 21:22:35,759 - INFO -   Exchange: ASX
+2025-11-14 21:22:35,759 - INFO -   Currency: AUD
+2025-11-14 21:22:35,762 - INFO -   Collected 364 data points for XARO.AX
+2025-11-14 21:22:35,762 - INFO -   Date range: 2018-12-02 08:00:00 to 2025-11-14 00:10:18
+2025-11-14 21:22:35,764 - INFO - Saved XARO data to data/etf/historical/XARO.parquet
+2025-11-14 21:22:35,765 - INFO - Collecting data for YANK.AX
+2025-11-14 21:22:37,121 - INFO -   Name: Betashares Strong US Dollar Complex ETF
+2025-11-14 21:22:37,121 - INFO -   Exchange: ASX
+2025-11-14 21:22:37,121 - INFO -   Currency: AUD
+2025-11-14 21:22:37,124 - INFO -   Collected 469 data points for YANK.AX
+2025-11-14 21:22:37,125 - INFO -   Date range: 2016-11-27 08:00:00 to 2025-11-13 19:24:41
+2025-11-14 21:22:37,127 - INFO - Saved YANK data to data/etf/historical/YANK.parquet
+2025-11-14 21:22:37,128 - INFO - Collecting data for YMAX.AX
+2025-11-14 21:22:38,491 - INFO -   Name: Betashares Australian Top 20 Equities Yield Maximiser Complex ETF
+2025-11-14 21:22:38,492 - INFO -   Exchange: ASX
+2025-11-14 21:22:38,492 - INFO -   Currency: AUD
+2025-11-14 21:22:38,494 - INFO -   Collected 157 data points for YMAX.AX
+2025-11-14 21:22:38,494 - INFO -   Date range: 2012-11-30 08:00:00 to 2025-11-13 23:59:16
+2025-11-14 21:22:38,496 - INFO - Saved YMAX data to data/etf/historical/YMAX.parquet
+2025-11-14 21:22:38,497 - INFO - Collecting data for ZYAU.AX
+2025-11-14 21:22:39,879 - INFO -   Name: Global X S&P/ASX 200 High Dividend ETF
+2025-11-14 21:22:39,880 - INFO -   Exchange: ASX
+2025-11-14 21:22:39,880 - INFO -   Currency: AUD
+2025-11-14 21:22:39,882 - INFO -   Collected 126 data points for ZYAU.AX
+2025-11-14 21:22:39,882 - INFO -   Date range: 2015-06-30 10:00:00 to 2025-11-13 23:37:28
+2025-11-14 21:22:39,884 - INFO - Saved ZYAU data to data/etf/historical/ZYAU.parquet
+2025-11-14 21:22:39,885 - INFO - Collecting data for ZYUS.AX
+2025-11-14 21:22:41,672 - INFO -   Name: Global X S&P 500 High Yield Low Volatility ETF
+2025-11-14 21:22:41,672 - INFO -   Exchange: ASX
+2025-11-14 21:22:41,672 - INFO -   Currency: AUD
+2025-11-14 21:22:41,674 - INFO -   Collected 126 data points for ZYUS.AX
+2025-11-14 21:22:41,675 - INFO -   Date range: 2015-06-30 10:00:00 to 2025-11-13 23:59:44
+2025-11-14 21:22:41,676 - INFO - Saved ZYUS data to data/etf/historical/ZYUS.parquet
+  ✅ Success: 129 rows (2015-03-31 to 2025-11-13)
+
+[100/139] Processing RDV...
+  ✅ Success: 187 rows (2010-05-31 to 2025-11-14)
+
+[101/139] Processing REIT...
+  ✅ Success: 348 rows (2019-03-24 to 2025-11-14)
+
+[102/139] Processing RINC...
+  ✅ Success: 365 rows (2018-02-11 to 2025-02-02)
+
+[103/139] Processing ROBO...
+  ✅ Success: 428 rows (2017-09-10 to 2025-11-14)
+
+[104/139] Processing SEMI...
+  ✅ Success: 222 rows (2021-08-22 to 2025-11-14)
+
+[105/139] Processing SMLL...
+  ✅ Success: 451 rows (2017-04-02 to 2025-11-13)
+
+[106/139] Processing SPY...
+  ✅ Success: 134 rows (2014-10-31 to 2025-11-13)
+
+[107/139] Processing STW...
+  ✅ Success: 216 rows (2007-12-31 to 2025-11-14)
+
+[108/139] Processing SYI...
+  ✅ Success: 183 rows (2010-09-30 to 2025-11-13)
+
+[109/139] Processing UMAX...
+  ✅ Success: 135 rows (2014-09-30 to 2025-11-14)
+
+[110/139] Processing USA...
+  ❌ Failed: No data returned
+
+[111/139] Processing USD...
+  ✅ Success: 179 rows (2011-01-31 to 2025-11-13)
+
+[112/139] Processing VAE...
+  ✅ Success: 120 rows (2015-12-31 to 2025-11-14)
+
+[113/139] Processing VAF...
+  ✅ Success: 158 rows (2012-10-31 to 2025-11-14)
+
+[114/139] Processing VAP...
+  ✅ Success: 182 rows (2010-10-31 to 2025-11-14)
+
+[115/139] Processing VAS...
+  ✅ Success: 200 rows (2009-04-30 to 2025-11-14)
+
+[116/139] Processing VBND...
+  ✅ Success: 424 rows (2017-10-08 to 2025-11-13)
+
+[117/139] Processing VDBA...
+  ✅ Success: 418 rows (2017-11-19 to 2025-11-14)
+
+[118/139] Processing VDCO...
+  ✅ Success: 418 rows (2017-11-19 to 2025-11-13)
+
+[119/139] Processing VDGR...
+  ✅ Success: 418 rows (2017-11-19 to 2025-11-14)
+
+[120/139] Processing VDHG...
+  ✅ Success: 418 rows (2017-11-19 to 2025-11-14)
+
+[121/139] Processing VEQ...
+  ✅ Success: 120 rows (2015-12-31 to 2025-11-14)
+
+[122/139] Processing VESG...
+  ✅ Success: 376 rows (2018-09-09 to 2025-11-14)
+
+[123/139] Processing VETH...
+  ✅ Success: 267 rows (2020-10-11 to 2025-11-13)
+
+[124/139] Processing VGAD...
+  ✅ Success: 133 rows (2014-11-30 to 2025-11-14)
+
+[125/139] Processing VGB...
+  ✅ Success: 164 rows (2012-04-30 to 2025-11-13)
+
+[126/139] Processing VGE...
+  ✅ Success: 145 rows (2013-11-30 to 2025-11-13)
+
+[127/139] Processing VGS...
+  ✅ Success: 133 rows (2014-11-30 to 2025-11-14)
+
+[128/139] Processing VHY...
+  ✅ Success: 175 rows (2011-05-31 to 2025-11-14)
+
+[129/139] Processing VIF...
+  ✅ Success: 120 rows (2015-12-31 to 2025-11-14)
+
+[130/139] Processing VSO...
+  ✅ Success: 175 rows (2011-05-31 to 2025-11-14)
+
+[131/139] Processing VTS...
+  ✅ Success: 199 rows (2009-05-31 to 2025-11-14)
+
+[132/139] Processing WMX...
+  ✅ Success: 138 rows (2025-05-04 to 2025-11-13)
+
+[133/139] Processing WSMG...
+  ❌ Failed: No data returned
+
+[134/139] Processing WXOZ...
+  ✅ Success: 153 rows (2013-03-31 to 2025-11-13)
+
+[135/139] Processing XARO...
+  ✅ Success: 364 rows (2018-12-02 to 2025-11-14)
+
+[136/139] Processing YANK...
+  ✅ Success: 469 rows (2016-11-27 to 2025-11-13)
+
+[137/139] Processing YMAX...
+  ✅ Success: 157 rows (2012-11-30 to 2025-11-13)
+
+[138/139] Processing ZYAU...
+  ✅ Success: 126 rows (2015-06-30 to 2025-11-13)
+
+[139/139] Processing ZYUS...
+  ✅ Success: 126 rows (2015-06-30 to 2025-11-13)
+
+================================================================================
+DOWNLOAD SUMMARY
+================================================================================
+Total ETFs: 139
+Successful: 132
+Failed: 7
+Success rate: 95.0%
+End time: 2025-11-14 21:22:41.677408
+
+✅ Successfully downloaded ETFs:
+  Total data points: 31,625
+
+  Sample ETFs:
+    A200: 394 rows (2018-05-06 to 2025-11-14)
+    AAA: 165 rows (2012-03-31 to 2025-11-14)
+    ASAO: 162 rows (2022-10-16 to 2025-11-13)
+    ASIA: 375 rows (2018-09-16 to 2025-11-14)
+    ATEC: 299 rows (2020-03-01 to 2025-11-14)
+    AYLD: 147 rows (2023-01-29 to 2025-11-13)
+    BBOZ: 128 rows (2015-04-30 to 2025-11-14)
+    BBUS: 124 rows (2015-08-31 to 2025-11-14)
+    BEAR: 161 rows (2012-07-31 to 2025-11-14)
+    BILL: 443 rows (2017-05-28 to 2025-11-13)
+    ... and 122 more
+
+❌ Failed ETFs (7):
+  - DIFF: No data returned
+  - DIVI: No data returned
+  - EQIN: No data returned
+  - HYLD: No data returned
+  - MVE: No data returned
+  - USA: No data returned
+  - WSMG: No data returned
+
+Detailed results saved to: etf_download_results.json
+Log file: etf_download.log

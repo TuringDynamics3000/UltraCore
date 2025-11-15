@@ -113,6 +113,11 @@ class ManusYahooFinanceCollector:
                 range_param = 'max'
             
             # Call Manus Yahoo Finance API
+            # Note: Yahoo Finance returns monthly data when using range='max' with interval='1d'
+            # Use range='10y' for daily data instead
+            if interval == '1d' and range_param == 'max':
+                range_param = '10y'  # Use 10 years for daily data
+            
             response = self.client.call_api('YahooFinance/get_stock_chart', query={
                 'symbol': symbol,
                 'region': self.region,
