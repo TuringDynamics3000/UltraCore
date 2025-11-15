@@ -142,19 +142,7 @@ export const rlAgents = mysqlTable("rl_agents", {
 export type RlAgent = typeof rlAgents.$inferSelect;
 export type InsertRlAgent = typeof rlAgents.$inferInsert;
 
-export const trainingRuns = mysqlTable("training_runs", {
-  id: int("id").autoincrement().primaryKey(),
-  agentName: mysqlEnum("agent_name", ["alpha", "beta", "gamma", "delta", "epsilon"]).notNull(),
-  episodes: int("episodes").notNull(),
-  avgReward: decimal("avg_reward", { precision: 10, scale: 4 }),
-  finalReward: decimal("final_reward", { precision: 10, scale: 4 }),
-  duration: int("duration"),
-  status: mysqlEnum("status", ["running", "completed", "failed"]).default("running").notNull(),
-  startedAt: timestamp("started_at").defaultNow().notNull(),
-  completedAt: timestamp("completed_at"),
-});
-
-export type TrainingRun = typeof trainingRuns.$inferSelect;
+// Training runs table moved to RL AGENT TRAINING section below
 
 // ============================================================================
 // KAFKA EVENTS (Metadata only - actual events in Kafka)
@@ -186,6 +174,63 @@ export const kafkaEvents = mysqlTable("kafka_events", {
 
 export type KafkaEvent = typeof kafkaEvents.$inferSelect;
 export type InsertKafkaEvent = typeof kafkaEvents.$inferInsert;
+
+// ============================================================================
+// RL AGENT TRAINING
+// ============================================================================
+
+export const trainingRuns = mysqlTable("training_runs", {
+  id: varchar("id", { length: 64 }).primaryKey(),
+  agentName: mysqlEnum("agent_name", ["alpha", "beta", "gamma", "delta", "epsilon"]).notNull(),
+  status: mysqlEnum("status", ["running", "paused", "completed", "failed"]).default("running").notNull(),
+  startedAt: timestamp("started_at").defaultNow().notNull(),
+  completedAt: timestamp("completed_at"),
+  totalEpisodes: int("total_episodes").default(0).notNull(),
+  currentEpisode: int("current_episode").default(0).notNull(),
+  bestReward: decimal("best_reward", { precision: 15, scale: 4 }),
+  avgReward: decimal("avg_reward", { precision: 15, scale: 4 }),
+  portfolioValue: decimal("portfolio_value", { precision: 15, scale: 2 }),
+  sharpeRatio: decimal("sharpe_ratio", { precision: 8, scale: 4 }),
+  errorMessage: text("error_message"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
+export type TrainingRun = typeof trainingRuns.$inferSelect;
+export type InsertTrainingRun = typeof trainingRuns.$inferInsert;
+
+export const trainingMetrics = mysqlTable("training_metrics", {
+  id: int("id").autoincrement().primaryKey(),
+  runId: varchar("run_id", { length: 64 }).notNull(),
+  episode: int("episode").notNull(),
+  reward: decimal("reward", { precision: 15, scale: 4 }).notNull(),
+  portfolioValue: decimal("portfolio_value", { precision: 15, scale: 2 }).notNull(),
+  totalReturn: decimal("total_return", { precision: 8, scale: 4 }),
+  sharpeRatio: decimal("sharpe_ratio", { precision: 8, scale: 4 }),
+  maxDrawdown: decimal("max_drawdown", { precision: 8, scale: 4 }),
+  tradesExecuted: int("trades_executed").default(0).notNull(),
+  timestamp: timestamp("timestamp").defaultNow().notNull(),
+});
+
+export type TrainingMetric = typeof trainingMetrics.$inferSelect;
+export type InsertTrainingMetric = typeof trainingMetrics.$inferInsert;
+
+export const agentPerformance = mysqlTable("agent_performance", {
+  id: int("id").autoincrement().primaryKey(),
+  agentName: mysqlEnum("agent_name", ["alpha", "beta", "gamma", "delta", "epsilon"]).notNull(),
+  totalRuns: int("total_runs").default(0).notNull(),
+  successfulRuns: int("successful_runs").default(0).notNull(),
+  avgReward: decimal("avg_reward", { precision: 15, scale: 4 }),
+  bestReward: decimal("best_reward", { precision: 15, scale: 4 }),
+  avgSharpeRatio: decimal("avg_sharpe_ratio", { precision: 8, scale: 4 }),
+  avgReturn: decimal("avg_return", { precision: 8, scale: 4 }),
+  totalEpisodes: int("total_episodes").default(0).notNull(),
+  lastTrainedAt: timestamp("last_trained_at"),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
+export type AgentPerformance = typeof agentPerformance.$inferSelect;
+export type InsertAgentPerformance = typeof agentPerformance.$inferInsert;
 
 // ============================================================================
 // DATA MESH PRODUCTS

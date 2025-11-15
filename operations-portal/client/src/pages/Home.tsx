@@ -12,6 +12,8 @@ import {
   AlertCircle
 } from "lucide-react";
 import { useLocation } from "wouter";
+import { InfoTooltip } from "@/components/InfoTooltip";
+import { InfoCard } from "@/components/InfoCard";
 
 export default function Home() {
   const [, setLocation] = useLocation();
@@ -81,7 +83,8 @@ export default function Home() {
       value: "$45.2M",
       change: "+12.5%",
       trend: "up",
-      icon: TrendingUp
+      icon: TrendingUp,
+      tooltip: "Assets Under Management: Total market value of all portfolios managed by the platform"
     },
     {
       title: "Active Portfolios",
@@ -116,13 +119,23 @@ export default function Home() {
         </p>
       </div>
 
+      {/* Info Card */}
+      <InfoCard title="Welcome to UltraCore Operations Portal">
+        <p>
+          This dashboard provides real-time monitoring and management of all UltraCore systems including
+          portfolio management, RL agent training, event streaming, and data analytics. Navigate through
+          the modules below to access specific functionality.
+        </p>
+      </InfoCard>
+
       {/* KPI Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {kpis.map((kpi) => (
           <Card key={kpi.title}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-sm font-medium flex items-center gap-1">
                 {kpi.title}
+                {(kpi as any).tooltip && <InfoTooltip content={(kpi as any).tooltip} />}
               </CardTitle>
               <kpi.icon className="h-4 w-4 text-muted-foreground" />
             </CardHeader>

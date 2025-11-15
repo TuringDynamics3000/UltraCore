@@ -110,7 +110,7 @@ export default function SecurityDetail() {
           y: {
             beginAtZero: false,
             ticks: {
-              callback: (value) => `$${value}`,
+              callback: (value: string | number) => `$${value}`,
             },
           },
         },

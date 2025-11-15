@@ -7,6 +7,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Building2, Bitcoin, Palette, Wine, Home, Search, TrendingUp, Globe } from "lucide-react";
+import { InfoCard } from "@/components/InfoCard";
+import { InfoTooltip } from "@/components/InfoTooltip";
+import { DataSourceBadge } from "@/components/DataSourceBadge";
 
 export default function Securities() {
   const [, setLocation] = useLocation();
@@ -129,6 +132,16 @@ export default function Securities() {
           Add Security
         </Button>
       </div>
+
+      {/* Info Card */}
+      <InfoCard title="Dynamic Securities Register">
+        <p>
+          This register combines static master data (ISIN, CUSIP, custody info) with real-time market intelligence from
+          <DataSourceBadge source="fiscal_ai" className="mx-1" /> and
+          <DataSourceBadge source="yahoo_finance" className="mx-1" />.
+          All price updates are automatically persisted to the database and published to Kafka for ML/RL training.
+        </p>
+      </InfoCard>
 
       {/* Summary Cards */}
       <div className="grid gap-4 md:grid-cols-4">

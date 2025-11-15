@@ -199,3 +199,39 @@
 - [x] Add event audit trail and monitoring
 - [ ] Create WebSocket bridge for real-time event streaming
 - [ ] Test event flow end-to-end
+
+
+## Current Sprint: Complete Operations Portal
+- [x] Build Kafka Events Dashboard page
+- [x] Add real-time event statistics cards
+- [x] Create event search and filtering UI
+- [x] Add event timeline visualization
+- [x] Fix TypeScript errors in SecurityDetail and PortfolioDetail
+- [x] Polish navigation and routing
+- [x] Final testing of all modules
+- [ ] Create comprehensive README
+
+
+## Current Sprint: RL Agent Training Dashboard
+- [ ] Design training_runs and training_metrics tables
+- [ ] Create agent_performance table for portfolio outcomes
+- [ ] Add tRPC endpoints for training data retrieval
+- [ ] Build Agent Training Dashboard page
+- [ ] Add reward curve visualization with Chart.js
+- [ ] Create training progress indicators and status badges
+- [ ] Implement portfolio performance comparison charts
+- [ ] Add training control panel (start/stop/pause)
+- [ ] Create agent comparison view
+- [ ] Test with sample training data
+
+
+## Current Sprint: Add Explainers and Hints
+- [x] Create InfoTooltip component for metric explanations
+- [x] Create InfoCard component for module descriptions
+- [x] Add tooltips to Dashboard metrics (AUM, Sharpe Ratio, etc.)
+- [x] Add data source badges (Fiscal.ai, Yahoo Finance, Internal)
+- [x] Create contextual help for Kafka Events
+- [x] Add Securities page explainers (ISIN, CUSIP, Asset Classes)
+- [ ] Add explainers to Portfolio metrics (Volatility, Max Drawdown)
+- [ ] Add RL concept hints (Reward, Episode, Training Run)
+- [ ] Test all tooltips and hints

@@ -17,6 +17,7 @@ import DataMesh from "./pages/DataMesh";
 import MCP from "./pages/MCP";
 import Securities from "./pages/Securities";
 import SecurityDetail from "./pages/SecurityDetail";
+import KafkaEvents from "./pages/KafkaEvents";
 
 function Router() {
   return (
@@ -80,6 +81,11 @@ function Router() {
       <Route path="/securities/:id">
         <DashboardLayout>
           <SecurityDetail />
+        </DashboardLayout>
+      </Route>
+      <Route path="/kafka-events">
+        <DashboardLayout>
+          <KafkaEvents />
         </DashboardLayout>
       </Route>
       <Route path="/404" component={NotFound} />
