@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
   LayoutDashboard, 
@@ -9,14 +10,36 @@ import {
   Wrench,
   TrendingUp,
   Users,
-  AlertCircle
+  AlertCircle,
+  HelpCircle
 } from "lucide-react";
 import { useLocation } from "wouter";
 import { InfoTooltip } from "@/components/InfoTooltip";
 import { InfoCard } from "@/components/InfoCard";
+import { OnboardingTour } from "@/components/OnboardingTour";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const [, setLocation] = useLocation();
+  const [runTour, setRunTour] = useState(false);
+
+  useEffect(() => {
+    // Check if user has completed the tour
+    const tourCompleted = localStorage.getItem('ultracore-tour-completed');
+    if (!tourCompleted) {
+      // Auto-start tour for first-time users after a short delay
+      setTimeout(() => setRunTour(true), 1000);
+    }
+  }, []);
+
+  const handleTourFinish = () => {
+    setRunTour(false);
+    localStorage.setItem('ultracore-tour-completed', 'true');
+  };
+
+  const handleStartTour = () => {
+    setRunTour(true);
+  };
 
   const modules = [
     {
@@ -112,11 +135,17 @@ export default function Home() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Operations Dashboard</h1>
-        <p className="text-muted-foreground mt-2">
-          Comprehensive management portal for UltraCore operations
-        </p>
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Operations Dashboard</h1>
+          <p className="text-muted-foreground mt-2">
+            Comprehensive management portal for UltraCore operations
+          </p>
+        </div>
+        <Button variant="outline" onClick={handleStartTour} className="gap-2">
+          <HelpCircle className="h-4 w-4" />
+          Start Tour
+        </Button>
       </div>
 
       {/* Info Card */}
@@ -129,7 +158,7 @@ export default function Home() {
       </InfoCard>
 
       {/* KPI Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div data-tour="kpi-cards" className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {kpis.map((kpi) => (
           <Card key={kpi.title}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -150,12 +179,13 @@ export default function Home() {
       </div>
 
       {/* Module Grid */}
-      <div>
+      <div data-tour="modules">
         <h2 className="text-xl font-semibold mb-4">Modules</h2>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {modules.map((module) => (
+          {modules.map((module, index) => (
             <Card 
               key={module.path}
+              data-tour={index === 0 ? "portfolios-module" : index === 2 ? "securities-module" : index === 4 ? "kafka-module" : index === 3 ? "rl-agents-module" : undefined}
               className="cursor-pointer hover:shadow-md transition-shadow"
               onClick={() => setLocation(module.path)}
             >
@@ -216,6 +246,9 @@ export default function Home() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Onboarding Tour */}
+      <OnboardingTour run={runTour} onFinish={handleTourFinish} />
     </div>
   );
 }

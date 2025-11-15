@@ -235,3 +235,46 @@
 - [ ] Add explainers to Portfolio metrics (Volatility, Max Drawdown)
 - [ ] Add RL concept hints (Reward, Episode, Training Run)
 - [ ] Test all tooltips and hints
+
+
+## Current Sprint: Interactive Onboarding Tour
+- [x] Install react-joyride package
+- [x] Create OnboardingTour component
+- [x] Define tour steps for Dashboard walkthrough
+- [x] Add tour steps for Securities module
+- [x] Add tour steps for Kafka Events
+- [x] Implement localStorage to track tour completion
+- [x] Add manual "Start Tour" button in Dashboard
+- [x] Add "Skip Tour" and "Next" navigation
+- [x] Style tour tooltips to match portal theme
+- [x] Test complete tour flow
+
+
+## Future: UltraWealth Account Creation Integration
+- [ ] Design customer onboarding flow (KYC, risk profiling, compliance)
+- [ ] Create WealthClient registration form with risk assessment
+- [ ] Implement MDA contract signing workflow
+- [ ] Build Statement of Advice (SOA) generation and delivery
+- [ ] Add portfolio creation wizard with goal selection
+- [ ] Integrate ETF universe selection (12 ASX ETFs)
+- [ ] Implement fee structure display (0.50% management fee)
+- [ ] Add compliance checks (ASIC, AFSL, best interests)
+- [ ] Create admin approval workflow for new accounts
+- [ ] Build customer self-service sign-up portal option
+- [ ] Add Tax File Number validation
+- [ ] Implement glide path strategy selection (first home, retirement, wealth accumulation)
+- [ ] Create minimum investment validation ($1,000 pod, $100 monthly)
+- [ ] Add Anya AI integration for onboarding support
+
+
+## Current Sprint: Final Portal Completion
+- [x] Create comprehensive README.md with architecture overview
+- [x] Document all 9 modules and their features
+- [x] Add setup and deployment instructions
+- [x] Document API endpoints and data models
+- [x] Review all modules for completeness (Dashboard, Portfolios, Securities, ESG, Loans, RL Agents, Kafka Events, Data Mesh, MCP Tools)
+- [x] Test navigation between all pages
+- [x] Verify all tooltips and explainers are working
+- [x] Check responsive design on mobile/tablet
+- [ ] Final checkpoint and commit to GitHub
+- [x] Create deployment guide
