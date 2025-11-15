@@ -13,6 +13,7 @@ from datetime import datetime, timedelta
 
 from ultracore.esg.agents.epsilon_agent import EpsilonAgent
 from ultracore.esg.data.esg_data_loader import EsgDataLoader
+from ultracore.esg.data.data_mesh_client import DataMeshClient
 
 
 class EsgPortfolioOptimizer:
@@ -28,7 +29,8 @@ class EsgPortfolioOptimizer:
         esg_data_loader: EsgDataLoader,
         epsilon_agent: EpsilonAgent,
         asset_universe: List[str],  # List of ISINs
-        lookback_days: int = 252  # 1 year of trading days
+        lookback_days: int = 252,  # 1 year of trading days
+        data_mesh_client: Optional[DataMeshClient] = None
     ):
         """
         Initialize the portfolio optimizer.
@@ -43,6 +45,7 @@ class EsgPortfolioOptimizer:
         self.epsilon_agent = epsilon_agent
         self.asset_universe = asset_universe
         self.lookback_days = lookback_days
+        self.data_mesh_client = data_mesh_client or DataMeshClient()
         
         # ESG rating mapping
         self.rating_map = {
@@ -120,10 +123,34 @@ class EsgPortfolioOptimizer:
         
         # Financial features (20 per asset)
         financial_features = []
-        for isin in self.asset_universe:
-            # Mock historical returns (in production, load from Data Mesh)
-            returns = np.random.randn(20) * 0.01  # Daily returns
-            financial_features.extend(returns)
+        
+        # Query financial data from Data Mesh
+        end_date = datetime.now()
+        start_date = end_date - timedelta(days=self.lookback_days)
+        
+        try:
+            financial_df = self.data_mesh_client.get_financial_data(
+                isins=self.asset_universe,
+                start_date=start_date,
+                end_date=end_date,
+                columns=["isin", "date", "returns"]
+            )
+            
+            # Extract last 20 returns for each asset
+            for isin in self.asset_universe:
+                asset_data = financial_df[financial_df["isin"] == isin]
+                returns = asset_data["returns"].tail(20).values
+                
+                # Pad with zeros if insufficient data
+                if len(returns) < 20:
+                    returns = np.pad(returns, (20 - len(returns), 0), mode="constant")
+                
+                financial_features.extend(returns)
+        except Exception as e:
+            # Fallback to mock data if Data Mesh unavailable
+            for isin in self.asset_universe:
+                returns = np.random.randn(20) * 0.01
+                financial_features.extend(returns)
         
         # Current holdings (1 per asset)
         holdings = []

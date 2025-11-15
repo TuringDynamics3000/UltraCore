@@ -41,6 +41,8 @@ class PortfolioEventType(str, Enum):
     PORTFOLIO_REBALANCED = "portfolio_rebalanced"
     ESG_CONSTRAINT_ADDED = "esg_constraint_added"
     ESG_CONSTRAINT_REMOVED = "esg_constraint_removed"
+    PORTFOLIO_OPTIMIZATION_REQUESTED = "portfolio_optimization_requested"
+    PORTFOLIO_OPTIMIZATION_COMPLETED = "portfolio_optimization_completed"
 
 
 class CorporateActionType(str, Enum):
