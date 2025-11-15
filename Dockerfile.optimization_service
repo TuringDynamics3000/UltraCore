@@ -1,0 +1,57 @@
+# Dockerfile for ESG Portfolio Optimization Service
+# Multi-stage build for smaller final image
+
+# Stage 1: Builder
+FROM python:3.11-slim as builder
+
+WORKDIR /build
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir --user -r requirements.txt
+
+# Stage 2: Runtime
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install runtime dependencies
+RUN apt-get update && apt-get install -y \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy Python dependencies from builder
+COPY --from=builder /root/.local /root/.local
+
+# Make sure scripts in .local are usable
+ENV PATH=/root/.local/bin:$PATH
+
+# Copy application code
+COPY src/ /app/src/
+COPY models/ /app/models/
+
+# Create log directory
+RUN mkdir -p /var/log/ultracore
+
+# Set Python path
+ENV PYTHONPATH=/app/src:$PYTHONPATH
+
+# Run as non-root user for security
+RUN useradd -m -u 1000 ultracore && \
+    chown -R ultracore:ultracore /app /var/log/ultracore
+USER ultracore
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD python -c "import sys; sys.exit(0)"
+
+# Run the service
+CMD ["python", "-m", "ultracore.esg.services.optimization_service_production"]
