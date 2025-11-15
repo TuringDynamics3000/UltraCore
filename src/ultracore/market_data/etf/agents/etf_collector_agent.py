@@ -9,7 +9,7 @@ from typing import List, Dict, Any, Optional
 from uuid import uuid4, UUID
 import logging
 
-from ultracore.agentic_ai.base import Agent
+# Simplified to standalone service - no Agent inheritance needed
 from ultracore.market_data.etf.services.yahoo_finance_collector import (
     YahooFinanceCollector,
     CollectionResult
@@ -22,7 +22,7 @@ from ultracore.event_sourcing.store.event_store import EventStore
 logger = logging.getLogger(__name__)
 
 
-class ETFCollectorAgent(Agent):
+class ETFCollectorAgent:
     """
     Autonomous agent for ETF data collection
     
@@ -39,12 +39,8 @@ class ETFCollectorAgent(Agent):
         event_store: EventStore,
         collector: Optional[YahooFinanceCollector] = None
     ):
-        super().__init__(
-            agent_id=str(uuid4()),
-            name="ETF Data Collector Agent",
-            capabilities=[]
-        )
-        
+        self.agent_id = str(uuid4())
+        self.name = "ETF Data Collector Agent"
         self.event_store = event_store
         self.collector = collector or YahooFinanceCollector()
         self.etf_aggregates: Dict[str, ETFAggregate] = {}
