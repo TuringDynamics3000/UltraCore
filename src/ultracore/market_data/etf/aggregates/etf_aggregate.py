@@ -8,7 +8,7 @@ from decimal import Decimal
 from typing import List, Optional, Dict, Any
 from uuid import UUID, uuid4
 
-from ultracore.event_sourcing.aggregate_root import AggregateRoot
+from ultracore.event_sourcing.base import AggregateRoot
 from ultracore.market_data.etf.events import (
     ETFCreatedEvent,
     ETFDataUpdatedEvent,

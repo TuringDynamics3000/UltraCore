@@ -4,7 +4,7 @@ Coordinates all components: agents, data collection, storage, and updates
 """
 import asyncio
 import logging
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 from pathlib import Path
 from typing import Dict, Any, Optional
 from uuid import uuid4
@@ -13,7 +13,7 @@ from ultracore.market_data.etf.agents.etf_collector_agent import ETFCollectorAge
 from ultracore.market_data.etf.services.yahoo_finance_collector import YahooFinanceCollector
 from ultracore.market_data.etf.data_mesh.etf_data_product import ETFDataProduct
 from ultracore.market_data.etf.asx_etf_list import get_all_etfs
-from ultracore.event_sourcing.event_store import EventStore
+from ultracore.event_sourcing.store.event_store import EventStore
 
 
 logger = logging.getLogger(__name__)
@@ -58,8 +58,20 @@ class ETFDataSystem:
         """Create event store for event sourcing"""
         # In production, this would connect to a real event store
         # For now, return a mock or in-memory store
-        from ultracore.event_sourcing.in_memory_event_store import InMemoryEventStore
-        return InMemoryEventStore()
+        # Use a simple in-memory implementation
+        from ultracore.event_sourcing.base import EventStore
+        
+        class SimpleEventStore(EventStore):
+            def __init__(self):
+                self.events = []
+            
+            def append(self, event):
+                self.events.append(event)
+            
+            def get_events(self, aggregate_id, after_version=0):
+                return [e for e in self.events if e.metadata.aggregate_id == aggregate_id and e.metadata.version > after_version]
+        
+        return SimpleEventStore()
     
     async def initialize(self, force: bool = False) -> Dict[str, Any]:
         """

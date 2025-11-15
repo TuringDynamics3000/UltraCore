@@ -1,0 +1,32 @@
+[Unit]
+Description=ETF Data System Scheduler
+Documentation=https://github.com/TuringDynamics3000/UltraCore
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/ultracore-fix
+Environment="PYTHONPATH=/home/ubuntu/ultracore-fix/src"
+Environment="PATH=/usr/bin:/usr/local/bin"
+
+# Main command
+ExecStart=/usr/bin/python3 -m ultracore.market_data.etf.cli scheduler --time 18:00
+
+# Restart policy
+Restart=always
+RestartSec=60
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=etf-scheduler
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

@@ -16,7 +16,7 @@ from ultracore.market_data.etf.services.yahoo_finance_collector import (
 )
 from ultracore.market_data.etf.aggregates.etf_aggregate import ETFAggregate, ETFMetadata
 from ultracore.market_data.etf.asx_etf_list import get_all_etfs, get_category_for_etf
-from ultracore.event_sourcing.event_store import EventStore
+from ultracore.event_sourcing.store.event_store import EventStore
 
 
 logger = logging.getLogger(__name__)
