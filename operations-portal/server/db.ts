@@ -1,4 +1,4 @@
-import { eq, desc, and, gte, lte } from "drizzle-orm";
+import { eq, desc, and, gte, lte, like, or } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
   InsertUser,
@@ -25,6 +25,7 @@ import {
   mcpTools,
   mcpExecutions,
   auditLog,
+  securities,
 } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 
@@ -465,4 +466,76 @@ export async function getAuditLogs(filters?: {
   }
 
   return await query.orderBy(desc(auditLog.createdAt)).limit(filters?.limit || 100);
+}
+
+
+// ============================================================================
+// SECURITIES REGISTER QUERIES
+// ============================================================================
+
+export async function getSecurities(filters: {
+  assetClass?: string;
+  marketType?: string;
+  search?: string;
+  exchange?: string;
+  sector?: string;
+  limit?: number;
+}) {
+  const db = await getDb();
+  if (!db) return [];
+
+  let query = db.select().from(securities);
+
+  // Apply filters
+  const conditions: any[] = [];
+  if (filters.assetClass) {
+    conditions.push(eq(securities.assetClass, filters.assetClass as any));
+  }
+  if (filters.marketType) {
+    conditions.push(eq(securities.marketType, filters.marketType as any));
+  }
+  if (filters.exchange) {
+    conditions.push(eq(securities.exchange, filters.exchange));
+  }
+  if (filters.sector) {
+    conditions.push(eq(securities.sector, filters.sector));
+  }
+  if (filters.search) {
+    const searchTerm = `%${filters.search}%`;
+    // Only search in non-nullable fields to avoid TypeScript errors
+    conditions.push(
+      or(
+        like(securities.ticker, searchTerm),
+        like(securities.name, searchTerm)
+      )
+    );
+  }
+
+  if (conditions.length > 0) {
+    query = query.where(and(...conditions)) as any;
+  }
+
+  // Apply limit
+  if (filters.limit) {
+    query = query.limit(filters.limit) as any;
+  }
+
+  const results = await query;
+  return results;
+}
+
+export async function getSecurityById(id: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db.select().from(securities).where(eq(securities.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function getSecurityByTicker(ticker: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db.select().from(securities).where(eq(securities.ticker, ticker)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
 }

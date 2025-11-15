@@ -30,7 +30,8 @@ import {
   Brain,
   Activity,
   Database,
-  Wrench
+  Wrench,
+  Building2
 } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
@@ -40,6 +41,7 @@ import { Button } from "./ui/button";
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/" },
   { icon: LayoutDashboard, label: "Portfolios", path: "/portfolios" },
+  { icon: Building2, label: "Securities", path: "/securities" },
   { icon: Leaf, label: "ESG Data", path: "/esg" },
   { icon: DollarSign, label: "UltraGrow Loans", path: "/loans" },
   { icon: Brain, label: "RL Agents", path: "/agents" },

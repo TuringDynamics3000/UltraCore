@@ -15,6 +15,8 @@ import AgentDetail from "./pages/AgentDetail";
 import Kafka from "./pages/Kafka";
 import DataMesh from "./pages/DataMesh";
 import MCP from "./pages/MCP";
+import Securities from "./pages/Securities";
+import SecurityDetail from "./pages/SecurityDetail";
 
 function Router() {
   return (
@@ -68,6 +70,16 @@ function Router() {
       <Route path="/mcp">
         <DashboardLayout>
           <MCP />
+        </DashboardLayout>
+      </Route>
+      <Route path="/securities">
+        <DashboardLayout>
+          <Securities />
+        </DashboardLayout>
+      </Route>
+      <Route path="/securities/:id">
+        <DashboardLayout>
+          <SecurityDetail />
         </DashboardLayout>
       </Route>
       <Route path="/404" component={NotFound} />

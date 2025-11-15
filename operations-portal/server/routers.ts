@@ -4,6 +4,9 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import * as db from "./db";
+import { fiscalAI } from "./fiscal-ai";
+import { callDataApi } from "./_core/dataApi";
+import { persistYahooPriceData, enrichSecurityData } from "./enrichment";
 
 // ============================================================================
 // PORTFOLIO ROUTER
@@ -410,6 +413,199 @@ const auditRouter = router({
 });
 
 // ============================================================================
+// SECURITIES REGISTER ROUTER
+// ============================================================================
+
+const securitiesRouter = router({ list: protectedProcedure
+    .input(
+      z.object({
+        assetClass: z.string().optional(),
+        marketType: z.string().optional(),
+        search: z.string().optional(),
+        exchange: z.string().optional(),
+        sector: z.string().optional(),
+        limit: z.number().optional(),
+      })
+    )
+    .query(async ({ input }) => {
+      return await db.getSecurities(input);
+    }),
+
+  getById: protectedProcedure.input(z.object({ id: z.string() })).query(async ({ input }) => {
+    return await db.getSecurityById(input.id);
+  }),
+
+  getByTicker: protectedProcedure.input(z.object({ ticker: z.string() })).query(async ({ input }) => {
+    return await db.getSecurityByTicker(input.ticker);
+  }),
+
+  create: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        ticker: z.string(),
+        name: z.string(),
+        assetClass: z.string(),
+        marketType: z.string(),
+        exchange: z.string().optional(),
+        currency: z.string(),
+        lastPrice: z.string().optional(),
+        marketCap: z.string().optional(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      await db.logAudit({
+        userId: ctx.user.id,
+        action: "CREATE_SECURITY",
+        resource: "security",
+        resourceId: input.id,
+        details: `Created security ${input.ticker} - ${input.name}`,
+      });
+      return { success: true };
+    }),
+
+  // Fiscal.ai integration endpoints
+  getMarketData: protectedProcedure
+    .input(z.object({ ticker: z.string() }))
+    .query(async ({ input }) => {
+      try {
+        const [profile, latestPrice, ratios] = await Promise.all([
+          fiscalAI.getCompanyProfile(input.ticker).catch(() => null),
+          fiscalAI.getLatestPrice(input.ticker).catch(() => null),
+          fiscalAI.getCompanyRatios(input.ticker, "annual", 1).catch(() => []),
+        ]);
+
+        return {
+          profile,
+          latestPrice,
+          ratios: ratios.length > 0 ? ratios[0] : null,
+        };
+      } catch (error) {
+        console.error("Fiscal.ai API error:", error);
+        return { profile: null, latestPrice: null, ratios: null };
+      }
+    }),
+
+  getPriceHistory: protectedProcedure
+    .input(
+      z.object({
+        ticker: z.string(),
+        fromDate: z.string().optional(),
+        toDate: z.string().optional(),
+      })
+    )
+    .query(async ({ input }) => {
+      try {
+        return await fiscalAI.getStockPrices(input.ticker, input.fromDate, input.toDate);
+      } catch (error) {
+        console.error("Fiscal.ai price history error:", error);
+        return [];
+      }
+    }),
+
+  getFinancials: protectedProcedure
+    .input(
+      z.object({
+        ticker: z.string(),
+        period: z.enum(["annual", "quarterly"]).default("annual"),
+      })
+    )
+    .query(async ({ input }) => {
+      try {
+        const [incomeStatement, balanceSheet, cashFlow] = await Promise.all([
+          fiscalAI.getIncomeStatement(input.ticker, input.period, 5).catch(() => []),
+          fiscalAI.getBalanceSheet(input.ticker, input.period, 5).catch(() => []),
+          fiscalAI.getCashFlowStatement(input.ticker, input.period, 5).catch(() => []),
+        ]);
+
+        return {
+          incomeStatement,
+          balanceSheet,
+          cashFlow,
+        };
+      } catch (error) {
+        console.error("Fiscal.ai financials error:", error);
+        return { incomeStatement: [], balanceSheet: [], cashFlow: [] };
+      }
+    }),
+
+  // Yahoo Finance integration endpoints
+  getYahooInsights: protectedProcedure
+    .input(z.object({ symbol: z.string() }))
+    .query(async ({ input }) => {
+      try {
+        const result = await callDataApi("YahooFinance/get_stock_insights", {
+          query: { symbol: input.symbol },
+        });
+        return result;
+      } catch (error) {
+        console.error("Yahoo Finance insights error:", error);
+        return null;
+      }
+    }),
+
+  getYahooChart: protectedProcedure
+    .input(
+      z.object({
+        symbol: z.string(),
+        interval: z.string().default("1d"),
+        range: z.string().default("1mo"),
+      })
+    )
+    .query(async ({ input }) => {
+      try {
+        const result = await callDataApi("YahooFinance/get_stock_chart", {
+          query: {
+            symbol: input.symbol,
+            region: "US",
+            interval: input.interval,
+            range: input.range,
+            includeAdjustedClose: true,
+            events: "div,split",
+          },
+        });
+
+        // AUTO-PERSIST: Store price data for ML/RL training
+        if (result) {
+          const security = await db.getSecurityByTicker(input.symbol);
+          if (security) {
+            persistYahooPriceData(security.id, input.symbol, result).catch((err) =>
+              console.error("Background persist error:", err)
+            );
+          }
+        }
+
+        return result;
+      } catch (error) {
+        console.error("Yahoo Finance chart error:", error);
+        return null;
+      }
+    }),
+
+  // Manual enrichment endpoint for batch operations
+  enrichSecurity: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const security = await db.getSecurityById(input.id);
+      if (!security) {
+        throw new Error("Security not found");
+      }
+
+      const result = await enrichSecurityData(security.id, security.ticker, security.assetClass);
+
+      await db.logAudit({
+        userId: ctx.user.id,
+        action: "ENRICH_SECURITY",
+        resource: "security",
+        resourceId: security.id,
+        details: `Enriched ${security.ticker}: ${result.priceRecordsPersisted} records from ${result.source}`,
+      });
+
+      return result;
+    }),
+});
+
+// ============================================================================
 // MAIN APP ROUTER
 // ============================================================================
 
@@ -435,6 +631,7 @@ export const appRouter = router({
   dataMesh: dataMeshRouter,
   mcp: mcpRouter,
   audit: auditRouter,
+  securities: securitiesRouter,
 });
 
 export type AppRouter = typeof appRouter;

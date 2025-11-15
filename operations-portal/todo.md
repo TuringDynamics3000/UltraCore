@@ -127,3 +127,51 @@
 - [ ] Add performance charts (price history, returns, volatility)
 - [ ] Implement sector allocation visualization
 - [ ] Add expense ratio comparison charts
+
+## Current Sprint: Securities Register UI
+- [x] Design Kafka event schema (SecurityCreated, PriceUpdated, CorporateActionAnnounced)
+- [x] Create comprehensive Global Asset Register schema (15 tables, 50+ fields)
+- [x] Add support for all asset classes (equities, ETFs, bonds, crypto, alternatives)
+- [x] Seed register with 63 real securities (28 US stocks, 15 ASX stocks, 15 crypto, 5 alternatives)
+- [x] Include real ISINs, contract addresses, market caps, and metadata
+- [x] Build Securities List page with asset class filters and search
+- [x] Add tRPC routers for securities queries
+- [ ] Create Security Detail page with asset-specific views
+- [ ] Implement asset-specific detail views (equities, crypto, art, wine, real estate)
+- [ ] Add navigation to Securities Register from dashboard
+- [ ] Implement Zeta Agent for OpenFIGI API data enrichment
+- [ ] Integrate with Data Mesh (securities as data products)
+- [ ] Add MCP interface for Anya AI natural language queries
+
+## Current Sprint: Security Detail Pages
+- [ ] Research Fiscal.ai API for financial market data integration
+- [ ] Design Security Detail page layout with asset-specific sections
+- [ ] Create tRPC endpoint for fetching security details with related data
+- [ ] Build SecurityDetail.tsx component with routing
+- [ ] Implement equity-specific view with price charts (Chart.js + Fiscal.ai data)
+- [ ] Add financial metrics display (P/E ratio, dividend yield, 52-week high/low)
+- [ ] Create crypto-specific view with blockchain explorer links (Etherscan, Blockchain.com)
+- [ ] Add wallet address display and contract information
+- [ ] Build artwork detail view with images, provenance, auction history
+- [ ] Create wine detail view with vintage info, ratings, storage location
+- [ ] Add real estate detail view with property details, valuation history
+- [ ] Implement custody information section for all asset types
+- [ ] Add tax lot tracking display
+- [ ] Create ESG ratings display section
+- [ ] Add insurance and restrictions information
+- [ ] Implement counterparty risk display
+- [ ] Test detail pages for all 63 securities across 6 asset classes
+
+## Current Sprint: Data Enrichment Pipeline for ML/RL
+- [x] Design data enrichment pipeline architecture diagram
+- [x] Create price_history table for time-series storage
+- [x] Implement data persistence layer in securities router
+- [x] Add automatic price data capture on API calls
+- [ ] Create Kafka event publishers for PriceUpdated events
+- [ ] Build scheduled job for daily market data enrichment
+- [ ] Implement Parquet export for Data Mesh integration
+- [ ] Create Zeta Agent workflow for automated enrichment
+- [ ] Add data quality checks and validation
+- [ ] Implement rate limiting and API quota management
+- [ ] Create monitoring dashboard for enrichment pipeline
+- [ ] Test end-to-end data flow from API to ML storage
