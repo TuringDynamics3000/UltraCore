@@ -91,3 +91,10 @@
 - [ ] Deploy to staging
 - [ ] Production deployment
 - [ ] Monitoring and alerting setup
+
+## Current Sprint: RL Agent Monitoring Module
+- [x] Build RL Agents list page with agent cards
+- [x] Create Agent Detail page with training metrics
+- [x] Add performance charts for agent training history
+- [x] Implement agent control interface (start/stop/retrain)
+- [x] Add training job management dashboard

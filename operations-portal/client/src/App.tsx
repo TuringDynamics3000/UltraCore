@@ -11,6 +11,7 @@ import PortfolioDetail from "./pages/PortfolioDetail";
 import ESG from "./pages/ESG";
 import Loans from "./pages/Loans";
 import Agents from "./pages/Agents";
+import AgentDetail from "./pages/AgentDetail";
 import Kafka from "./pages/Kafka";
 import DataMesh from "./pages/DataMesh";
 import MCP from "./pages/MCP";
@@ -47,6 +48,11 @@ function Router() {
       <Route path="/agents">
         <DashboardLayout>
           <Agents />
+        </DashboardLayout>
+      </Route>
+      <Route path="/agents/:name">
+        <DashboardLayout>
+          <AgentDetail />
         </DashboardLayout>
       </Route>
       <Route path="/kafka">
