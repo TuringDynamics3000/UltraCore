@@ -175,3 +175,27 @@
 - [ ] Implement rate limiting and API quota management
 - [ ] Create monitoring dashboard for enrichment pipeline
 - [ ] Test end-to-end data flow from API to ML storage
+
+
+## Current Sprint: Populate Securities Register from APIs
+- [ ] Create batch enrichment script for all 63 securities
+- [ ] Implement Fiscal.ai company profile fetching
+- [ ] Implement Yahoo Finance price data fetching
+- [ ] Update securities table with fetched metadata
+- [ ] Persist historical price data to price_history table
+- [ ] Add error handling and retry logic for API failures
+- [ ] Create progress tracking and logging
+- [ ] Verify data quality and completeness
+- [ ] Create scheduled job for daily enrichment
+- [ ] Test enrichment on all asset classes
+
+
+## Current Sprint: Kafka Event Streaming for RL Agents
+- [x] Design Kafka event schema (SecurityPriceUpdated, SecurityCreated, CorporateAction)
+- [x] Create event publisher service with batching and retry logic
+- [x] Integrate event publishing into enrichment pipeline
+- [x] Build Kafka consumer API endpoints for RL agents
+- [x] Implement event replay functionality for backtesting
+- [x] Add event audit trail and monitoring
+- [ ] Create WebSocket bridge for real-time event streaming
+- [ ] Test event flow end-to-end

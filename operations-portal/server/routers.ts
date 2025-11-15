@@ -7,6 +7,7 @@ import * as db from "./db";
 import { fiscalAI } from "./fiscal-ai";
 import { callDataApi } from "./_core/dataApi";
 import { persistYahooPriceData, enrichSecurityData } from "./enrichment";
+import { getKafkaConsumer } from "./kafka-consumer";
 
 // ============================================================================
 // PORTFOLIO ROUTER
@@ -602,6 +603,74 @@ const securitiesRouter = router({ list: protectedProcedure
       });
 
       return result;
+    }),
+
+  // Kafka event streaming endpoints
+  getEvents: protectedProcedure
+    .input(
+      z.object({
+        topic: z.string().optional(),
+        fromTimestamp: z.string().optional(),
+        toTimestamp: z.string().optional(),
+        limit: z.number().default(100),
+        offset: z.number().default(0),
+      })
+    )
+    .query(async ({ input }) => {
+      const consumer = getKafkaConsumer();
+      return await consumer.consume({
+        topic: input.topic,
+        fromTimestamp: input.fromTimestamp ? new Date(input.fromTimestamp) : undefined,
+        toTimestamp: input.toTimestamp ? new Date(input.toTimestamp) : undefined,
+        limit: input.limit,
+        offset: input.offset,
+      });
+    }),
+
+  getEventsBySecurityId: protectedProcedure
+    .input(
+      z.object({
+        securityId: z.string(),
+        fromTimestamp: z.string().optional(),
+        toTimestamp: z.string().optional(),
+        limit: z.number().default(100),
+        offset: z.number().default(0),
+      })
+    )
+    .query(async ({ input }) => {
+      const consumer = getKafkaConsumer();
+      return await consumer.consumeBySecurityId(input.securityId, {
+        fromTimestamp: input.fromTimestamp ? new Date(input.fromTimestamp) : undefined,
+        toTimestamp: input.toTimestamp ? new Date(input.toTimestamp) : undefined,
+        limit: input.limit,
+        offset: input.offset,
+      });
+    }),
+
+  getLatestPrices: protectedProcedure
+    .input(
+      z.object({
+        securityIds: z.array(z.string()),
+        limit: z.number().default(1),
+      })
+    )
+    .query(async ({ input }) => {
+      const consumer = getKafkaConsumer();
+      const result = await consumer.getLatestPrices(input.securityIds, input.limit);
+      
+      // Convert Map to object for JSON serialization
+      const obj: Record<string, any[]> = {};
+      result.forEach((value, key) => {
+        obj[key] = value;
+      });
+      return obj;
+    }),
+
+  getEventStats: protectedProcedure
+    .input(z.object({ topic: z.string().optional() }))
+    .query(async ({ input }) => {
+      const consumer = getKafkaConsumer();
+      return await consumer.getStats(input.topic);
     }),
 });
 

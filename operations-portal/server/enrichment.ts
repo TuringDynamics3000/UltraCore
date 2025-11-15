@@ -6,6 +6,7 @@
 import { getDb } from "./db";
 import { priceHistory } from "../drizzle/schema";
 import { callDataApi } from "./_core/dataApi";
+import { publishPriceUpdate } from "./kafka-publisher";
 
 /**
  * Persist Yahoo Finance price data to database
@@ -58,6 +59,24 @@ export async function persistYahooPriceData(
     }
 
     console.log(`[Enrichment] Persisted ${records.length} price records for ${ticker}`);
+    
+    // Publish Kafka event for latest price
+    if (records.length > 0) {
+      const latestRecord = records[records.length - 1];
+      const previousRecord = records.length > 1 ? records[records.length - 2] : null;
+      
+      await publishPriceUpdate({
+        securityId,
+        ticker,
+        price: parseFloat(latestRecord.close || "0"),
+        previousPrice: previousRecord ? parseFloat(previousRecord.close || "0") : undefined,
+        volume: latestRecord.volume || undefined,
+        currency: latestRecord.currency,
+        source: "yahoo_finance",
+        exchange: meta.exchangeName,
+      }).catch(err => console.error(`[Kafka] Error publishing price update: ${err}`));
+    }
+    
     return records.length;
   } catch (error) {
     console.error(`[Enrichment] Error persisting price data for ${ticker}:`, error);

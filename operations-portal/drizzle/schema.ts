@@ -172,6 +172,21 @@ export const kafkaTopics = mysqlTable("kafka_topics", {
 
 export type KafkaTopic = typeof kafkaTopics.$inferSelect;
 
+// Kafka Events - Actual event data for audit/replay
+export const kafkaEvents = mysqlTable("kafka_events", {
+  id: varchar("id", { length: 128 }).primaryKey(),
+  topic: varchar("topic", { length: 255 }).notNull(),
+  key: varchar("key", { length: 255 }).notNull(),
+  value: json("value").notNull(),
+  partition: int("partition").default(0).notNull(),
+  offset: bigint("offset", { mode: "number" }).notNull(),
+  timestamp: timestamp("timestamp").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export type KafkaEvent = typeof kafkaEvents.$inferSelect;
+export type InsertKafkaEvent = typeof kafkaEvents.$inferInsert;
+
 // ============================================================================
 // DATA MESH PRODUCTS
 // ============================================================================
