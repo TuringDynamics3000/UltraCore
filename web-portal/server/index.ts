@@ -1,10 +1,17 @@
 import express from 'express';
+import cors from 'cors';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { appRouter } from './router.js';
 import { createContext } from './context.js';
 
 const app = express();
 const PORT = 3002;
+
+// Enable CORS for frontend
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  credentials: true,
+}));
 
 app.use(express.json());
 
