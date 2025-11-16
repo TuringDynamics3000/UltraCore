@@ -7,7 +7,7 @@ The UltraCore Operations Portal is a **fully standalone** financial services pla
 ## Prerequisites
 
 - **Node.js** 18+ and npm/pnpm
-- **PostgreSQL** 14+ database
+- **MySQL** 8.0+ or **TiDB** (MySQL-compatible) database
 - **OpenAI API Key** (for Larry AI assistant)
 - **Git** for version control
 
@@ -41,8 +41,8 @@ nano .env  # or use your preferred editor
 **Required Configuration:**
 
 ```env
-# Database - Update with your PostgreSQL credentials
-DATABASE_URL=postgresql://user:password@localhost:5432/ultracore_operations
+# Database - Update with your MySQL credentials
+DATABASE_URL=mysql://root:password@localhost:3306/ultracore_operations
 
 # JWT Secret - Already generated, but you can regenerate with:
 # openssl rand -base64 32
@@ -54,9 +54,9 @@ OPENAI_API_KEY=sk-your-api-key-here
 
 ### 4. Setup Database
 
-```bash
-# Create the database
-createdb ultracore_operations
+````bash
+# Create the database (using MySQL command line)
+mysql -u root -p -e "CREATE DATABASE ultracore_operations;"
 
 # Run migrations
 pnpm db:push
@@ -83,7 +83,7 @@ The portal will be available at: **http://localhost:3001**
 ### Security Checklist
 
 - [ ] Use strong, randomly generated `JWT_SECRET`
-- [ ] Enable PostgreSQL SSL (`sslmode=require` in DATABASE_URL)
+- [ ] Enable MySQL SSL (add `?ssl={"rejectUnauthorized":true}` to DATABASE_URL)
 - [ ] Use environment-specific `.env` files (never commit to git)
 - [ ] Enable database backups and point-in-time recovery
 - [ ] Configure firewall rules to restrict database access
@@ -97,7 +97,7 @@ The portal will be available at: **http://localhost:3001**
 
 ```env
 NODE_ENV=production
-DATABASE_URL=postgresql://user:password@prod-db.example.com:5432/ultracore_operations?sslmode=require
+DATABASE_URL=mysql://user:password@prod-db.example.com:3306/ultracore_operations
 JWT_SECRET=<strong-random-secret>
 OPENAI_API_KEY=<production-api-key>
 ```
@@ -126,16 +126,17 @@ NODE_ENV=production npm start
 
 **Option 3: Cloud Platforms**
 
-- **AWS**: Deploy on EC2, ECS, or EKS with RDS PostgreSQL
-- **Azure**: App Service with Azure Database for PostgreSQL
-- **GCP**: Cloud Run with Cloud SQL PostgreSQL
-- **On-Premises**: Your own infrastructure with PostgreSQL cluster
+- **AWS**: Deploy on EC2, ECS, or EKS with RDS MySQL or Aurora MySQL
+- **Azure**: App Service with Azure Database for MySQL
+- **GCP**: Cloud Run with Cloud SQL MySQL
+- **TiDB Cloud**: Serverless MySQL-compatible database with HTAP capabilities
+- **On-Premises**: Your own infrastructure with MySQL cluster
 
 ## Architecture
 
 ### Data Layers
 
-1. **PostgreSQL** - Transactional data (portfolios, securities, users)
+1. **MySQL/TiDB** - Transactional data (portfolios, securities, users)
 2. **Kafka** - Event streaming (price updates, corporate actions)
 3. **Data Mesh** - Analytics layer (DuckDB WASM + Parquet files)
 4. **RL Agents** - Reinforcement learning for portfolio optimization
@@ -202,11 +203,11 @@ All API endpoints are type-safe using tRPC:
 ### Database Connection Issues
 
 ```bash
-# Test PostgreSQL connection
-psql -h localhost -U postgres -d ultracore_operations
+# Test MySQL connection
+mysql -u root -p -e "SHOW DATABASES LIKE 'ultracore_operations';"
 
 # Check if database exists
-psql -l | grep ultracore
+mysql -u root -p -e "USE ultracore_operations; SHOW TABLES;"
 ```
 
 ### Environment Variables Not Loading
