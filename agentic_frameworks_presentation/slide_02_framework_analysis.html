@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Framework Comparison</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            color: #1A1A1A;
+        }
+        .title-font {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+        .ruled-line {
+            height: 3px;
+            background: #000000;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            text-align: left;
+            padding: 16px 20px;
+            border-bottom: 3px solid #000000;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #000000;
+        }
+        td {
+            padding: 20px;
+            border-bottom: 2px solid #E0E0E0;
+            font-size: 16px;
+            line-height: 1.5;
+            vertical-align: top;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container p-16">
+        <!-- Header -->
+        <div class="mb-10">
+            <h1 class="title-font" style="font-size: 40px; line-height: 1.2; color: #000000;">
+                Four Leading Agentic Frameworks Compared
+            </h1>
+            <div class="ruled-line mt-4"></div>
+        </div>
+
+        <!-- Framework comparison table -->
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 28%;">FRAMEWORK</th>
+                        <th style="width: 38%;">STRENGTHS</th>
+                        <th style="width: 34%;">LIMITATIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="title-font" style="font-size: 20px; color: #0066FF; margin-bottom: 4px;">OpenAI Agents SDK</div>
+                            <div style="font-size: 14px; color: #666;">17.3k GitHub stars<br/>Production-ready</div>
+                        </td>
+                        <td>MCP native support, Voice & Realtime capabilities, Built-in guardrails, Lightweight Python-native design</td>
+                        <td>OpenAI-centric ecosystem, No checkpointing support</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="title-font" style="font-size: 20px; color: #0066FF; margin-bottom: 4px;">Microsoft Agent Framework</div>
+                            <div style="font-size: 14px; color: #666;">Public preview<br/>SK + AutoGen successor</div>
+                        </td>
+                        <td>Graph-based workflows, Checkpointing for long-running processes, Type-safe architecture, Enterprise-grade features</td>
+                        <td>Heavyweight framework, Azure-centric optimization, No voice support</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="title-font" style="font-size: 20px; color: #0066FF; margin-bottom: 4px;">LangChain / LangGraph</div>
+                            <div style="font-size: 14px; color: #666;">Extensive ecosystem<br/>LangSmith observability</div>
+                        </td>
+                        <td>Extensive tool library, LangSmith observability platform, Multiple agent architectures (ReAct, Plan-and-Execute)</td>
+                        <td>Heavyweight with many dependencies, LangSmith is paid service</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="title-font" style="font-size: 20px; color: #0066FF; margin-bottom: 4px;">CrewAI</div>
+                            <div style="font-size: 14px; color: #666;">40k+ GitHub stars<br/>60% Fortune 500</div>
+                        </td>
+                        <td>No-code UI Studio, Role-playing paradigm, Performance tracking, Self-hosted deployment, LLM agnostic</td>
+                        <td>Less enterprise-grade than Microsoft, Role-playing adds latency overhead</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Bottom note -->
+        <div class="mt-10 pt-6" style="border-top: 2px solid #E0E0E0;">
+            <div style="font-size: 15px; color: #666;">
+                <strong style="color: #000000;">ANALYSIS:</strong> All frameworks are designed for LLM agents and conversational workflows, not high-performance financial operations.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 2 Implementation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            color: #1A1A1A;
+        }
+        .title-font {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+        .ruled-line {
+            height: 3px;
+            background: #000000;
+        }
+        .phase-box {
+            border-left: 6px solid #0066FF;
+            padding-left: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container p-16">
+        <!-- Header -->
+        <div class="mb-10">
+            <h1 class="title-font" style="font-size: 40px; line-height: 1.2; color: #000000;">
+                Phase 2: Automate Business Processes<br/>with Microsoft Agent Framework
+            </h1>
+            <div class="ruled-line mt-4"></div>
+            <div style="font-size: 18px; color: #0066FF; margin-top: 8px;" class="title-font">6-MONTH IMPLEMENTATION • ENTERPRISE WORKFLOWS</div>
+        </div>
+
+        <!-- Main content -->
+        <div class="grid grid-cols-2 gap-12">
+            <!-- Left column -->
+            <div>
+                <div class="phase-box mb-10">
+                    <div class="title-font" style="font-size: 22px; margin-bottom: 12px;">USE CASES</div>
+                    <div style="font-size: 17px; line-height: 1.8;">
+                        • UltraGrow Loan processing<br/>
+                        • Customer onboarding<br/>
+                        • Compliance reviews<br/>
+                        • Document analysis pipelines
+                    </div>
+                </div>
+
+                <div class="phase-box">
+                    <div class="title-font" style="font-size: 22px; margin-bottom: 12px;">KEY FEATURES</div>
+                    <div style="font-size: 17px; line-height: 1.8;">
+                        <strong>Graph-based workflows</strong> model multi-step processes explicitly<br/>
+                        <strong>Checkpointing</strong> ensures recovery from failures<br/>
+                        <strong>Human-in-the-loop</strong> for compliance approvals<br/>
+                        <strong>Type safety</strong> prevents runtime errors
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right column -->
+            <div>
+                <div class="phase-box mb-10">
+                    <div class="title-font" style="font-size: 22px; margin-bottom: 12px;">PILOT PROJECT</div>
+                    <div style="font-size: 17px; line-height: 1.8;">
+                        <strong style="color: #0066FF;">UltraGrow Loan Workflow</strong><br/>
+                        <div style="margin-top: 8px; font-size: 16px;">
+                            • 5 Agents: Data Collector, Risk Assessor, Underwriter, Compliance Checker, Approver<br/>
+                            • 3 Human Checkpoints for approval<br/>
+                            • Complete audit trail via Kafka<br/>
+                            • Checkpointing for long-running applications
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: #F8F8F8; padding: 20px; border-left: 6px solid #0066FF;">
+                    <div class="title-font" style="font-size: 20px; margin-bottom: 12px;">EXPECTED OUTCOMES</div>
+                    <div style="font-size: 17px; line-height: 1.8;">
+                        <strong style="color: #0066FF; font-size: 24px;">40%</strong> reduction in manual process time<br/>
+                        <strong style="color: #0066FF; font-size: 24px;">30%</strong> increase in compliance throughput
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom integration note -->
+        <div class="mt-12 pt-8" style="border-top: 2px solid #E0E0E0;">
+            <div style="font-size: 16px; color: #666;">
+                <strong style="color: #000000;">INTEGRATION:</strong> Microsoft Agent Framework connects to UltraCore MCP Server for controlled access to operational layer. Kafka event sourcing captures all workflow actions for auditability.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

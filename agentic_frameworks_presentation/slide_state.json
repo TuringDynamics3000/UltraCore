@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "title": "UltraCore's Hybrid Architecture Leverages Best-in-Class Agentic Frameworks",
+    "created": 1763200068.3579423,
+    "last_updated": 1763200306.6961517,
+    "total_slides": 8
+  },
+  "slides": {
+    "slide_01_hybrid_architecture": "edited",
+    "slide_02_framework_analysis": "edited",
+    "slide_02_framework_analysis_cont": "edited",
+    "slide_03_phase_1_anya": "edited",
+    "slide_03_phase_1_anya_cont": "edited",
+    "slide_04_phase_2_3_automation": "edited",
+    "slide_04_phase_2_3_automation_cont": "edited",
+    "slide_05_keep_the_core": "edited"
+  },
+  "outline": [
+    {
+      "id": "slide_01_hybrid_architecture",
+      "title": "UltraCore's Hybrid Architecture Leverages Best-in-Class Agentic Frameworks",
+      "summary": "Introduction to the multi-layered approach combining agentic AI frameworks for conversational/business automation with existing RL/Kafka operational layer. Covers the challenge, solution, strategic advantage, framework selection, and integration point.",
+      "image_plan": "Use a suitable image if needed",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_02_framework_analysis",
+      "title": "Four Leading Agentic Frameworks Compared",
+      "summary": "Comparative analysis table of four leading frameworks: OpenAI Agents SDK (17.3k stars, MCP native, voice support), Microsoft Agent Framework (graph workflows, checkpointing, type-safe), LangChain (tool library, LangSmith observability), and CrewAI (40k+ stars, no-code UI, role-playing). Shows strengths and limitations for each framework in a terminal-style data table.",
+      "image_plan": "No images required - pure data table presentation",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_02_framework_analysis_cont",
+      "title": "Why LLM Agents Cannot Match RL Performance",
+      "summary": "Performance comparison showing LLM agents (500ms-5s latency, $0.01-$0.10 per request, non-deterministic) versus RL agents (<1ms latency, essentially free, fully deterministic). Explains the 100-1000x performance gap and why agentic frameworks are the right tool for conversational AI but not for core financial operations. Highlights event sourcing advantages.",
+      "slide_template_key": "",
+      "image_plan": "No images required - performance metrics and text explanation"
+    },
+    {
+      "id": "slide_03_phase_1_anya",
+      "title": "Phase 1: Why OpenAI Agents SDK for Anya",
+      "summary": "Explains why OpenAI Agents SDK was chosen for rebuilding Anya AI Assistant (lightweight Python-native, MCP native support, voice & realtime capabilities, built-in guardrails). Shows the architecture with Anya Agent connecting to MCP Client, UltraCore MCP Server with 14 tools, and specialist agents (Loan, Investment, ESG). Includes key capabilities: multi-turn conversations, tool use, handoffs, streaming, and guardrails.",
+      "image_plan": "No images required - architecture and rationale presentation",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_03_phase_1_anya_cont",
+      "title": "Phase 1: Implementation Timeline and Success Metrics",
+      "summary": "Shows the 3-month implementation timeline broken down by month: Month 1 (setup, agent definition, MCP integration, session management), Month 2 (guardrails, specialist agents, handoff logic, streaming), Month 3 (UI integration, testing, production deployment). Displays success metrics: 50% reduction in support tickets, 90% customer satisfaction NPS, sub-2s response time for 95% of queries, zero compliance violations, 1,000 users in voice banking pilot.",
+      "slide_template_key": "",
+      "image_plan": "No images required - timeline and metrics presentation"
+    },
+    {
+      "id": "slide_04_phase_2_3_automation",
+      "title": "Phase 2: Automate Business Processes with Microsoft Agent Framework (6 Months)",
+      "summary": "Phase 2 implementation using Microsoft Agent Framework for enterprise-grade workflow automation. Covers use cases (UltraGrow Loan processing, customer onboarding, compliance reviews, document analysis), key features (graph-based workflows, checkpointing, human-in-the-loop, type safety), pilot project details, and expected outcomes (40% reduction in manual process time, 30% increase in compliance throughput).",
+      "image_plan": "No images required - text and data blocks only",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_04_phase_2_3_automation_cont",
+      "title": "Phase 3: Empower Business Users with CrewAI (9 Months)",
+      "summary": "Phase 3 implementation using CrewAI for no-code agent building to empower business users. Covers use cases (marketing campaigns, customer feedback analysis, sales reporting, financial advisory crews), key features (UI Studio, role-playing paradigm, performance tracking, self-hosted), governance framework, risk mitigation strategies (sandboxing, approval workflows, audit trails), and expected outcomes (20+ business-built crews, 15% cost reduction).",
+      "slide_template_key": "",
+      "image_plan": "No images required - text and data blocks only"
+    },
+    {
+      "id": "slide_05_keep_the_core",
+      "title": "Keep the Core: RL Agents and Kafka Event Sourcing Remain Superior",
+      "summary": "Explanation of why UltraCore's existing operational architecture must be preserved. Covers RL agent superiority, Kafka event sourcing advantages, competitive moat, what stays unchanged, and the hybrid advantage.",
+      "image_plan": "Use a suitable image if needed",
+      "slide_template_key": ""
+    }
+  ]
+}

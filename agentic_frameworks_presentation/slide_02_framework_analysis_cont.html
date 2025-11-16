@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Comparison</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            color: #1A1A1A;
+        }
+        .title-font {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+        .ruled-line {
+            height: 3px;
+            background: #000000;
+        }
+        .metric-box {
+            border-left: 4px solid #0066FF;
+            padding-left: 20px;
+        }
+        .warning-box {
+            border-left: 4px solid #00C896;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container p-16">
+        <!-- Header -->
+        <div class="mb-10">
+            <h1 class="title-font" style="font-size: 40px; line-height: 1.2; color: #000000;">
+                Why LLM Agents Cannot Match RL Performance
+            </h1>
+            <div class="ruled-line mt-4"></div>
+        </div>
+
+        <!-- Performance comparison -->
+        <div class="grid grid-cols-2 gap-10 mb-10">
+            <div>
+                <div class="metric-box mb-8">
+                    <div class="title-font" style="font-size: 24px; color: #0066FF; margin-bottom: 12px;">LLM AGENTS</div>
+                    <div style="font-size: 17px; line-height: 1.8;">
+                        <div style="margin-bottom: 8px;"><strong>Latency:</strong> 500ms - 5s</div>
+                        <div style="margin-bottom: 8px;"><strong>Cost:</strong> $0.01 - $0.10 per request</div>
+                        <div style="margin-bottom: 8px;"><strong>Determinism:</strong> Non-deterministic</div>
+                        <div><strong>State:</strong> External management required</div>
+                    </div>
+                </div>
+                <div class="warning-box">
+                    <div class="title-font" style="font-size: 24px; color: #00C896; margin-bottom: 12px;">RL AGENTS</div>
+                    <div style="font-size: 17px; line-height: 1.8;">
+                        <div style="margin-bottom: 8px;"><strong>Latency:</strong> &lt;1ms</div>
+                        <div style="margin-bottom: 8px;"><strong>Cost:</strong> Essentially free at scale</div>
+                        <div style="margin-bottom: 8px;"><strong>Determinism:</strong> Fully deterministic</div>
+                        <div><strong>State:</strong> Learned from historical data</div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="title-font" style="font-size: 24px; margin-bottom: 16px; color: #000000;">THE RIGHT TOOL FOR THE RIGHT JOB</div>
+                <div style="font-size: 17px; line-height: 1.8;">
+                    <p style="margin-bottom: 20px;">Agentic frameworks are purpose-built for <strong>conversational AI</strong>, <strong>document processing</strong>, and <strong>human-in-the-loop workflows</strong>—use cases where natural language understanding and flexibility matter more than speed and determinism.</p>
+                    <p>For UltraCore's 137 ETFs and millions of daily transactions, the <strong style="color: #00C896;">100-1000x performance gap</strong> between LLM and RL agents is insurmountable for core financial operations.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Event sourcing advantages -->
+        <div class="mt-10 pt-8" style="border-top: 3px solid #000000;">
+            <div class="title-font" style="font-size: 22px; margin-bottom: 12px; color: #000000;">EVENT SOURCING ADVANTAGES</div>
+            <div style="font-size: 16px; line-height: 1.7; color: #1A1A1A;">
+                <strong style="color: #000000;">Kafka event sourcing</strong> provides <strong>complete auditability</strong> (immutable event log), <strong>unlimited scalability</strong> (distributed consumers), <strong>loose coupling</strong> (producers/consumers independent), and <strong>full replayability</strong>—capabilities that orchestration-based frameworks cannot match.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
