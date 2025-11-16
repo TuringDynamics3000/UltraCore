@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, decimal, boolean, json, date, bigint } from "drizzle-orm/pg-core";
+import { integer, pgEnum, pgTable, text, timestamp, varchar, numeric, boolean, json, date, bigint, serial } from "drizzle-orm/pg-core";
 
 /**
  * GLOBAL ASSET REGISTER
