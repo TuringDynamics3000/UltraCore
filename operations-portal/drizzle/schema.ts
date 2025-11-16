@@ -15,7 +15,7 @@ export const users = pgTable("users", {
   name: text("name"),
   email: varchar("email", { length: 320 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
-  role: text("role").default("user").notNull()
+  role: text("role").default("user").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
@@ -32,7 +32,7 @@ export const portfolios = pgTable("portfolios", {
   id: varchar("id", { length: 64 }).primaryKey(),
   investorId: integer("investor_id").notNull(),
   investorName: varchar("investor_name", { length: 255 }).notNull(),
-  agent: text("agent").notNull()
+  agent: text("agent").notNull(),
   value: numeric("value", { precision: 15, scale: 2 }).notNull(),
   initialInvestment: numeric("initial_investment", { precision: 15, scale: 2 }).notNull(),
   return30d: numeric("return_30d", { precision: 8, scale: 4 }),
@@ -40,7 +40,7 @@ export const portfolios = pgTable("portfolios", {
   sharpeRatio: numeric("sharpe_ratio", { precision: 8, scale: 4 }),
   volatility: numeric("volatility", { precision: 8, scale: 4 }),
   maxDrawdown: numeric("max_drawdown", { precision: 8, scale: 4 }),
-  status: text("status").default("active").notNull()
+  status: text("status").default("active").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -96,7 +96,7 @@ export const loans = pgTable("loans", {
   feeRate: numeric("fee_rate", { precision: 5, scale: 4 }).notNull(),
   monthlyPayment: numeric("monthly_payment", { precision: 15, scale: 2 }).notNull(),
   remainingBalance: numeric("remaining_balance", { precision: 15, scale: 2 }).notNull(),
-  status: text("status").default("pending").notNull()
+  status: text("status").default("pending").notNull(),
   approvedBy: integer("approved_by"),
   approvedAt: timestamp("approved_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -114,7 +114,7 @@ export const loanPayments = pgTable("loan_payments", {
   fee: numeric("fee", { precision: 15, scale: 2 }).notNull(),
   dueDate: timestamp("due_date").notNull(),
   paidDate: timestamp("paid_date"),
-  status: text("status").default("pending").notNull()
+  status: text("status").default("pending").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -130,7 +130,7 @@ export const rlAgents = pgTable("rl_agents", {
   displayName: varchar("display_name", { length: 100 }).notNull(),
   objective: text("objective").notNull(),
   modelVersion: varchar("model_version", { length: 50 }).notNull(),
-  status: text("status").default("deployed").notNull()
+  status: text("status").default("deployed").notNull(),
   episodesTrained: integer("episodes_trained").default(0).notNull(),
   avgReward: numeric("avg_reward", { precision: 10, scale: 4 }),
   lastTrainedAt: timestamp("last_trained_at"),
@@ -181,8 +181,8 @@ export type InsertKafkaEvent = typeof kafkaEvents.$inferInsert;
 
 export const trainingRuns = pgTable("training_runs", {
   id: varchar("id", { length: 64 }).primaryKey(),
-  agentName: text("agentName").notNull()
-  status: text("status").default("running").notNull()
+  agentName: text("agentName").notNull(),
+  status: text("status").default("running").notNull(),
   startedAt: timestamp("started_at").defaultNow().notNull(),
   completedAt: timestamp("completed_at"),
   totalEpisodes: integer("total_episodes").default(0).notNull(),
@@ -217,7 +217,7 @@ export type InsertTrainingMetric = typeof trainingMetrics.$inferInsert;
 
 export const agentPerformance = pgTable("agent_performance", {
   id: serial("id").primaryKey(),
-  agentName: text("agentName").notNull()
+  agentName: text("agentName").notNull(),
   totalRuns: integer("total_runs").default(0).notNull(),
   successfulRuns: integer("successful_runs").default(0).notNull(),
   avgReward: numeric("avg_reward", { precision: 15, scale: 4 }),
@@ -241,7 +241,7 @@ export const dataProducts = pgTable("data_products", {
   name: varchar("name", { length: 255 }).notNull().unique(),
   ticker: varchar("ticker", { length: 20 }),
   description: text("description"),
-  category: text("category").notNull()
+  category: text("category").notNull(),
   expenseRatio: varchar("expense_ratio", { length: 20 }),
   aum: varchar("aum", { length: 50 }),
   s3Path: varchar("s3_path", { length: 500 }).notNull(),
@@ -250,7 +250,7 @@ export const dataProducts = pgTable("data_products", {
   rowCount: integer("row_count"),
   sizeBytes: integer("size_bytes"),
   owner: varchar("owner", { length: 100 }),
-  status: text("status").default("active").notNull()
+  status: text("status").default("active").notNull(),
   lastUpdated: timestamp("last_updated").defaultNow().notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
@@ -266,7 +266,7 @@ export const mcpTools = pgTable("mcp_tools", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 255 }).notNull().unique(),
   description: text("description").notNull(),
-  category: text("category").notNull()
+  category: text("category").notNull(),
   inputSchema: text("input_schema").notNull(),
   enabled: boolean("enabled").default(true).notNull(),
   executionCount: integer("execution_count").default(0).notNull(),
@@ -282,7 +282,7 @@ export const mcpExecutions = pgTable("mcp_executions", {
   toolName: varchar("tool_name", { length: 255 }).notNull(),
   input: text("input").notNull(),
   output: text("output"),
-  status: text("status").notNull()
+  status: text("status").notNull(),
   duration: integer("duration"),
   executedBy: varchar("executed_by", { length: 100 }),
   executedAt: timestamp("executed_at").defaultNow().notNull(),
@@ -443,7 +443,7 @@ export const securities = pgTable("securities", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
   createdBy: varchar("created_by", { length: 64 }), // user ID or 'zeta-agent'
   source: varchar("source", { length: 50 }).default("manual").notNull(), // 'manual', 'openfigi', 'zeta-agent', 'blockchain'
-  verificationStatus: text("verificationStatus").default("unverified").notNull()
+  verificationStatus: text("verificationStatus").default("unverified").notNull(),
   verifiedBy: varchar("verified_by", { length: 64 }), // user ID or 'zeta-agent'
   verifiedAt: timestamp("verified_at"),
 });
@@ -459,13 +459,13 @@ export const corporateActions = pgTable("corporate_actions", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }).notNull(),
-  actionType: text("actionType").notNull()
+  actionType: text("actionType").notNull(),
   announcementDate: date("announcement_date").notNull(),
   effectiveDate: date("effective_date").notNull(),
   recordDate: date("record_date"),
   paymentDate: date("payment_date"),
   details: json("details"), // Flexible storage for action-specific data
-  status: text("status").default("announced").notNull()
+  status: text("status").default("announced").notNull(),
   impactOnHoldings: json("impact_on_holdings"), // How this affects portfolio holdings
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -531,7 +531,7 @@ export const valuations = pgTable("valuations", {
   valuationDate: date("valuation_date").notNull(),
   valuationAmount: numeric("valuation_amount", { precision: 20, scale: 2 }).notNull(),
   currency: varchar("currency", { length: 10 }).notNull(),
-  valuationType: text("valuationType").notNull()
+  valuationType: text("valuationType").notNull(),
   appraiser: varchar("appraiser", { length: 255 }), // Appraiser name or firm
   appraisalDocument: text("appraisal_document"), // S3 URL to appraisal PDF
   methodology: text("methodology"), // Valuation methodology description
@@ -583,7 +583,7 @@ export const securityLending = pgTable("security_lending", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }).notNull(),
-  lendingType: text("lendingType").notNull()
+  lendingType: text("lendingType").notNull(),
   lender: varchar("lender", { length: 255 }),
   borrower: varchar("borrower", { length: 255 }),
   platform: varchar("platform", { length: 255 }), // Lending platform/protocol
@@ -594,7 +594,7 @@ export const securityLending = pgTable("security_lending", {
   startDate: date("start_date").notNull(),
   endDate: date("end_date"),
   lockupPeriod: integer("lockup_period"), // Days
-  status: text("status").default("active").notNull()
+  status: text("status").default("active").notNull(),
   rewardsEarned: numeric("rewards_earned", { precision: 20, scale: 8 }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -617,14 +617,14 @@ export const taxLots = pgTable("tax_lots", {
   costBasis: numeric("cost_basis", { precision: 20, scale: 8 }).notNull(), // Per unit
   totalCost: numeric("total_cost", { precision: 20, scale: 2 }).notNull(),
   currency: varchar("currency", { length: 10 }).notNull(),
-  acquisitionMethod: text("acquisitionMethod").notNull()
+  acquisitionMethod: text("acquisitionMethod").notNull(),
   taxTreatment: text,
   disposalDate: date("disposal_date"),
   disposalPrice: numeric("disposal_price", { precision: 20, scale: 8 }),
   disposalMethod: text,
   realizedGainLoss: numeric("realized_gain_loss", { precision: 20, scale: 2 }),
   isWashSale: boolean("is_wash_sale").default(false),
-  status: text("status").default("open").notNull()
+  status: text("status").default("open").notNull(),
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -686,7 +686,7 @@ export const counterparties = pgTable("counterparties", {
   name: varchar("name", { length: 255 }).notNull(),
   legalName: varchar("legal_name", { length: 255 }),
   lei: varchar("lei", { length: 20 }).unique(), // Legal Entity Identifier
-  entityType: text("entityType").notNull()
+  entityType: text("entityType").notNull(),
   country: varchar("country", { length: 2 }),
   creditRating: varchar("credit_rating", { length: 10 }), // AAA, AA+, etc.
   ratingAgency: varchar("rating_agency", { length: 50 }), // S&P, Moody's, Fitch
@@ -696,7 +696,7 @@ export const counterparties = pgTable("counterparties", {
   exposureLimit: numeric("exposure_limit", { precision: 20, scale: 2 }),
   currentExposure: numeric("current_exposure", { precision: 20, scale: 2 }),
   collateralRequired: boolean("collateral_required").default(false),
-  status: text("status").default("active").notNull()
+  status: text("status").default("active").notNull(),
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -715,7 +715,7 @@ export const securityInsurance = pgTable("security_insurance", {
   ticker: varchar("ticker", { length: 50 }),
   policyNumber: varchar("policy_number", { length: 100 }).notNull(),
   insurer: varchar("insurer", { length: 255 }).notNull(),
-  insuranceType: text("insuranceType").notNull()
+  insuranceType: text("insuranceType").notNull(),
   coverageAmount: numeric("coverage_amount", { precision: 20, scale: 2 }).notNull(),
   currency: varchar("currency", { length: 10 }).notNull(),
   deductible: numeric("deductible", { precision: 20, scale: 2 }),
@@ -724,7 +724,7 @@ export const securityInsurance = pgTable("security_insurance", {
   effectiveDate: date("effective_date").notNull(),
   expiryDate: date("expiry_date").notNull(),
   policyDocument: text("policy_document"), // S3 URL
-  status: text("status").default("active").notNull()
+  status: text("status").default("active").notNull(),
   claimHistory: json("claim_history"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -741,7 +741,7 @@ export const securityLocations = pgTable("security_locations", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }),
-  locationType: text("locationType").notNull()
+  locationType: text("locationType").notNull(),
   facilityName: varchar("facility_name", { length: 255 }),
   address: text("address"),
   city: varchar("city", { length: 100 }),
@@ -756,7 +756,7 @@ export const securityLocations = pgTable("security_locations", {
   environmentalConditions: json("environmental_conditions"), // Temperature, humidity for wine/art
   lastVerified: timestamp("last_verified"),
   verifiedBy: varchar("verified_by", { length: 64 }),
-  status: text("status").default("active").notNull()
+  status: text("status").default("active").notNull(),
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -773,7 +773,7 @@ export const securityRestrictions = pgTable("security_restrictions", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }),
-  restrictionType: text("restrictionType").notNull()
+  restrictionType: text("restrictionType").notNull(),
   startDate: date("start_date").notNull(),
   endDate: date("end_date"),
   vestingSchedule: json("vesting_schedule"), // Array of vesting milestones
@@ -785,7 +785,7 @@ export const securityRestrictions = pgTable("security_restrictions", {
   canTransfer: boolean("can_transfer").default(false),
   canPledge: boolean("can_pledge").default(false),
   penaltyForViolation: text("penalty_for_violation"),
-  status: text("status").default("active").notNull()
+  status: text("status").default("active").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -801,13 +801,13 @@ export const securityRelationships = pgTable("security_relationships", {
   id: varchar("id", { length: 64 }).primaryKey(),
   parentSecurityId: varchar("parent_security_id", { length: 64 }).notNull(),
   childSecurityId: varchar("child_security_id", { length: 64 }).notNull(),
-  relationshipType: text("relationshipType").notNull()
+  relationshipType: text("relationshipType").notNull(),
   relationshipRatio: varchar("relationship_ratio", { length: 50 }), // e.g., "2:1", "1:10"
   effectiveDate: date("effective_date").notNull(),
   endDate: date("end_date"),
   conversionPrice: numeric("conversion_price", { precision: 20, scale: 8 }),
   details: json("details"),
-  status: text("status").default("active").notNull()
+  status: text("status").default("active").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -825,7 +825,7 @@ export const conversations = pgTable("conversations", {
   userId: integer("user_id").notNull().references(() => users.id),
   title: varchar("title", { length: 500 }),
   summary: text("summary"),
-  status: text("status").default("active").notNull()
+  status: text("status").default("active").notNull(),
   messageCount: integer("message_count").default(0).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -838,7 +838,7 @@ export type InsertConversation = typeof conversations.$inferInsert;
 export const messages = pgTable("messages", {
   id: varchar("id", { length: 64 }).primaryKey(),
   conversationId: varchar("conversation_id", { length: 64 }).notNull().references(() => conversations.id),
-  role: text("role").notNull()
+  role: text("role").notNull(),
   content: text("content"),
   toolCalls: json("tool_calls"), // Array of {id, name, arguments}
   toolCallId: varchar("tool_call_id", { length: 64 }), // For tool response messages
@@ -859,7 +859,7 @@ export const toolExecutions = pgTable("tool_executions", {
   output: json("output"),
   error: text("error"),
   duration: integer("duration"), // Milliseconds
-  status: text("status").default("pending").notNull()
+  status: text("status").default("pending").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   completedAt: timestamp("completed_at"),
 });
@@ -869,8 +869,8 @@ export type InsertToolExecution = typeof toolExecutions.$inferInsert;
 
 export const insights = pgTable("insights", {
   id: varchar("id", { length: 64 }).primaryKey(),
-  type: text("type").notNull()
-  severity: text("severity").notNull()
+  type: text("type").notNull(),
+  severity: text("severity").notNull(),
   title: varchar("title", { length: 500 }).notNull(),
   description: text("description").notNull(),
   data: json("data"), // Related data (security, portfolio, agent, etc.)

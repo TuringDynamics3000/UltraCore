@@ -134,7 +134,7 @@ export const securities = pgTable("securities", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
   createdBy: varchar("created_by", { length: 64 }), // user ID or 'zeta-agent'
   source: varchar("source", { length: 50 }).default("manual").notNull(), // 'manual', 'openfigi', 'zeta-agent', 'blockchain'
-  verificationStatus: text("verificationStatus").default("unverified").notNull()
+  verificationStatus: text("verificationStatus").default("unverified").notNull(),
   verifiedBy: varchar("verified_by", { length: 64 }), // user ID or 'zeta-agent'
   verifiedAt: timestamp("verified_at"),
 });
@@ -150,13 +150,13 @@ export const corporateActions = pgTable("corporate_actions", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }).notNull(),
-  actionType: text("actionType").notNull()
+  actionType: text("actionType").notNull(),
   announcementDate: date("announcement_date").notNull(),
   effectiveDate: date("effective_date").notNull(),
   recordDate: date("record_date"),
   paymentDate: date("payment_date"),
   details: json("details"), // Flexible storage for action-specific data
-  status: text("status").default("announced").notNull()
+  status: text("status").default("announced").notNull(),
   impactOnHoldings: json("impact_on_holdings"), // How this affects portfolio holdings
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -219,7 +219,7 @@ export const valuations = pgTable("valuations", {
   valuationDate: date("valuation_date").notNull(),
   valuationAmount: numeric("valuation_amount", { precision: 20, scale: 2 }).notNull(),
   currency: varchar("currency", { length: 10 }).notNull(),
-  valuationType: text("valuationType").notNull()
+  valuationType: text("valuationType").notNull(),
   appraiser: varchar("appraiser", { length: 255 }), // Appraiser name or firm
   appraisalDocument: text("appraisal_document"), // S3 URL to appraisal PDF
   methodology: text("methodology"), // Valuation methodology description
@@ -271,7 +271,7 @@ export const securityLending = pgTable("security_lending", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }).notNull(),
-  lendingType: text("lendingType").notNull()
+  lendingType: text("lendingType").notNull(),
   lender: varchar("lender", { length: 255 }),
   borrower: varchar("borrower", { length: 255 }),
   platform: varchar("platform", { length: 255 }), // Lending platform/protocol
@@ -282,7 +282,7 @@ export const securityLending = pgTable("security_lending", {
   startDate: date("start_date").notNull(),
   endDate: date("end_date"),
   lockupPeriod: integer("lockup_period"), // Days
-  status: text("status").default("active").notNull()
+  status: text("status").default("active").notNull(),
   rewardsEarned: numeric("rewards_earned", { precision: 20, scale: 8 }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -305,14 +305,14 @@ export const taxLots = pgTable("tax_lots", {
   costBasis: numeric("cost_basis", { precision: 20, scale: 8 }).notNull(), // Per unit
   totalCost: numeric("total_cost", { precision: 20, scale: 2 }).notNull(),
   currency: varchar("currency", { length: 10 }).notNull(),
-  acquisitionMethod: text("acquisitionMethod").notNull()
+  acquisitionMethod: text("acquisitionMethod").notNull(),
   taxTreatment: text,
   disposalDate: date("disposal_date"),
   disposalPrice: numeric("disposal_price", { precision: 20, scale: 8 }),
   disposalMethod: text,
   realizedGainLoss: numeric("realized_gain_loss", { precision: 20, scale: 2 }),
   isWashSale: boolean("is_wash_sale").default(false),
-  status: text("status").default("open").notNull()
+  status: text("status").default("open").notNull(),
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -374,7 +374,7 @@ export const counterparties = pgTable("counterparties", {
   name: varchar("name", { length: 255 }).notNull(),
   legalName: varchar("legal_name", { length: 255 }),
   lei: varchar("lei", { length: 20 }).unique(), // Legal Entity Identifier
-  entityType: text("entityType").notNull()
+  entityType: text("entityType").notNull(),
   country: varchar("country", { length: 2 }),
   creditRating: varchar("credit_rating", { length: 10 }), // AAA, AA+, etc.
   ratingAgency: varchar("rating_agency", { length: 50 }), // S&P, Moody's, Fitch
@@ -384,7 +384,7 @@ export const counterparties = pgTable("counterparties", {
   exposureLimit: numeric("exposure_limit", { precision: 20, scale: 2 }),
   currentExposure: numeric("current_exposure", { precision: 20, scale: 2 }),
   collateralRequired: boolean("collateral_required").default(false),
-  status: text("status").default("active").notNull()
+  status: text("status").default("active").notNull(),
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -403,7 +403,7 @@ export const securityInsurance = pgTable("security_insurance", {
   ticker: varchar("ticker", { length: 50 }),
   policyNumber: varchar("policy_number", { length: 100 }).notNull(),
   insurer: varchar("insurer", { length: 255 }).notNull(),
-  insuranceType: text("insuranceType").notNull()
+  insuranceType: text("insuranceType").notNull(),
   coverageAmount: numeric("coverage_amount", { precision: 20, scale: 2 }).notNull(),
   currency: varchar("currency", { length: 10 }).notNull(),
   deductible: numeric("deductible", { precision: 20, scale: 2 }),
@@ -412,7 +412,7 @@ export const securityInsurance = pgTable("security_insurance", {
   effectiveDate: date("effective_date").notNull(),
   expiryDate: date("expiry_date").notNull(),
   policyDocument: text("policy_document"), // S3 URL
-  status: text("status").default("active").notNull()
+  status: text("status").default("active").notNull(),
   claimHistory: json("claim_history"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -429,7 +429,7 @@ export const securityLocations = pgTable("security_locations", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }),
-  locationType: text("locationType").notNull()
+  locationType: text("locationType").notNull(),
   facilityName: varchar("facility_name", { length: 255 }),
   address: text("address"),
   city: varchar("city", { length: 100 }),
@@ -444,7 +444,7 @@ export const securityLocations = pgTable("security_locations", {
   environmentalConditions: json("environmental_conditions"), // Temperature, humidity for wine/art
   lastVerified: timestamp("last_verified"),
   verifiedBy: varchar("verified_by", { length: 64 }),
-  status: text("status").default("active").notNull()
+  status: text("status").default("active").notNull(),
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -461,7 +461,7 @@ export const securityRestrictions = pgTable("security_restrictions", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }),
-  restrictionType: text("restrictionType").notNull()
+  restrictionType: text("restrictionType").notNull(),
   startDate: date("start_date").notNull(),
   endDate: date("end_date"),
   vestingSchedule: json("vesting_schedule"), // Array of vesting milestones
@@ -473,7 +473,7 @@ export const securityRestrictions = pgTable("security_restrictions", {
   canTransfer: boolean("can_transfer").default(false),
   canPledge: boolean("can_pledge").default(false),
   penaltyForViolation: text("penalty_for_violation"),
-  status: text("status").default("active").notNull()
+  status: text("status").default("active").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -489,13 +489,13 @@ export const securityRelationships = pgTable("security_relationships", {
   id: varchar("id", { length: 64 }).primaryKey(),
   parentSecurityId: varchar("parent_security_id", { length: 64 }).notNull(),
   childSecurityId: varchar("child_security_id", { length: 64 }).notNull(),
-  relationshipType: text("relationshipType").notNull()
+  relationshipType: text("relationshipType").notNull(),
   relationshipRatio: varchar("relationship_ratio", { length: 50 }), // e.g., "2:1", "1:10"
   effectiveDate: date("effective_date").notNull(),
   endDate: date("end_date"),
   conversionPrice: numeric("conversion_price", { precision: 20, scale: 8 }),
   details: json("details"),
-  status: text("status").default("active").notNull()
+  status: text("status").default("active").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
