@@ -11,7 +11,7 @@ const queryClient = new QueryClient();
 const trpcClient = trpc.createClient({
   links: [
     httpBatchLink({
-      url: 'http://localhost:3001/api/trpc',
+      url: 'http://localhost:3002/api/trpc',
       headers() {
         const token = localStorage.getItem('auth_token');
         return token ? { Authorization: `Bearer ${token}` } : {};
