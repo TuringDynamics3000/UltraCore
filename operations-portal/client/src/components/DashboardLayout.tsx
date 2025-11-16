@@ -1,4 +1,4 @@
-import { useAuth } from "@/_core/hooks/useAuth";
+import { useAuthState, useLogout, useGetIdentity } from 'react-admin';
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -66,7 +66,9 @@ export default function DashboardLayout({
     const saved = localStorage.getItem(SIDEBAR_WIDTH_KEY);
     return saved ? parseInt(saved, 10) : DEFAULT_WIDTH;
   });
-  const { loading, user } = useAuth();
+  const { isLoading: loading, authenticated } = useAuthState();
+  const { data: identity } = useGetIdentity();
+  const user = authenticated ? identity : null;
   const [, setLocation] = useLocation();
 
   useEffect(() => {
@@ -136,7 +138,9 @@ function DashboardLayoutContent({
   children,
   setSidebarWidth,
 }: DashboardLayoutContentProps) {
-  const { user, logout } = useAuth();
+  const { data: identity } = useGetIdentity();
+  const user = identity;
+  const logout = useLogout();
   const [location, setLocation] = useLocation();
   const { state, toggleSidebar } = useSidebar();
   const isCollapsed = state === "collapsed";
