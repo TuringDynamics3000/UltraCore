@@ -14,7 +14,7 @@ import Kafka from './pages/Kafka';
 import DataMesh from './pages/DataMesh';
 import MCP from './pages/MCP';
 import Larry from './pages/Larry';
-import Login from './pages/Login';
+import CustomLoginPage from './components/CustomLoginPage';
 
 // Custom layout with shadcn/ui
 import { DashboardLayoutWrapper } from './components/DashboardLayoutWrapper';
@@ -32,7 +32,7 @@ export default function AdminApp() {
       dataProvider={compositeDataProvider}
       authProvider={authProvider}
       layout={DashboardLayoutWrapper}
-      loginPage={Login}
+      loginPage={CustomLoginPage}
       dashboard={Home}
       disableTelemetry
     >
