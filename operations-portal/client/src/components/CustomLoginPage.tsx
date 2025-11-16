@@ -12,7 +12,7 @@ export default function CustomLoginPage() {
   const handleQuickLogin = async () => {
     setLoading(true);
     try {
-      await login({ quickLogin: true });
+      await login({ username: 'admin', password: '' });
       // Redirect handled by React Admin
     } catch (error) {
       notify('Login failed', { type: 'error' });
