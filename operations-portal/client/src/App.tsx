@@ -19,10 +19,14 @@ import Securities from "./pages/Securities";
 import SecurityDetail from "./pages/SecurityDetail";
 import KafkaEvents from "./pages/KafkaEvents";
 import Larry from "./pages/Larry";
+import Login from "./pages/Login";
 
 function Router() {
   return (
     <Switch>
+      {/* Login route (no auth required) */}
+      <Route path="/login" component={Login} />
+      
       {/* All routes wrapped in DashboardLayout for authenticated access */}
       <Route path="/">
         <DashboardLayout>
