@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, decimal, boolean, json, date, bigint } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, decimal, boolean, json, date, bigint } from "drizzle-orm/pg-core";
 
 /**
  * GLOBAL ASSET REGISTER
@@ -13,14 +13,14 @@ import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, decimal, boolean,
 // GLOBAL ASSET REGISTER - Main Table
 // ============================================================================
 
-export const securities = mysqlTable("securities", {
+export const securities = pgTable("securities", {
   // Primary Identification
   id: varchar("id", { length: 64 }).primaryKey(), // Internal ID, ISIN, crypto address, or custom ID
   ticker: varchar("ticker", { length: 50 }).notNull(), // Stock ticker, crypto symbol, or custom identifier
   name: text("name").notNull(),
   
   // Asset Classification
-  assetClass: mysqlEnum("asset_class", [
+  assetClass: pgEnum("asset_class", [
     // Traditional Securities (On-Market)
     "equity",              // Listed stocks
     "etf",                 // Exchange-Traded Funds
@@ -56,7 +56,7 @@ export const securities = mysqlTable("securities", {
   ]).notNull(),
   
   // Market Classification
-  marketType: mysqlEnum("market_type", [
+  marketType: pgEnum("market_type", [
     "exchange_traded",     // Listed on public exchange (ASX, NYSE, NASDAQ)
     "otc",                 // Over-the-counter
     "private",             // Private placement, not publicly traded
@@ -104,22 +104,22 @@ export const securities = mysqlTable("securities", {
   // - Crypto: {total_supply, circulating_supply, consensus_mechanism}
   
   // Valuation & Pricing
-  lastPrice: decimal("last_price", { precision: 20, scale: 8 }), // Support crypto decimals
+  lastPrice: numeric("last_price", { precision: 20, scale: 8 }), // Support crypto decimals
   lastPriceDate: timestamp("last_price_date"),
   lastVolume: bigint("last_volume", { mode: "number" }),
-  marketCap: decimal("market_cap", { precision: 20, scale: 2 }),
+  marketCap: numeric("market_cap", { precision: 20, scale: 2 }),
   
   // Liquidity & Trading
   isLiquid: boolean("is_liquid").default(true), // Can it be easily sold?
-  minTradeSize: decimal("min_trade_size", { precision: 20, scale: 8 }),
-  lotSize: decimal("lot_size", { precision: 20, scale: 8 }),
+  minTradeSize: numeric("min_trade_size", { precision: 20, scale: 8 }),
+  lotSize: numeric("lot_size", { precision: 20, scale: 8 }),
   
   // Status & Lifecycle
   listingDate: date("listing_date"),
   delistingDate: date("delisting_date"),
   maturityDate: date("maturity_date"), // For bonds, options, futures
   isActive: boolean("is_active").default(true).notNull(),
-  status: mysqlEnum("status", [
+  status: pgEnum("status", [
     "active",
     "suspended",
     "delisted",
@@ -140,10 +140,10 @@ export const securities = mysqlTable("securities", {
   
   // Audit Trail
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
   createdBy: varchar("created_by", { length: 64 }), // user ID or 'zeta-agent'
   source: varchar("source", { length: 50 }).default("manual").notNull(), // 'manual', 'openfigi', 'zeta-agent', 'blockchain'
-  verificationStatus: mysqlEnum("verification_status", [
+  verificationStatus: pgEnum("verification_status", [
     "unverified",
     "pending",
     "verified",
@@ -160,11 +160,11 @@ export type InsertSecurity = typeof securities.$inferInsert;
 // CORPORATE ACTIONS & EVENTS
 // ============================================================================
 
-export const corporateActions = mysqlTable("corporate_actions", {
+export const corporateActions = pgTable("corporate_actions", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }).notNull(),
-  actionType: mysqlEnum("action_type", [
+  actionType: pgEnum("action_type", [
     "dividend",
     "split",
     "reverse_split",
@@ -193,10 +193,10 @@ export const corporateActions = mysqlTable("corporate_actions", {
   recordDate: date("record_date"),
   paymentDate: date("payment_date"),
   details: json("details"), // Flexible storage for action-specific data
-  status: mysqlEnum("status", ["announced", "confirmed", "completed", "cancelled"]).default("announced").notNull(),
+  status: pgEnum("status", ["announced", "confirmed", "completed", "cancelled"]).default("announced").notNull(),
   impactOnHoldings: json("impact_on_holdings"), // How this affects portfolio holdings
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export type CorporateAction = typeof corporateActions.$inferSelect;
@@ -206,7 +206,7 @@ export type InsertCorporateAction = typeof corporateActions.$inferInsert;
 // SECURITY EVENTS (Kafka Event Store - Materialized View)
 // ============================================================================
 
-export const securityEvents = mysqlTable("security_events", {
+export const securityEvents = pgTable("security_events", {
   id: varchar("id", { length: 64 }).primaryKey(), // Event ID from Kafka
   eventType: varchar("event_type", { length: 50 }).notNull(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
@@ -216,7 +216,7 @@ export const securityEvents = mysqlTable("security_events", {
   userId: varchar("user_id", { length: 64 }),
   timestamp: timestamp("timestamp").notNull(),
   kafkaOffset: bigint("kafka_offset", { mode: "number" }), // Kafka partition offset
-  kafkaPartition: int("kafka_partition"),
+  kafkaPartition: integer("kafka_partition"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -227,18 +227,18 @@ export type InsertSecurityEvent = typeof securityEvents.$inferInsert;
 // PRICE HISTORY (For assets not in Data Mesh Parquet files)
 // ============================================================================
 
-export const priceHistory = mysqlTable("price_history", {
+export const priceHistory = pgTable("price_history", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }).notNull(),
   date: date("date").notNull(),
-  open: decimal("open", { precision: 20, scale: 8 }),
-  high: decimal("high", { precision: 20, scale: 8 }),
-  low: decimal("low", { precision: 20, scale: 8 }),
-  close: decimal("close", { precision: 20, scale: 8 }).notNull(),
+  open: numeric("open", { precision: 20, scale: 8 }),
+  high: numeric("high", { precision: 20, scale: 8 }),
+  low: numeric("low", { precision: 20, scale: 8 }),
+  close: numeric("close", { precision: 20, scale: 8 }).notNull(),
   volume: bigint("volume", { mode: "number" }),
-  adjClose: decimal("adj_close", { precision: 20, scale: 8 }),
-  marketCap: decimal("market_cap", { precision: 20, scale: 2 }),
+  adjClose: numeric("adj_close", { precision: 20, scale: 8 }),
+  marketCap: numeric("market_cap", { precision: 20, scale: 2 }),
   source: varchar("source", { length: 50 }).default("yahoo-finance").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
@@ -250,13 +250,13 @@ export type InsertPriceHistory = typeof priceHistory.$inferInsert;
 // VALUATIONS (For alternative assets requiring periodic appraisals)
 // ============================================================================
 
-export const valuations = mysqlTable("valuations", {
+export const valuations = pgTable("valuations", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   valuationDate: date("valuation_date").notNull(),
-  valuationAmount: decimal("valuation_amount", { precision: 20, scale: 2 }).notNull(),
+  valuationAmount: numeric("valuation_amount", { precision: 20, scale: 2 }).notNull(),
   currency: varchar("currency", { length: 10 }).notNull(),
-  valuationType: mysqlEnum("valuation_type", [
+  valuationType: pgEnum("valuation_type", [
     "market",              // Current market value
     "appraisal",           // Professional appraisal
     "insurance",           // Insurance valuation
@@ -268,7 +268,7 @@ export const valuations = mysqlTable("valuations", {
   appraisalDocument: text("appraisal_document"), // S3 URL to appraisal PDF
   methodology: text("methodology"), // Valuation methodology description
   notes: text("notes"),
-  confidence: mysqlEnum("confidence", ["low", "medium", "high"]).default("medium"),
+  confidence: pgEnum("confidence", ["low", "medium", "high"]).default("medium"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   createdBy: varchar("created_by", { length: 64 }),
 });
@@ -280,13 +280,13 @@ export type InsertValuation = typeof valuations.$inferInsert;
 // FRACTIONAL OWNERSHIP (For shared assets)
 // ============================================================================
 
-export const securityOwnership = mysqlTable("security_ownership", {
+export const securityOwnership = pgTable("security_ownership", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   portfolioId: varchar("portfolio_id", { length: 64 }), // Link to portfolio
   ownerId: varchar("owner_id", { length: 64 }).notNull(), // User or entity ID
   ownerName: varchar("owner_name", { length: 255 }),
-  ownershipType: mysqlEnum("ownership_type", [
+  ownershipType: pgEnum("ownership_type", [
     "full",                // 100% ownership
     "fractional",          // Partial ownership
     "beneficial",          // Beneficial owner (not legal owner)
@@ -294,17 +294,17 @@ export const securityOwnership = mysqlTable("security_ownership", {
     "syndicate",           // Part of syndicate
     "trust"                // Held in trust
   ]).notNull(),
-  ownershipPercentage: decimal("ownership_percentage", { precision: 10, scale: 6 }), // Up to 6 decimals
-  units: decimal("units", { precision: 20, scale: 8 }), // Number of units/shares/tokens owned
+  ownershipPercentage: numeric("ownership_percentage", { precision: 10, scale: 6 }), // Up to 6 decimals
+  units: numeric("units", { precision: 20, scale: 8 }), // Number of units/shares/tokens owned
   acquisitionDate: date("acquisition_date").notNull(),
-  acquisitionPrice: decimal("acquisition_price", { precision: 20, scale: 8 }),
+  acquisitionPrice: numeric("acquisition_price", { precision: 20, scale: 8 }),
   acquisitionCurrency: varchar("acquisition_currency", { length: 10 }),
   syndicationAgreement: text("syndication_agreement"), // S3 URL to agreement
   coOwners: json("co_owners"), // Array of co-owner details
   votingRights: boolean("voting_rights").default(true),
   transferRestrictions: text("transfer_restrictions"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export type SecurityOwnership = typeof securityOwnership.$inferSelect;
@@ -314,11 +314,11 @@ export type InsertSecurityOwnership = typeof securityOwnership.$inferInsert;
 // LENDING & BORROWING (Securities lending, crypto staking)
 // ============================================================================
 
-export const securityLending = mysqlTable("security_lending", {
+export const securityLending = pgTable("security_lending", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }).notNull(),
-  lendingType: mysqlEnum("lending_type", [
+  lendingType: pgEnum("lending_type", [
     "securities_lending",  // Traditional stock lending
     "crypto_staking",      // Staking for rewards
     "crypto_lending",      // DeFi lending
@@ -328,17 +328,17 @@ export const securityLending = mysqlTable("security_lending", {
   lender: varchar("lender", { length: 255 }),
   borrower: varchar("borrower", { length: 255 }),
   platform: varchar("platform", { length: 255 }), // Lending platform/protocol
-  quantity: decimal("quantity", { precision: 20, scale: 8 }).notNull(),
-  collateralValue: decimal("collateral_value", { precision: 20, scale: 2 }),
-  interestRate: decimal("interest_rate", { precision: 8, scale: 4 }), // Annual percentage
-  stakingRewardRate: decimal("staking_reward_rate", { precision: 8, scale: 4 }),
+  quantity: numeric("quantity", { precision: 20, scale: 8 }).notNull(),
+  collateralValue: numeric("collateral_value", { precision: 20, scale: 2 }),
+  interestRate: numeric("interest_rate", { precision: 8, scale: 4 }), // Annual percentage
+  stakingRewardRate: numeric("staking_reward_rate", { precision: 8, scale: 4 }),
   startDate: date("start_date").notNull(),
   endDate: date("end_date"),
-  lockupPeriod: int("lockup_period"), // Days
-  status: mysqlEnum("status", ["active", "completed", "defaulted", "recalled"]).default("active").notNull(),
-  rewardsEarned: decimal("rewards_earned", { precision: 20, scale: 8 }),
+  lockupPeriod: integer("lockup_period"), // Days
+  status: pgEnum("status", ["active", "completed", "defaulted", "recalled"]).default("active").notNull(),
+  rewardsEarned: numeric("rewards_earned", { precision: 20, scale: 8 }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export type SecurityLending = typeof securityLending.$inferSelect;
@@ -348,17 +348,17 @@ export type InsertSecurityLending = typeof securityLending.$inferInsert;
 // TAX LOT TRACKING (Cost basis for tax reporting)
 // ============================================================================
 
-export const taxLots = mysqlTable("tax_lots", {
+export const taxLots = pgTable("tax_lots", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   portfolioId: varchar("portfolio_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }).notNull(),
   acquisitionDate: date("acquisition_date").notNull(),
-  quantity: decimal("quantity", { precision: 20, scale: 8 }).notNull(),
-  costBasis: decimal("cost_basis", { precision: 20, scale: 8 }).notNull(), // Per unit
-  totalCost: decimal("total_cost", { precision: 20, scale: 2 }).notNull(),
+  quantity: numeric("quantity", { precision: 20, scale: 8 }).notNull(),
+  costBasis: numeric("cost_basis", { precision: 20, scale: 8 }).notNull(), // Per unit
+  totalCost: numeric("total_cost", { precision: 20, scale: 2 }).notNull(),
   currency: varchar("currency", { length: 10 }).notNull(),
-  acquisitionMethod: mysqlEnum("acquisition_method", [
+  acquisitionMethod: pgEnum("acquisition_method", [
     "purchase",
     "gift",
     "inheritance",
@@ -369,7 +369,7 @@ export const taxLots = mysqlTable("tax_lots", {
     "merger",
     "conversion"
   ]).notNull(),
-  taxTreatment: mysqlEnum("tax_treatment", [
+  taxTreatment: pgEnum("tax_treatment", [
     "short_term",          // < 1 year
     "long_term",           // >= 1 year
     "tax_deferred",        // Retirement account
@@ -378,14 +378,14 @@ export const taxLots = mysqlTable("tax_lots", {
     "ordinary_income"
   ]),
   disposalDate: date("disposal_date"),
-  disposalPrice: decimal("disposal_price", { precision: 20, scale: 8 }),
-  disposalMethod: mysqlEnum("disposal_method", ["sale", "gift", "donation", "loss", "transfer"]),
-  realizedGainLoss: decimal("realized_gain_loss", { precision: 20, scale: 2 }),
+  disposalPrice: numeric("disposal_price", { precision: 20, scale: 8 }),
+  disposalMethod: pgEnum("disposal_method", ["sale", "gift", "donation", "loss", "transfer"]),
+  realizedGainLoss: numeric("realized_gain_loss", { precision: 20, scale: 2 }),
   isWashSale: boolean("is_wash_sale").default(false),
-  status: mysqlEnum("status", ["open", "closed", "transferred"]).default("open").notNull(),
+  status: pgEnum("status", ["open", "closed", "transferred"]).default("open").notNull(),
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export type TaxLot = typeof taxLots.$inferSelect;
@@ -395,29 +395,29 @@ export type InsertTaxLot = typeof taxLots.$inferInsert;
 // ESG RATINGS (Link to ESG module)
 // ============================================================================
 
-export const securityEsgRatings = mysqlTable("security_esg_ratings", {
+export const securityEsgRatings = pgTable("security_esg_ratings", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }).notNull(),
   ratingDate: date("rating_date").notNull(),
   
   // ESG Scores (0-100)
-  environmentalScore: decimal("environmental_score", { precision: 5, scale: 2 }),
-  socialScore: decimal("social_score", { precision: 5, scale: 2 }),
-  governanceScore: decimal("governance_score", { precision: 5, scale: 2 }),
-  overallEsgScore: decimal("overall_esg_score", { precision: 5, scale: 2 }),
+  environmentalScore: numeric("environmental_score", { precision: 5, scale: 2 }),
+  socialScore: numeric("social_score", { precision: 5, scale: 2 }),
+  governanceScore: numeric("governance_score", { precision: 5, scale: 2 }),
+  overallEsgScore: numeric("overall_esg_score", { precision: 5, scale: 2 }),
   
   // Ratings
   esgRating: varchar("esg_rating", { length: 10 }), // AAA, AA, A, BBB, etc.
   ratingProvider: varchar("rating_provider", { length: 100 }), // MSCI, Sustainalytics, etc.
   
   // Carbon & Climate
-  carbonIntensity: decimal("carbon_intensity", { precision: 15, scale: 4 }), // tCO2e per $M revenue
-  carbonFootprint: decimal("carbon_footprint", { precision: 20, scale: 2 }), // Total tCO2e
-  climateRisk: mysqlEnum("climate_risk", ["low", "medium", "high", "severe"]),
+  carbonIntensity: numeric("carbon_intensity", { precision: 15, scale: 4 }), // tCO2e per $M revenue
+  carbonFootprint: numeric("carbon_footprint", { precision: 20, scale: 2 }), // Total tCO2e
+  climateRisk: pgEnum("climate_risk", ["low", "medium", "high", "severe"]),
   
   // Controversies
-  controversyLevel: mysqlEnum("controversy_level", ["none", "low", "moderate", "high", "severe"]),
+  controversyLevel: pgEnum("controversy_level", ["none", "low", "moderate", "high", "severe"]),
   controversyDetails: text("controversy_details"),
   
   // SDG Alignment (UN Sustainable Development Goals)
@@ -427,9 +427,9 @@ export const securityEsgRatings = mysqlTable("security_esg_ratings", {
   impactMetrics: json("impact_metrics"), // Custom impact KPIs
   
   source: varchar("source", { length: 100 }),
-  dataQuality: mysqlEnum("data_quality", ["low", "medium", "high"]).default("medium"),
+  dataQuality: pgEnum("data_quality", ["low", "medium", "high"]).default("medium"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export type SecurityEsgRating = typeof securityEsgRatings.$inferSelect;
@@ -439,12 +439,12 @@ export type InsertSecurityEsgRating = typeof securityEsgRatings.$inferInsert;
 // COUNTERPARTY RISK (For derivatives, OTC trades)
 // ============================================================================
 
-export const counterparties = mysqlTable("counterparties", {
+export const counterparties = pgTable("counterparties", {
   id: varchar("id", { length: 64 }).primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
   legalName: varchar("legal_name", { length: 255 }),
   lei: varchar("lei", { length: 20 }).unique(), // Legal Entity Identifier
-  entityType: mysqlEnum("entity_type", [
+  entityType: pgEnum("entity_type", [
     "bank",
     "broker_dealer",
     "exchange",
@@ -460,16 +460,16 @@ export const counterparties = mysqlTable("counterparties", {
   country: varchar("country", { length: 2 }),
   creditRating: varchar("credit_rating", { length: 10 }), // AAA, AA+, etc.
   ratingAgency: varchar("rating_agency", { length: 50 }), // S&P, Moody's, Fitch
-  riskLevel: mysqlEnum("risk_level", ["low", "medium", "high", "critical"]).default("medium"),
+  riskLevel: pgEnum("risk_level", ["low", "medium", "high", "critical"]).default("medium"),
   isRegulated: boolean("is_regulated").default(true),
   regulators: json("regulators"), // Array of regulatory bodies
-  exposureLimit: decimal("exposure_limit", { precision: 20, scale: 2 }),
-  currentExposure: decimal("current_exposure", { precision: 20, scale: 2 }),
+  exposureLimit: numeric("exposure_limit", { precision: 20, scale: 2 }),
+  currentExposure: numeric("current_exposure", { precision: 20, scale: 2 }),
   collateralRequired: boolean("collateral_required").default(false),
-  status: mysqlEnum("status", ["active", "suspended", "defaulted", "inactive"]).default("active").notNull(),
+  status: pgEnum("status", ["active", "suspended", "defaulted", "inactive"]).default("active").notNull(),
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export type Counterparty = typeof counterparties.$inferSelect;
@@ -479,13 +479,13 @@ export type InsertCounterparty = typeof counterparties.$inferInsert;
 // INSURANCE & PROTECTION
 // ============================================================================
 
-export const securityInsurance = mysqlTable("security_insurance", {
+export const securityInsurance = pgTable("security_insurance", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }),
   policyNumber: varchar("policy_number", { length: 100 }).notNull(),
   insurer: varchar("insurer", { length: 255 }).notNull(),
-  insuranceType: mysqlEnum("insurance_type", [
+  insuranceType: pgEnum("insurance_type", [
     "property",            // For real estate
     "fine_art",            // For artwork
     "collectibles",        // For collectibles
@@ -495,18 +495,18 @@ export const securityInsurance = mysqlTable("security_insurance", {
     "title",               // Title insurance
     "credit_default"       // CDS for bonds
   ]).notNull(),
-  coverageAmount: decimal("coverage_amount", { precision: 20, scale: 2 }).notNull(),
+  coverageAmount: numeric("coverage_amount", { precision: 20, scale: 2 }).notNull(),
   currency: varchar("currency", { length: 10 }).notNull(),
-  deductible: decimal("deductible", { precision: 20, scale: 2 }),
-  premium: decimal("premium", { precision: 20, scale: 2 }),
-  premiumFrequency: mysqlEnum("premium_frequency", ["monthly", "quarterly", "annual"]),
+  deductible: numeric("deductible", { precision: 20, scale: 2 }),
+  premium: numeric("premium", { precision: 20, scale: 2 }),
+  premiumFrequency: pgEnum("premium_frequency", ["monthly", "quarterly", "annual"]),
   effectiveDate: date("effective_date").notNull(),
   expiryDate: date("expiry_date").notNull(),
   policyDocument: text("policy_document"), // S3 URL
-  status: mysqlEnum("status", ["active", "expired", "cancelled", "claimed"]).default("active").notNull(),
+  status: pgEnum("status", ["active", "expired", "cancelled", "claimed"]).default("active").notNull(),
   claimHistory: json("claim_history"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export type SecurityInsurance = typeof securityInsurance.$inferSelect;
@@ -516,11 +516,11 @@ export type InsertSecurityInsurance = typeof securityInsurance.$inferInsert;
 // PHYSICAL LOCATION & CUSTODY
 // ============================================================================
 
-export const securityLocations = mysqlTable("security_locations", {
+export const securityLocations = pgTable("security_locations", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }),
-  locationType: mysqlEnum("location_type", [
+  locationType: pgEnum("location_type", [
     "vault",               // Bank vault, secure storage
     "gallery",             // Art gallery
     "warehouse",           // General warehouse
@@ -547,10 +547,10 @@ export const securityLocations = mysqlTable("security_locations", {
   environmentalConditions: json("environmental_conditions"), // Temperature, humidity for wine/art
   lastVerified: timestamp("last_verified"),
   verifiedBy: varchar("verified_by", { length: 64 }),
-  status: mysqlEnum("status", ["active", "in_transit", "relocated", "disposed"]).default("active").notNull(),
+  status: pgEnum("status", ["active", "in_transit", "relocated", "disposed"]).default("active").notNull(),
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export type SecurityLocation = typeof securityLocations.$inferSelect;
@@ -560,11 +560,11 @@ export type InsertSecurityLocation = typeof securityLocations.$inferInsert;
 // RESTRICTIONS & LOCK-UPS
 // ============================================================================
 
-export const securityRestrictions = mysqlTable("security_restrictions", {
+export const securityRestrictions = pgTable("security_restrictions", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }),
-  restrictionType: mysqlEnum("restriction_type", [
+  restrictionType: pgEnum("restriction_type", [
     "lockup",              // Lock-up period
     "vesting",             // Vesting schedule
     "transfer_restriction", // Cannot transfer
@@ -577,17 +577,17 @@ export const securityRestrictions = mysqlTable("security_restrictions", {
   startDate: date("start_date").notNull(),
   endDate: date("end_date"),
   vestingSchedule: json("vesting_schedule"), // Array of vesting milestones
-  percentageRestricted: decimal("percentage_restricted", { precision: 5, scale: 2 }),
-  quantityRestricted: decimal("quantity_restricted", { precision: 20, scale: 8 }),
+  percentageRestricted: numeric("percentage_restricted", { precision: 5, scale: 2 }),
+  quantityRestricted: numeric("quantity_restricted", { precision: 20, scale: 8 }),
   reason: text("reason"),
   legalDocument: text("legal_document"), // S3 URL to agreement
   canSell: boolean("can_sell").default(false),
   canTransfer: boolean("can_transfer").default(false),
   canPledge: boolean("can_pledge").default(false),
   penaltyForViolation: text("penalty_for_violation"),
-  status: mysqlEnum("status", ["active", "expired", "waived", "violated"]).default("active").notNull(),
+  status: pgEnum("status", ["active", "expired", "waived", "violated"]).default("active").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export type SecurityRestriction = typeof securityRestrictions.$inferSelect;
@@ -597,11 +597,11 @@ export type InsertSecurityRestriction = typeof securityRestrictions.$inferInsert
 // RELATED SECURITIES (Parent/child relationships)
 // ============================================================================
 
-export const securityRelationships = mysqlTable("security_relationships", {
+export const securityRelationships = pgTable("security_relationships", {
   id: varchar("id", { length: 64 }).primaryKey(),
   parentSecurityId: varchar("parent_security_id", { length: 64 }).notNull(),
   childSecurityId: varchar("child_security_id", { length: 64 }).notNull(),
-  relationshipType: mysqlEnum("relationship_type", [
+  relationshipType: pgEnum("relationship_type", [
     "stock_split",         // Parent split into child
     "reverse_split",       // Child merged into parent
     "merger",              // Two securities merged
@@ -619,11 +619,11 @@ export const securityRelationships = mysqlTable("security_relationships", {
   relationshipRatio: varchar("relationship_ratio", { length: 50 }), // e.g., "2:1", "1:10"
   effectiveDate: date("effective_date").notNull(),
   endDate: date("end_date"),
-  conversionPrice: decimal("conversion_price", { precision: 20, scale: 8 }),
+  conversionPrice: numeric("conversion_price", { precision: 20, scale: 8 }),
   details: json("details"),
-  status: mysqlEnum("status", ["active", "completed", "cancelled"]).default("active").notNull(),
+  status: pgEnum("status", ["active", "completed", "cancelled"]).default("active").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export type SecurityRelationship = typeof securityRelationships.$inferSelect;
