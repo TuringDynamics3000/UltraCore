@@ -20,8 +20,7 @@ export const securities = pgTable("securities", {
   name: text("name").notNull(),
   
   // Asset Classification
-  assetClass: pgEnum("asset_class", [
-    // Traditional Securities (On-Market)
+  assetClass: text
     "equity",              // Listed stocks
     "etf",                 // Exchange-Traded Funds
     "bond",                // Fixed Income
@@ -56,8 +55,7 @@ export const securities = pgTable("securities", {
   ]).notNull(),
   
   // Market Classification
-  marketType: pgEnum("market_type", [
-    "exchange_traded",     // Listed on public exchange (ASX, NYSE, NASDAQ)
+  marketType: text
     "otc",                 // Over-the-counter
     "private",             // Private placement, not publicly traded
     "decentralized",       // Crypto DEX, blockchain-based
@@ -119,14 +117,7 @@ export const securities = pgTable("securities", {
   delistingDate: date("delisting_date"),
   maturityDate: date("maturity_date"), // For bonds, options, futures
   isActive: boolean("is_active").default(true).notNull(),
-  status: pgEnum("status", [
-    "active",
-    "suspended",
-    "delisted",
-    "matured",
-    "defaulted",
-    "sold"           // For unique assets like art
-  ]).default("active").notNull(),
+  status: text("status").default("active").notNull()
   
   // Data Integration
   parquetUrl: text("parquet_url"), // Link to historical OHLCV data in S3
@@ -143,12 +134,7 @@ export const securities = pgTable("securities", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
   createdBy: varchar("created_by", { length: 64 }), // user ID or 'zeta-agent'
   source: varchar("source", { length: 50 }).default("manual").notNull(), // 'manual', 'openfigi', 'zeta-agent', 'blockchain'
-  verificationStatus: pgEnum("verification_status", [
-    "unverified",
-    "pending",
-    "verified",
-    "disputed"
-  ]).default("unverified").notNull(),
+  verificationStatus: text("verificationStatus").default("unverified").notNull()
   verifiedBy: varchar("verified_by", { length: 64 }), // user ID or 'zeta-agent'
   verifiedAt: timestamp("verified_at"),
 });
@@ -164,36 +150,13 @@ export const corporateActions = pgTable("corporate_actions", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }).notNull(),
-  actionType: pgEnum("action_type", [
-    "dividend",
-    "split",
-    "reverse_split",
-    "merger",
-    "acquisition",
-    "spinoff",
-    "delisting",
-    "rights_issue",
-    "bonus_issue",
-    "buyback",
-    "name_change",
-    "ticker_change",
-    // Crypto-specific
-    "hard_fork",
-    "airdrop",
-    "token_burn",
-    "staking_reward",
-    // Alternative assets
-    "appraisal_update",
-    "ownership_transfer",
-    "restoration",        // For art
-    "recertification"     // For collectibles, wine
-  ]).notNull(),
+  actionType: text("actionType").notNull()
   announcementDate: date("announcement_date").notNull(),
   effectiveDate: date("effective_date").notNull(),
   recordDate: date("record_date"),
   paymentDate: date("payment_date"),
   details: json("details"), // Flexible storage for action-specific data
-  status: pgEnum("status", ["announced", "confirmed", "completed", "cancelled"]).default("announced").notNull(),
+  status: text("status").default("announced").notNull()
   impactOnHoldings: json("impact_on_holdings"), // How this affects portfolio holdings
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -256,19 +219,12 @@ export const valuations = pgTable("valuations", {
   valuationDate: date("valuation_date").notNull(),
   valuationAmount: numeric("valuation_amount", { precision: 20, scale: 2 }).notNull(),
   currency: varchar("currency", { length: 10 }).notNull(),
-  valuationType: pgEnum("valuation_type", [
-    "market",              // Current market value
-    "appraisal",           // Professional appraisal
-    "insurance",           // Insurance valuation
-    "liquidation",         // Forced sale value
-    "replacement",         // Replacement cost
-    "fair_value"           // Accounting fair value
-  ]).notNull(),
+  valuationType: text("valuationType").notNull()
   appraiser: varchar("appraiser", { length: 255 }), // Appraiser name or firm
   appraisalDocument: text("appraisal_document"), // S3 URL to appraisal PDF
   methodology: text("methodology"), // Valuation methodology description
   notes: text("notes"),
-  confidence: pgEnum("confidence", ["low", "medium", "high"]).default("medium"),
+  confidence: text("confidence").default("medium")
   createdAt: timestamp("created_at").defaultNow().notNull(),
   createdBy: varchar("created_by", { length: 64 }),
 });
@@ -286,10 +242,7 @@ export const securityOwnership = pgTable("security_ownership", {
   portfolioId: varchar("portfolio_id", { length: 64 }), // Link to portfolio
   ownerId: varchar("owner_id", { length: 64 }).notNull(), // User or entity ID
   ownerName: varchar("owner_name", { length: 255 }),
-  ownershipType: pgEnum("ownership_type", [
-    "full",                // 100% ownership
-    "fractional",          // Partial ownership
-    "beneficial",          // Beneficial owner (not legal owner)
+  ownershipType: text
     "nominee",             // Held by nominee
     "syndicate",           // Part of syndicate
     "trust"                // Held in trust
@@ -318,13 +271,7 @@ export const securityLending = pgTable("security_lending", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }).notNull(),
-  lendingType: pgEnum("lending_type", [
-    "securities_lending",  // Traditional stock lending
-    "crypto_staking",      // Staking for rewards
-    "crypto_lending",      // DeFi lending
-    "collateral",          // Used as collateral
-    "repo"                 // Repurchase agreement
-  ]).notNull(),
+  lendingType: text("lendingType").notNull()
   lender: varchar("lender", { length: 255 }),
   borrower: varchar("borrower", { length: 255 }),
   platform: varchar("platform", { length: 255 }), // Lending platform/protocol
@@ -335,7 +282,7 @@ export const securityLending = pgTable("security_lending", {
   startDate: date("start_date").notNull(),
   endDate: date("end_date"),
   lockupPeriod: integer("lockup_period"), // Days
-  status: pgEnum("status", ["active", "completed", "defaulted", "recalled"]).default("active").notNull(),
+  status: text("status").default("active").notNull()
   rewardsEarned: numeric("rewards_earned", { precision: 20, scale: 8 }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -358,31 +305,14 @@ export const taxLots = pgTable("tax_lots", {
   costBasis: numeric("cost_basis", { precision: 20, scale: 8 }).notNull(), // Per unit
   totalCost: numeric("total_cost", { precision: 20, scale: 2 }).notNull(),
   currency: varchar("currency", { length: 10 }).notNull(),
-  acquisitionMethod: pgEnum("acquisition_method", [
-    "purchase",
-    "gift",
-    "inheritance",
-    "airdrop",
-    "staking_reward",
-    "dividend_reinvestment",
-    "stock_split",
-    "merger",
-    "conversion"
-  ]).notNull(),
-  taxTreatment: pgEnum("tax_treatment", [
-    "short_term",          // < 1 year
-    "long_term",           // >= 1 year
-    "tax_deferred",        // Retirement account
-    "tax_exempt",          // Municipal bonds, etc.
-    "capital_gains",
-    "ordinary_income"
-  ]),
+  acquisitionMethod: text("acquisitionMethod").notNull()
+  taxTreatment: text,
   disposalDate: date("disposal_date"),
   disposalPrice: numeric("disposal_price", { precision: 20, scale: 8 }),
-  disposalMethod: pgEnum("disposal_method", ["sale", "gift", "donation", "loss", "transfer"]),
+  disposalMethod: text,
   realizedGainLoss: numeric("realized_gain_loss", { precision: 20, scale: 2 }),
   isWashSale: boolean("is_wash_sale").default(false),
-  status: pgEnum("status", ["open", "closed", "transferred"]).default("open").notNull(),
+  status: text("status").default("open").notNull()
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -414,10 +344,10 @@ export const securityEsgRatings = pgTable("security_esg_ratings", {
   // Carbon & Climate
   carbonIntensity: numeric("carbon_intensity", { precision: 15, scale: 4 }), // tCO2e per $M revenue
   carbonFootprint: numeric("carbon_footprint", { precision: 20, scale: 2 }), // Total tCO2e
-  climateRisk: pgEnum("climate_risk", ["low", "medium", "high", "severe"]),
+  climateRisk: text,
   
   // Controversies
-  controversyLevel: pgEnum("controversy_level", ["none", "low", "moderate", "high", "severe"]),
+  controversyLevel: text,
   controversyDetails: text("controversy_details"),
   
   // SDG Alignment (UN Sustainable Development Goals)
@@ -427,7 +357,7 @@ export const securityEsgRatings = pgTable("security_esg_ratings", {
   impactMetrics: json("impact_metrics"), // Custom impact KPIs
   
   source: varchar("source", { length: 100 }),
-  dataQuality: pgEnum("data_quality", ["low", "medium", "high"]).default("medium"),
+  dataQuality: text("dataQuality").default("medium")
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -444,29 +374,17 @@ export const counterparties = pgTable("counterparties", {
   name: varchar("name", { length: 255 }).notNull(),
   legalName: varchar("legal_name", { length: 255 }),
   lei: varchar("lei", { length: 20 }).unique(), // Legal Entity Identifier
-  entityType: pgEnum("entity_type", [
-    "bank",
-    "broker_dealer",
-    "exchange",
-    "custodian",
-    "clearing_house",
-    "hedge_fund",
-    "private_equity",
-    "insurance_company",
-    "corporate",
-    "government",
-    "individual"
-  ]).notNull(),
+  entityType: text("entityType").notNull()
   country: varchar("country", { length: 2 }),
   creditRating: varchar("credit_rating", { length: 10 }), // AAA, AA+, etc.
   ratingAgency: varchar("rating_agency", { length: 50 }), // S&P, Moody's, Fitch
-  riskLevel: pgEnum("risk_level", ["low", "medium", "high", "critical"]).default("medium"),
+  riskLevel: text("riskLevel").default("medium")
   isRegulated: boolean("is_regulated").default(true),
   regulators: json("regulators"), // Array of regulatory bodies
   exposureLimit: numeric("exposure_limit", { precision: 20, scale: 2 }),
   currentExposure: numeric("current_exposure", { precision: 20, scale: 2 }),
   collateralRequired: boolean("collateral_required").default(false),
-  status: pgEnum("status", ["active", "suspended", "defaulted", "inactive"]).default("active").notNull(),
+  status: text("status").default("active").notNull()
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -485,25 +403,16 @@ export const securityInsurance = pgTable("security_insurance", {
   ticker: varchar("ticker", { length: 50 }),
   policyNumber: varchar("policy_number", { length: 100 }).notNull(),
   insurer: varchar("insurer", { length: 255 }).notNull(),
-  insuranceType: pgEnum("insurance_type", [
-    "property",            // For real estate
-    "fine_art",            // For artwork
-    "collectibles",        // For collectibles
-    "transit",             // During transport
-    "storage",             // While in storage
-    "cyber",               // For digital assets
-    "title",               // Title insurance
-    "credit_default"       // CDS for bonds
-  ]).notNull(),
+  insuranceType: text("insuranceType").notNull()
   coverageAmount: numeric("coverage_amount", { precision: 20, scale: 2 }).notNull(),
   currency: varchar("currency", { length: 10 }).notNull(),
   deductible: numeric("deductible", { precision: 20, scale: 2 }),
   premium: numeric("premium", { precision: 20, scale: 2 }),
-  premiumFrequency: pgEnum("premium_frequency", ["monthly", "quarterly", "annual"]),
+  premiumFrequency: text,
   effectiveDate: date("effective_date").notNull(),
   expiryDate: date("expiry_date").notNull(),
   policyDocument: text("policy_document"), // S3 URL
-  status: pgEnum("status", ["active", "expired", "cancelled", "claimed"]).default("active").notNull(),
+  status: text("status").default("active").notNull()
   claimHistory: json("claim_history"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -520,19 +429,7 @@ export const securityLocations = pgTable("security_locations", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }),
-  locationType: pgEnum("location_type", [
-    "vault",               // Bank vault, secure storage
-    "gallery",             // Art gallery
-    "warehouse",           // General warehouse
-    "cold_storage",        // Crypto cold wallet
-    "hot_wallet",          // Crypto hot wallet
-    "custodian",           // Financial custodian
-    "exchange",            // Crypto exchange
-    "property",            // Physical property location
-    "cellar",              // Wine cellar
-    "safe_deposit_box",
-    "personal_residence"
-  ]).notNull(),
+  locationType: text("locationType").notNull()
   facilityName: varchar("facility_name", { length: 255 }),
   address: text("address"),
   city: varchar("city", { length: 100 }),
@@ -547,7 +444,7 @@ export const securityLocations = pgTable("security_locations", {
   environmentalConditions: json("environmental_conditions"), // Temperature, humidity for wine/art
   lastVerified: timestamp("last_verified"),
   verifiedBy: varchar("verified_by", { length: 64 }),
-  status: pgEnum("status", ["active", "in_transit", "relocated", "disposed"]).default("active").notNull(),
+  status: text("status").default("active").notNull()
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -564,16 +461,7 @@ export const securityRestrictions = pgTable("security_restrictions", {
   id: varchar("id", { length: 64 }).primaryKey(),
   securityId: varchar("security_id", { length: 64 }).notNull(),
   ticker: varchar("ticker", { length: 50 }),
-  restrictionType: pgEnum("restriction_type", [
-    "lockup",              // Lock-up period
-    "vesting",             // Vesting schedule
-    "transfer_restriction", // Cannot transfer
-    "trading_restriction", // Cannot trade
-    "regulatory",          // Regulatory restriction
-    "contractual",         // Contractual obligation
-    "blackout",            // Blackout period
-    "insider_trading"      // Insider trading restriction
-  ]).notNull(),
+  restrictionType: text("restrictionType").notNull()
   startDate: date("start_date").notNull(),
   endDate: date("end_date"),
   vestingSchedule: json("vesting_schedule"), // Array of vesting milestones
@@ -585,7 +473,7 @@ export const securityRestrictions = pgTable("security_restrictions", {
   canTransfer: boolean("can_transfer").default(false),
   canPledge: boolean("can_pledge").default(false),
   penaltyForViolation: text("penalty_for_violation"),
-  status: pgEnum("status", ["active", "expired", "waived", "violated"]).default("active").notNull(),
+  status: text("status").default("active").notNull()
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -601,27 +489,13 @@ export const securityRelationships = pgTable("security_relationships", {
   id: varchar("id", { length: 64 }).primaryKey(),
   parentSecurityId: varchar("parent_security_id", { length: 64 }).notNull(),
   childSecurityId: varchar("child_security_id", { length: 64 }).notNull(),
-  relationshipType: pgEnum("relationship_type", [
-    "stock_split",         // Parent split into child
-    "reverse_split",       // Child merged into parent
-    "merger",              // Two securities merged
-    "spinoff",             // Child spun off from parent
-    "conversion",          // Convertible bond → equity
-    "underlying",          // Derivative → underlying asset
-    "etf_holding",         // ETF → constituent security
-    "index_component",     // Index → component stock
-    "adr_ordinary",        // ADR → ordinary shares
-    "preferred_common",    // Preferred → common stock
-    "warrant_stock",       // Warrant → underlying stock
-    "option_stock",        // Option → underlying stock
-    "token_asset"          // Tokenized asset → physical asset
-  ]).notNull(),
+  relationshipType: text("relationshipType").notNull()
   relationshipRatio: varchar("relationship_ratio", { length: 50 }), // e.g., "2:1", "1:10"
   effectiveDate: date("effective_date").notNull(),
   endDate: date("end_date"),
   conversionPrice: numeric("conversion_price", { precision: 20, scale: 8 }),
   details: json("details"),
-  status: pgEnum("status", ["active", "completed", "cancelled"]).default("active").notNull(),
+  status: text("status").default("active").notNull()
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
