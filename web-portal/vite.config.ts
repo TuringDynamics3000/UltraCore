@@ -1,10 +1,10 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
-import tailwindcss from 'tailwindcss';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
   root: 'client',
   resolve: {
     alias: {
@@ -12,11 +12,7 @@ export default defineConfig({
       '@shared': path.resolve(__dirname, './shared'),
     },
   },
-  css: {
-    postcss: {
-      plugins: [tailwindcss()],
-    },
-  },
+
   server: {
     port: 3000,
     proxy: {
