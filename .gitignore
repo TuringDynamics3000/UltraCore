@@ -18,8 +18,11 @@ ENV/
 
 # Environment
 .env
-*.env
-.env.*
+.env.local
+.env.*.local
+# Allow .env.example templates
+!.env.example
+!**/.env.example
 
 # API Keys
 *api_key*
